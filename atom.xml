@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hexo</title>
+  <title>Yyb的花园</title>
   
   
-  <link href="http://example.com/atom.xml" rel="self"/>
+  <link href="https://yb705.github.io/atom.xml" rel="self"/>
   
-  <link href="http://example.com/"/>
+  <link href="https://yb705.github.io/"/>
   <updated>2021-06-10T13:13:16.704Z</updated>
-  <id>http://example.com/</id>
+  <id>https://yb705.github.io/</id>
   
   <author>
-    <name>John Doe</name>
+    <name>Yyb</name>
     
   </author>
   
@@ -18,8 +18,8 @@
   
   <entry>
     <title>岭回归实操</title>
-    <link href="http://example.com/2021/06/10/%E5%B2%AD%E5%9B%9E%E5%BD%92%E5%AE%9E%E6%93%8D/"/>
-    <id>http://example.com/2021/06/10/%E5%B2%AD%E5%9B%9E%E5%BD%92%E5%AE%9E%E6%93%8D/</id>
+    <link href="https://yb705.github.io/2021/06/10/%E5%B2%AD%E5%9B%9E%E5%BD%92%E5%AE%9E%E6%93%8D/"/>
+    <id>https://yb705.github.io/2021/06/10/%E5%B2%AD%E5%9B%9E%E5%BD%92%E5%AE%9E%E6%93%8D/</id>
     <published>2021-06-10T13:12:38.000Z</published>
     <updated>2021-06-10T13:13:16.704Z</updated>
     
@@ -38,8 +38,8 @@
   
   <entry>
     <title>Hexo</title>
-    <link href="http://example.com/2021/06/08/Hexo/"/>
-    <id>http://example.com/2021/06/08/Hexo/</id>
+    <link href="https://yb705.github.io/2021/06/08/Hexo/"/>
+    <id>https://yb705.github.io/2021/06/08/Hexo/</id>
     <published>2021-06-08T11:27:27.000Z</published>
     <updated>2021-06-08T11:27:27.745Z</updated>
     
@@ -51,8 +51,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://example.com/2021/06/08/hello-world/"/>
-    <id>http://example.com/2021/06/08/hello-world/</id>
+    <link href="https://yb705.github.io/2021/06/08/hello-world/"/>
+    <id>https://yb705.github.io/2021/06/08/hello-world/</id>
     <published>2021-06-08T11:25:37.252Z</published>
     <updated>2021-06-08T11:25:37.252Z</updated>
     
