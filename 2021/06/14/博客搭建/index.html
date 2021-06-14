@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="博客搭建"><meta name="keywords" content="博客搭建,注意事项"><meta name="author" content="Yyb,undefined"><meta name="copyright" content="Yyb"><title>博客搭建【Yyb的花园】</title><link rel="stylesheet" href="/css/fan.css"><link rel="stylesheet" href="/css/thirdparty/jquery.mCustomScrollbar.min.css"><link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.4/dist/instantsearch.min.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.4/dist/instantsearch-theme-algolia.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.4"></script><!-- link(rel="dns-prefetch" href="https://cdn.jsdelivr.net")--><!-- link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.1.1/dist/instantsearch.min.css")--><!-- script(src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.1.1/dist/instantsearch.min.js" defer)--><!-- script(src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")--><script src="/js/mathjax/mathjax.js"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+});
+</script><script>var isPassword = '' || false;
+if (isPassword) {
+    if (prompt('请输入文章密码') !== '') {
+        alert('密码错误！');
+        history.back();
+    }
+}</script><script>window.GLOBAL_CONFIG = {
+  root: '/',
+  algolia: {"appId":"VN5QYUXW8S","apiKey":"7bb2817029d8aaa580ce39e2aef50ce7","indexName":"search","hits":{"per_page":10},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容:${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  gitment: {},
+  valine: {"appId":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","appKey":"dJ07LxI5XAsyjJ3DB7zmCUL3","placeholder":"走过路过不要错过,买不买的瞧一瞧啊!","pageSize":10},
+}</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Yyb的花园" type="application/atom+xml">
+</head><body><canvas id="universe"></canvas><!--#body--><div id="sidebar"><div class="toggle-sidebar-info button-hover"><span data-toggle="文章目录">站点概览</span></div><div class="sidebar-toc"><div class="sidebar-toc-title">目录</div><div class="sidebar-toc-progress"><span class="progress-notice">您已阅读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc-progress-bar"></div></div><div class="sidebar-toc-content" id="sidebar-toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA"><span class="toc-number">1.</span> <span class="toc-text">博客搭建</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info-avatar"><img class="author-info-avatar-img" src="/avatar.png"></div><div class="author-info-name">Yyb</div><div class="author-info-description"></div><div class="links-buttons"><a class="links-button button-hover" href="https://mp.csdn.net/console/article?spm=1010.2135.3001.5416" target="_blank">CSDN<i class="icon-dot bg-color6"></i></a><a class="links-button button-hover" href="1994yybsr@sina.com" target="_blank">E-Mail<i class="icon-dot bg-color10"></i></a><a class="links-button button-hover" href="https://github.com/yb705" target="_blank">GitHub<i class="icon-dot bg-color8"></i></a></div><div class="author-info-articles"><a class="author-info-articles-archives article-meta" href="/archives"><span class="pull-top">日志</span><span class="pull-bottom">2</span></a><a class="author-info-articles-tags article-meta" href="/tags"><span class="pull-top">标签</span><span class="pull-bottom">3</span></a><a class="author-info-articles-categories article-meta" href="/categories"><span class="pull-top">分类</span><span class="pull-bottom">2</span></a></div><div class="friend-link"><a class="friend-link-text" href="https://github.com/yb705" target="_blank">不怎么用的github</a><a class="friend-link-text" href="https://i.csdn.net/#/user-center/profile?spm=1010.2135.3001.5111" target="_blank">定期更新的CSDN</a><a class="friend-link-text" href="1994yybsr@sina.com" target="_blank">只用来接收消息的邮箱</a></div></div></div><div id="main-container"><header><div id="menu-outer"><i class="menu-list-icon fas fa-bars"></i><nav id="menu-inner"><a class="menu-item" href="/">首页</a><a class="menu-item" href="/tags">标签</a><a class="menu-item" href="/categories">分类</a><a class="menu-item" href="/archives">归档</a><a class="menu-item" href="/about">关于</a></nav><div class="right-info"><a class="search social-icon"><i class="fas fa-search"></i><span> 搜索</span></a><a class="title-name" href="/">Yyb的花园</a><span id="now-time"></span></div></div></header><div id="content-outer"><div id="content-inner"><article id="post"><div class="post-header"><div class="title">博客搭建</div><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 发表于 2021-06-14 | 更新于 2021-06-14</time><!--time.button-hover.post-date #[i.fas.fa-calendar-alt.article-icon(aria-hidden="true")] #[=__('post.modified')] #[=date(page['updated'], config.date_format)]--><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/">注意事项</a></div></div></div><div class="main-content"><h4 id="博客搭建"><a href="#博客搭建" class="headerlink" title="博客搭建"></a>博客搭建</h4><p>目前网络上有两种主流的搭建方法,一个是<strong>jekyll+github</strong>,另一个是<strong>hexo+github</strong>,这两种框架均是利用静态网页编辑器将生成的静态网页上传到github上,从而实现网页展示,跳转等功能.</p>
+<p>本网站是采用hexo+github的方法搭建的,过程很简单,哪怕是完全不懂java,js的小白也可以轻松搭建出来.网络上有很多关于利用hexo搭建博客的文章,譬如:<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43270074/article/details/95392429">搭建GitHub免费个人网站（详细教程）</a>,有需要的朋友自行百度下就好了.</p>
+<p>不过,虽然搭建过程很简单,但是里面的小坑是真不少,接下来我会简单说一下搭建过程中遇到的问题.</p>
+<span id="more"></span>
+
+<ol>
+<li><p>有很多hexo主题的导航页并没有完全设置好,像是标签(tag),分类(catagories)这些属性的设立有可能是缺失的,这个时候就需要我们手动设置一下.具体过程可以参考这篇文章:<a target="_blank" rel="noopener" href="https://blog.csdn.net/nineya_com/article/details/103322773">hexo博客添加标签、分类、归档、关于等页面</a>.</p>
+</li>
+<li><p>由于我们的博客是利用markdown编辑器生成,然后上传到github的,所以如果文档中涉及到图片插入的话,在网页展示中是<strong>需要设立正确的图片路径来去引用图片</strong>的.但如果每张图片都去设立引用路径的话是很麻烦的,而且一旦设立错误就会让<strong>本该展示图片的地方变成空白,即无法引用图片</strong>.这个问题的解决方法就是通过typora(markdown编辑器)来去自动复制并生成图片引用路径,具体方法可以参考这篇文章:<a target="_blank" rel="noopener" href="https://blog.csdn.net/ayuayue/article/details/109198493">hexo 图片显示问题及使用typora设置图片路径</a>.</p>
+</li>
+<li><p>如果algolia搜索功能出现问题的话,可以参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35479468/article/details/107335663">为Hexo增加algolia搜索功能</a>.</p>
+<p>除此之外,还要注意两点:</p>
+<p>第一点:每次编写完新文章,并且重新部署之后,需要输入hexo algolia指令,来去更新algolia网站的新文章索引.</p>
+<p>第二点:修改blog根目录下config_yml文件里面的默认url选项,要修改成项目所在的url网址(如</p>
+<p><a href="https://yb705.github.io/">https://yb705.github.io</a>).</p>
+</li>
+<li><p>评论插件valine本身如果并没有什么问题,但是评论框没有显示的话,那么有可能是api和key设置错了,具体参数设置可以参考官方文档:<a target="_blank" rel="noopener" href="https://valine.js.org/configuration.html">https://valine.js.org/configuration.html</a></p>
+<p>PS:刚开始使用valine插件的时候,不显示评论框,博主调整了好久都没有成功,但是在leadcloud上新建了一个app之后,莫名其妙地就有了… ㄟ( ▔, ▔ )ㄏ</p>
+</li>
+<li><p>在博客搭建过程中,我们修改最多的就是blog根目录和theme目录下的<strong>config_yml</strong>文件.这个文件是遵从yml语言格式的,所以当我们在做属性修改的时候,一定要<strong>注意冒号后面加一个空格</strong>, 不然在网页部署的时候就会报错.这里建议用<strong>sumlime</strong>代码编辑器来去编辑,因为yml里面的属性会被不同的颜色标记出来,这样方便大家及时发现错误.当然我们也可以记事本来编辑,只是如果出现错误,会很难发现是哪里出现的问题.</p>
+</li>
+</ol>
+<p>其实博客搭建的本质就是用markdown编辑器编写完文章之后,将文章上传托管到github的博客项目上,并自动生成url链接网址与gitpage,然后通过点击特定组合的url网址来去跳转各种不同的静态网页.只要了解了这个流程,以后再遇到什么问题便都有个大概的思考方向,通过检查网页源码便能解决大部分问题,而不会两眼一抹黑,或者是到网上硬搜答案,有时甚至还什么都没搜出来┑(￣Д ￣)┍.</p>
+</div><div class="post-copyright"><div class="post-copyright-author"><span class="post-copyright-meta">本文作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Yyb</a></span></div><div class="post-copyright-type"><span class="post-copyright-meta">本文链接: </span><span class="post-copyright-info"><a href="https://yb705.github.io/2021/06/14/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">https://yb705.github.io/2021/06/14/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</a></span></div><div class="post-copyright-notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://yb705.github.io">Yyb的花园</a>！</span></div></div><div class="post-copyright valine" id="comments-container"><script src="//unpkg.com/valine@1.4.14/dist/Valine.min.js"></script><script>let arr = location.href.split('/#more')[0].split('/');
+let title = arr[arr.length - 1];
+if (title === '') {
+    title = arr[arr.length - 2];
+}
+var flag = false;
+var gitFun = function () {
+    try {
+        var valineObj = window.GLOBAL_CONFIG.valine;
+        new Valine({
+            el: "#comments-container",
+            ...valineObj
+        });
+        flag = true;
+    } catch (e) {
+        flag = false;
+    }
+}
+var setIn = setInterval(() => {
+    if (!flag) {
+        gitFun();
+    } else {
+        clearInterval(setIn);
+    }
+}, 200);</script></div></article><div id="pagination"><div class="next-post pull-right"><span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span><a href="/2021/06/14/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/"><span>第一篇博客</span><span>&nbsp;</span><i class="fas fa-angle-right"></i></a></div></div><!--div!= paginator()--></div></div><div class="button-hover" id="return-top"><i class="fas fa-arrow-up" aria-hidden="true"></i></div><footer><div id="footer"><div class="button-hover" id="side-button"><i class="fas fa-arrow-right"></i></div><div class="right-content"><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fas fa-file-o"></i></span><span id="busuanzi_value_page_pv"></span><span></span></div><div class="copyright">&copy;2017 ～ 2021 By Yyb</div></div></div></footer></div><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery-3.3.1.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/velocity.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery.mCustomScrollbar.concat.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/fan.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/canvas_bg.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/utils.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/scroll.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/sidebar.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/copy.js"></script><!--script(src=url)--><div class="search-dialog"><div id="algolia-search-title">Algolia</div><div class="search-close-button"><i class="fa fa-times"></i></div><!--div#current-refined-values--><!--div#clear-all--><div id="search-box"></div><!--div#refinement-list--><hr><div id="hits"></div><div id="algolia-pagination"></div></div><div class="search-mask"></div><script src="/js/search/algolia.js"></script></body></html>
