@@ -1,0 +1,594 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Yyb">
+  <meta name="keywords" content="">
+  
+  <title>无监督学习与主成分分析 - Yyb的花园</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yb705.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","app_key":"dJ07LxI5XAsyjJ3DB7zmCUL3","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Yyb的花园" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Yyb的花园</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/post.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="无监督学习与主成分分析">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Yyb
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-19 18:14" pubdate>
+        2021年6月19日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      34
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">无监督学习与主成分分析</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：几秒前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h1 id="无监督学习与主成分分析（PCA）"><a href="#无监督学习与主成分分析（PCA）" class="headerlink" title="无监督学习与主成分分析（PCA）"></a>无监督学习与主成分分析（PCA）</h1><h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>在之前的文章中，我讲了很多监督学习的算法（线性模型，SVM，决策树，神经网络等），那么接下来，我们要开始接触无监督学习了。首先，我们先说下相关概念。</p>
+<h2 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h2><p>与监督学习不同，<strong>在无监督学习中，学习算法只有输入数据，并且从数据中提取需要的知识</strong>。而其中有两种常用类型：<strong>数据集变换</strong>和<strong>聚类</strong>。</p>
+<p><strong>无监督变换</strong>是创建数据新的表示的算法，与数据的原始表示相比，新的表示可能更容易被人或其它机器学习算法所理解。而<strong>无监督变换的一个常见应用就是降维</strong>，它接受包含许多特征的数据的高维表示，并找到表示该数据的一种新的方法，<strong>用较少的特征就可以概括数据信息的重要特性</strong>。降维的一个常见应用是将数据降为二维之后进行可视化。（PS：这里的降维和“降维打击”里面的降维是两回事。。。）</p>
+<p><strong>无监督变换的另一个应用是找到”构成“数据的各个部分</strong>。这方面的一个例子就是对文本文档集合进行主题提取。</p>
+<p>而与之相反，<strong>聚类</strong>算法就是将数据划分成不同的组，每组包含相似的物项。譬如说人脸识别，可以将相同的某个人的照片分在一组。</p>
+<p>实际上，<strong>无监督学习的一个主要挑战就是评估算法是否学习到了有用的东西</strong>。因为无监督学习一般用于不包含任何标签信息的数据，所以我们不知道正确的输出应该是什么。因此很难判断一个模型是否”表现良好“。<strong>通常来说，评估无监督算法结果的唯一方法就是人工检查</strong>。</p>
+<p>PS：博主之前在58同城做过微聊审核相关的工作。整体的审核流程大致就是用机器学习建立一个模型，去评估用户有没有说违规的话，之后随机抽取模型的审核结果，再进行人工复审。当复审的错误率达到某个阈值的时候，就需要向技术部门阐明情况，提出修改模型的要求了。</p>
+<p>因此，如果数据科学家想要更好地理解数据，那么无监督算法通常可用于探索性的目的，而不是作为大型自动化系统的一部分（这点与监督学习是不同的）。因此<strong>无监督算法的另一个常见应用就是作为监督算法的预处理步骤</strong>。</p>
+<h2 id="主成分分析（PCA）"><a href="#主成分分析（PCA）" class="headerlink" title="主成分分析（PCA）"></a>主成分分析（PCA）</h2><p>前面说过，利用无监督学习进行数据变换可能有很多种目的。最常见的就是可视化，压缩数据（降维），以及寻找信息量更大的数据表示以用于进一步的处理。为了实现这些目的，最简单也是最常用的一种算法就是<strong>主成分分析（PCA）</strong>。</p>
+<p>PS：接下来要说理论的东西了，很枯燥，但是希望各位朋友可以耐心的看完，下面的内容对于算法的理解很有帮助。</p>
+<p>主成分分析（PCA）是一种旋转数据集的方法，旋转后的特征在统计上不相关。在做完这种旋转之后，通常是根据新特征对解释数据的重要性来选择它的一个子集。</p>
+<p>接下来，我用通俗一点的话来解释下：</p>
+<p>首先，<strong>模型就是数据集所表现出来的信息的集合体或者说构成体</strong>。通常，在机器学习的过程中，特征的个数过多会增加模型的复杂度。而我们所希望的<strong>理想状态就是用最少的特征表示数据集最多的信息</strong>。</p>
+<p>在许多情形下，特征之间是有一定的相关关系的（如线性相关：一个特征可以用另一个特征线性表示）。而当两个特征之间有一定的相关关系时，可以理解为两个特征所反映的此数据集的信息有一定的重叠。（譬如特征x和特征y，其中y=a*x+b）。</p>
+<p>而主成分分析就是对于原先数据集的所有特征进行处理。删去多余的重复的特征，建立尽可能少的特征，使得这些新特征两两不相关。并且这些新特征在反映数据集的信息方面尽可能保持原有信息。</p>
+<h2 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h2><p>来自于kaggle的一份关于心脏病患者分类的数据集：<a target="_blank" rel="noopener" href="https://www.kaggle.com/ronitf/heart-disease-uci">https://www.kaggle.com/ronitf/heart-disease-uci</a><br><img src="/2021/06/19/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/20210617134807955.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>这份数据集并不大，只包括303份数据样本（该数据不包含空值）。其中数据特征包括患者年龄，性别，心率，血糖量，血压等13个维度以及分类目标-target。而我们所需要做的，就是依照这些特征值来进行建模，从而依照模型的某种趋势来判断患者心脏是否健康。</p>
+<h2 id="PCA实际应用-降维"><a href="#PCA实际应用-降维" class="headerlink" title="PCA实际应用-降维"></a>PCA实际应用-降维</h2><p><strong>1.数据导入</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> winreg<br><span class="hljs-comment">###################</span><br>real_address = winreg.OpenKey(winreg.HKEY_CURRENT_USER,<span class="hljs-string">r&#x27;Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders&#x27;</span>,)<br>file_address=winreg.QueryValueEx(real_address, <span class="hljs-string">&quot;Desktop&quot;</span>)[<span class="hljs-number">0</span>]<br>file_address+=<span class="hljs-string">&#x27;\\&#x27;</span><br>file_origin=file_address+<span class="hljs-string">&quot;\\源数据-分析\\heart.csv&quot;</span><span class="hljs-comment">###https://www.kaggle.com/ronitf/heart-disease-uci</span><br>heart=pd.read_csv(file_origin)<br><span class="hljs-comment">#设立桌面绝对路径，读取源数据文件，这样将数据直接下载到桌面上就可以了，省得还要去找</span><br><span class="hljs-comment">###################</span><br></code></pre></td></tr></table></figure>
+
+<p>老规矩，上来先依次导入建模需要的各个模块，并读取文件。</p>
+<p><strong>2.标准化</strong></p>
+<p>由于PCA的数学原理是依照方差最大的方向来去标记主成分，所以我们先对数据进行标准化，使得各个维度的方差均为1.所以我们先用StandardScaler来对数据进行缩放，代码如下：</p>
+<p>（PS：具体实现原理及过程就不再赘述了，不了解的朋友可以看下<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/117774014">python机器学习之数据预处理与缩放</a>）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScaler<span class="hljs-comment">###标准化</span><br>train=heart.drop([<span class="hljs-string">&quot;target&quot;</span>],axis=<span class="hljs-number">1</span>)<br>standard=StandardScaler()<br>standard.fit(train)<br>X_scaled=standard.transform(train)<br></code></pre></td></tr></table></figure>
+
+<p>注意别忘了把数据集中的分类目标提取出来（<code>heart.drop([&quot;target&quot;],axis=1)</code>），分类目标是我们的分类目的或者说结果，而这里的标准化是不针对分类目标的。</p>
+<p><strong>3.PCA拟合转换</strong></p>
+<p>学习并应用PCA变换与应用预处理变换一样简单，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.decomposition <span class="hljs-keyword">import</span> PCA<br>pca=PCA(n_components=<span class="hljs-number">2</span>)<span class="hljs-comment">###为了接下来做图方便一些，就只保留数据的前两个部分，实际上这里也可以多保留些主成分</span><br>pca.fit(X_scaled)<span class="hljs-comment">###对数据进行拟合pca模型</span><br>X_pca=pca.transform(X_scaled)<span class="hljs-comment">#将数据变换到前两个主成分上</span><br></code></pre></td></tr></table></figure>
+
+<p>为了调整降低数据的维度，我们需要在创建PCA对象时指定想要保留的主成分个数（<strong>n_components=2</strong>）。之后将PCA对象实例化，调用<strong>fit</strong>方法找到主成分，再调用<strong>transform</strong>来旋转并降维。默认情况下，PCA仅变换数据，但保留所有的主成分。</p>
+<p>我们来看下变换前后的数据规模：<br><img src="/2021/06/19/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/2021061714251032.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>可以看出数据由之前的303x13，变成了303x2，样本数量没有变化，特征维度由之前的13个变成了2个。</p>
+<p>在拟合过程中，主成分被保存在components_属性中，其中每一行对应于一个主成分，它们按照重要性排序（第一主成分排在首位，以此类推）。列对应于PCA的原始特征属性。<br><img src="/2021/06/19/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/20210617144959959.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="PCA实际应用-高维数据可视化"><a href="#PCA实际应用-高维数据可视化" class="headerlink" title="PCA实际应用-高维数据可视化"></a>PCA实际应用-高维数据可视化</h2><p>正如我们之前所说的，PCA的另一个应用就是将高维数据可视化。要知道，对于有两个以上特征的数据，我们是很难绘制散点图的，譬如说上面包含13个维度的心脏患病数据。但是，我们可以用散点图画出PCA变换之后的两个主成分，并着色分类，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br>result=np.c_[X_pca,heart[<span class="hljs-string">&quot;target&quot;</span>]]<span class="hljs-comment">###将处理结果和数据集的目标值结合起来，这样就是一个新的数据集了。</span><br><span class="hljs-comment">###新数据集与原数据集的信息相差不大，甚至剔除了部分重叠数据造成的影响</span><br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br>plt.figure(figsize=(<span class="hljs-number">8</span>,<span class="hljs-number">8</span>))<br>plt.rcParams[<span class="hljs-string">&#x27;font.sans-serif&#x27;</span>] = [<span class="hljs-string">&#x27;SimHei&#x27;</span>]<span class="hljs-comment">###防止中文显示不出来</span><br>plt.rcParams[<span class="hljs-string">&#x27;axes.unicode_minus&#x27;</span>] = <span class="hljs-literal">False</span><span class="hljs-comment">###防止坐标轴符号显示不出来</span><br>result_1=result[result[:,<span class="hljs-number">2</span>]==<span class="hljs-number">1</span>]<span class="hljs-comment">###target类别1</span><br>result_0=result[result[:,<span class="hljs-number">2</span>]==<span class="hljs-number">0</span>]<span class="hljs-comment">###target类别0</span><br>plt.scatter(result_1[:,<span class="hljs-number">0</span>],result_1[:,<span class="hljs-number">1</span>])<span class="hljs-comment">###画类别1的散点图</span><br>plt.scatter(result_0[:,<span class="hljs-number">0</span>],result_0[:,<span class="hljs-number">1</span>])<span class="hljs-comment">###画类别0的散点图</span><br>plt.legend()<br>plt.xlabel(<span class="hljs-string">&#x27;第一主成分&#x27;</span>)<span class="hljs-comment">###横坐标轴标题</span><br>plt.ylabel(<span class="hljs-string">&#x27;第二主成分&#x27;</span>)<span class="hljs-comment">###纵坐标轴标题</span><br>plt.show()<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/19/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/20210617143301881.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>上面的散点图绘制了第一主成分和第二主成分的关系，然后利用类别信息对数据点进行着色。这让我们相信，即使是线性分类器（在这个空间中学习一条直线）也可以在区分这两个类别时表现的相当不错。</p>
+<p>在这里提醒大家一点，要注意pca是一种无监督的方法，在旋转方向时没有用到任何类别信息。它只是观察数据中的相关性。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p><strong>缺点</strong></p>
+<p>pca有一个缺点，就是通常不容易对图中的两个轴进行解释。虽然主成分是原始特征的组合，但这些组合往往非常复杂，我们可以用热力图表现出来：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">plt.figure(figsize=(<span class="hljs-number">15</span>,<span class="hljs-number">6</span>))<br>plt.matshow(pca.components_)<br>plt.yticks([<span class="hljs-number">0</span>,<span class="hljs-number">1</span>],[<span class="hljs-string">&quot;第一主成分&quot;</span>,<span class="hljs-string">&quot;第二主成分&quot;</span>])<span class="hljs-comment">###横坐标轴刻度</span><br>plt.colorbar()<br>plt.xticks(<span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(<span class="hljs-built_in">list</span>(train.columns))),train.columns)<span class="hljs-comment">###纵坐标轴刻度</span><br>plt.xlabel(<span class="hljs-string">&#x27;特征值&#x27;</span>)<span class="hljs-comment">###横坐标轴标题</span><br>plt.ylabel(<span class="hljs-string">&#x27;主成分&#x27;</span>)<span class="hljs-comment">###纵坐标轴标题</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/19/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/20210617144107125.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>PS：横坐标轴是13个特征维度</p>
+<p>上图可以看出每个主成分均是由13个特征值组成的，还展现出了各个特征对于成分构成的重要性（颜色越深越重要），但是我们却无法明确的指出这些特征如何构成主成分的。</p>
+<p><strong>优点</strong></p>
+<p>至于优点，我们从之前的散点图便可以看出来，那就是用简单的模型便可以对数据进行分类。通常来说，SVM核向量算法要比普通的线性模型算法Logistic更为复杂，且模型精度要更高一些。（<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/115350097">SVM</a>与<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/112277248">Logistic</a>的原理之前有在其他的文章中讲过，感兴趣的朋友可以点击链接去看一下，这里就不多做解释了。）</p>
+<p>那么为了突出刚才提到的优点，接下来我们用svm对没有经过pca变换的数据进行建模：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<br><span class="hljs-keyword">from</span> sklearn <span class="hljs-keyword">import</span> svm<br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score<br>X_train,X_test,y_train,y_test=train_test_split(train,heart[<span class="hljs-string">&quot;target&quot;</span>],random_state=<span class="hljs-number">1</span>)<br>svm=svm.SVC(C=<span class="hljs-number">1</span>,kernel=<span class="hljs-string">&quot;linear&quot;</span>,decision_function_shape=<span class="hljs-string">&quot;ovr&quot;</span>)<br>svm.fit(X_train,y_train)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;没有经过主成分分析的SVM模型评分：&quot;</span>+<span class="hljs-built_in">str</span>(accuracy_score(y_test,svm.predict(X_test))))<br><span class="hljs-comment">###没有经过主成分分析（pca）的模型评分</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/19/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/20210617145818809.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>再利用Logistic算法对变换后的数据进行建模：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LogisticRegression<br>result_pca=pd.DataFrame(result)<span class="hljs-comment">###其中第三列是目标值</span><br>X_train,X_test,y_train,y_test=train_test_split(result_pca.loc[:,<span class="hljs-number">0</span>:<span class="hljs-number">1</span>],result_pca.loc[:,<span class="hljs-number">2</span>],random_state=<span class="hljs-number">1</span>)<br>logistic=LogisticRegression(penalty=<span class="hljs-string">&#x27;l2&#x27;</span>,C=<span class="hljs-number">1</span>,solver=<span class="hljs-string">&#x27;lbfgs&#x27;</span>,max_iter=<span class="hljs-number">1000</span>)<br>logistic.fit(X_train,y_train)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;经过主成分分析的Logistic模型评分：&quot;</span>+<span class="hljs-built_in">str</span>(accuracy_score(y_train,logistic.predict(X_train))))<br><span class="hljs-comment">###经过主成分分析（pca）的模型评分</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/19/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/20210617150138257.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>从上面的结果对比便可以看出pca的优点，那就是在最大限度地保留了数据集的信息状态的条件下，它将原本复杂的数据集，转变为了更容易训练的低维度数据级，提高了模型的训练精度。</p>
+<p>有很多地方做的不是很好，欢迎网友来提出建议，也希望可以遇到些朋友来一起交流讨论。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">无监督学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/">主成分分析</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/python/">python</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/">数据处理</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E9%9B%86%E6%88%90-%E6%A2%AF%E5%BA%A6%E6%8F%90%E5%8D%87%E5%9B%9E%E5%BD%92%E6%A0%91/">
+                        <span class="hidden-mobile">决策树集成-随机森林随机森林</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","appKey":"dJ07LxI5XAsyjJ3DB7zmCUL3","placeholder":"走过路过不要错过,买不买的瞧一瞧也好啊!","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"requiredFields":[]},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://blog.csdn.net/weixin_43580339?spm=1010.2135.3001.5343" target="_blank" rel="nofollow noopener"><span>CSDN</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/yb705" target="_blank" rel="nofollow noopener"><span>Github</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
