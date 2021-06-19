@@ -1,25 +1,270 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="岭回归"><meta name="keywords" content="python,回归模型,L2正则化"><meta name="author" content="Yyb,undefined"><meta name="copyright" content="Yyb"><title>岭回归【Yyb的花园】</title><link rel="stylesheet" href="/css/fan.css"><link rel="stylesheet" href="/css/thirdparty/jquery.mCustomScrollbar.min.css"><link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.4/dist/instantsearch.min.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.4/dist/instantsearch-theme-algolia.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.4"></script><!-- link(rel="dns-prefetch" href="https://cdn.jsdelivr.net")--><!-- link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.1.1/dist/instantsearch.min.css")--><!-- script(src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.1.1/dist/instantsearch.min.js" defer)--><!-- script(src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")--><script src="/js/mathjax/mathjax.js"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
-    tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
-});
-</script><script>var isPassword = '' || false;
-if (isPassword) {
-    if (prompt('请输入文章密码') !== '') {
-        alert('密码错误！');
-        history.back();
-    }
-}</script><script>window.GLOBAL_CONFIG = {
-  root: '/',
-  algolia: {"appId":"VN5QYUXW8S","apiKey":"7bb2817029d8aaa580ce39e2aef50ce7","indexName":"search","hits":{"per_page":10},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容:${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
-  localSearch: undefined,
-  copy: {
-    success: '复制成功',
-    error: '复制错误',
-    noSupport: '浏览器不支持'
-  },
-  gitment: {},
-  valine: {"appId":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","appKey":"dJ07LxI5XAsyjJ3DB7zmCUL3","placeholder":"走过路过不要错过,买不买的瞧一瞧啊!","pageSize":10},
-}</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Yyb的花园" type="application/atom+xml">
-</head><body><canvas id="universe"></canvas><!--#body--><div id="sidebar"><div class="toggle-sidebar-info button-hover"><span data-toggle="文章目录">站点概览</span></div><div class="sidebar-toc"><div class="sidebar-toc-title">目录</div><div class="sidebar-toc-progress"><span class="progress-notice">您已阅读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc-progress-bar"></div></div><div class="sidebar-toc-content" id="sidebar-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B2%AD%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">岭回归算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E7%AE%80%E4%BB%8B"><span class="toc-number">1.2.</span> <span class="toc-text">算法简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9D%A5%E6%BA%90"><span class="toc-number">1.3.</span> <span class="toc-text">数据来源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98"><span class="toc-number">1.4.</span> <span class="toc-text">数据挖掘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A8%E8%AE%BA"><span class="toc-number">1.5.</span> <span class="toc-text">讨论</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info-avatar"><img class="author-info-avatar-img" src="/avatar.png"></div><div class="author-info-name">Yyb</div><div class="author-info-description"></div><div class="links-buttons"><a class="links-button button-hover" href="https://mp.csdn.net/console/article?spm=1010.2135.3001.5416" target="_blank">CSDN<i class="icon-dot bg-color3"></i></a><a class="links-button button-hover" href="1994yybsr@sina.com" target="_blank">E-Mail<i class="icon-dot bg-color0"></i></a><a class="links-button button-hover" href="https://github.com/yb705" target="_blank">GitHub<i class="icon-dot bg-color7"></i></a></div><div class="author-info-articles"><a class="author-info-articles-archives article-meta" href="/archives"><span class="pull-top">日志</span><span class="pull-bottom">19</span></a><a class="author-info-articles-tags article-meta" href="/tags"><span class="pull-top">标签</span><span class="pull-bottom">20</span></a><a class="author-info-articles-categories article-meta" href="/categories"><span class="pull-top">分类</span><span class="pull-bottom">13</span></a></div><div class="friend-link"><a class="friend-link-text" href="https://github.com/yb705" target="_blank">不怎么用的github</a><a class="friend-link-text" href="https://i.csdn.net/#/user-center/profile?spm=1010.2135.3001.5111" target="_blank">定期更新的CSDN</a><a class="friend-link-text" href="1994yybsr@sina.com" target="_blank">只用来接收消息的邮箱</a></div></div></div><div id="main-container"><header><div id="menu-outer"><i class="menu-list-icon fas fa-bars"></i><nav id="menu-inner"><a class="menu-item" href="/">首页</a><a class="menu-item" href="/tags">标签</a><a class="menu-item" href="/categories">分类</a><a class="menu-item" href="/archives">归档</a><a class="menu-item" href="/about">关于</a></nav><div class="right-info"><a class="search social-icon"><i class="fas fa-search"></i><span> 搜索</span></a><a class="title-name" href="/">Yyb的花园</a><span id="now-time"></span></div></div></header><div id="content-outer"><div id="content-inner"><article id="post"><div class="post-header"><div class="title">岭回归</div><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 发表于 2021-06-15 | 更新于 2021-06-15</time><!--time.button-hover.post-date #[i.fas.fa-calendar-alt.article-icon(aria-hidden="true")] #[=__('post.modified')] #[=date(page['updated'], config.date_format)]--><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/">线性模型</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/python/">python</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B/">回归模型</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/L2%E6%AD%A3%E5%88%99%E5%8C%96/">L2正则化</a></div></div></div><div class="main-content"><h1 id="岭回归算法"><a href="#岭回归算法" class="headerlink" title="岭回归算法"></a>岭回归算法</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p><strong>正则化</strong></p>
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Yyb">
+  <meta name="keywords" content="">
+  
+  <title>岭回归 - Yyb的花园</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yb705.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","app_key":"dJ07LxI5XAsyjJ3DB7zmCUL3","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Yyb的花园" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Yyb的花园</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/post.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="岭回归">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Yyb
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-15 20:03" pubdate>
+        2021年6月15日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      25
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">岭回归</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：6 小时前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h1 id="岭回归算法"><a href="#岭回归算法" class="headerlink" title="岭回归算法"></a>岭回归算法</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p><strong>正则化</strong></p>
 <p><strong>正则化</strong>是指对模型做显式约束，以避免过拟合。本文用到的岭回归就是L2正则化。（从数学的观点来看，岭回归惩罚了系数的L2范数或w的欧式长度）</p>
 <p>正则化的具体原理就不在这里多叙述了，感兴趣的朋友可以看一下这篇文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/jinping_shi/article/details/52433975">机器学习中正则化项L1和L2的直观理解</a>。</p>
 <h2 id="算法简介"><a href="#算法简介" class="headerlink" title="算法简介"></a>算法简介</h2><p><strong>岭回归</strong></p>
@@ -28,62 +273,317 @@ if (isPassword) {
 <p><strong>y=w[0]x[0]+w[1]x[1]+w[2]x[2]+……+w[p]x[p]+b</strong></p>
 </blockquote>
 <p>但在岭回归中，对系数w的选择不仅要在训练数据上得到很好的预测结果，而且还要拟合附加约束。换句话说，w的所有元素都应接近于0。直观上来看，这意味着每个特征对输出的影响应尽可能小（即斜率很小），同时仍给出很好的预测结果，这个约束也就是<strong>正则化</strong>。</p>
-<span id="more"></span>
-
-<h2 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h2><p><a target="_blank" rel="noopener" href="https://www.kaggle.com/altavish/boston-housing-dataset">波士顿房价：https://www.kaggle.com/altavish/boston-housing-dataset</a><br><del>也是非常经典的一个数据</del><br><img src="/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/20210121135007262.jpg" alt="在这里插入图片描述"></p>
+<h2 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h2><p><a target="_blank" rel="noopener" href="https://www.kaggle.com/altavish/boston-housing-dataset">波士顿房价：https://www.kaggle.com/altavish/boston-housing-dataset</a><br><del>也是非常经典的一个数据</del><br><img src="/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/20210121135007262.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>简单解释一下这个数据的几个主要指标：<br>ZN：25,000平方英尺以上的土地划为住宅用地的比例。<br>RM：每个住宅的平均房间数。<br>AGE：1940年之前建造的自有住房的比例<br>CHAS：有没有河流经过 (如果等于1，说明有，等于0就说明没有)<br>CRIM：犯罪率<br>MEDV：住房的价格<br><del>其它指标就不用说了，都是一些住房的其它指标，感兴趣的小伙伴可以自己查一下。</del> </p>
 <h2 id="数据挖掘"><a href="#数据挖掘" class="headerlink" title="数据挖掘"></a>数据挖掘</h2><p><strong>1.导入第三方库</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> winreg</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> Ridge<span class="comment">###导入岭回归算法</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> r2_score</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> winreg<br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<br><span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> Ridge<span class="hljs-comment">###导入岭回归算法</span><br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> r2_score<br></code></pre></td></tr></table></figure>
 
 <p>老规矩，上来先依次导入建模需要的各个模块<br><strong>2.读取文件</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> winreg</span><br><span class="line">real_address = winreg.OpenKey(winreg.HKEY_CURRENT_USER,<span class="string">r&#x27;Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders&#x27;</span>,)</span><br><span class="line">file_address=winreg.QueryValueEx(real_address, <span class="string">&quot;Desktop&quot;</span>)[<span class="number">0</span>]</span><br><span class="line">file_address+=<span class="string">&#x27;\\&#x27;</span></span><br><span class="line">file_origin=file_address+<span class="string">&quot;\\源数据-分析\\HousingData.csv&quot;</span><span class="comment">#设立源数据文件的桌面绝对路径</span></span><br><span class="line">house_price=pd.read_csv(file_origin)<span class="comment">#https://www.kaggle.com/altavish/boston-housing-dataset</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> winreg<br>real_address = winreg.OpenKey(winreg.HKEY_CURRENT_USER,<span class="hljs-string">r&#x27;Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders&#x27;</span>,)<br>file_address=winreg.QueryValueEx(real_address, <span class="hljs-string">&quot;Desktop&quot;</span>)[<span class="hljs-number">0</span>]<br>file_address+=<span class="hljs-string">&#x27;\\&#x27;</span><br>file_origin=file_address+<span class="hljs-string">&quot;\\源数据-分析\\HousingData.csv&quot;</span><span class="hljs-comment">#设立源数据文件的桌面绝对路径</span><br>house_price=pd.read_csv(file_origin)<span class="hljs-comment">#https://www.kaggle.com/altavish/boston-housing-dataset</span><br></code></pre></td></tr></table></figure>
 
 <p>因为之前每次下载数据之后都要将文件转移到python根目录里面，或者到下载文件夹里面去读取，很麻烦。所以我通过winreg库，来设立绝对桌面路径，这样只要把数据下载到桌面上，或者粘到桌面上的特定文件夹里面去读取就好了，不会跟其它数据搞混。<br><del>其实到这一步都是在走流程，基本上每个数据挖掘都要来一遍，没什么好说的。</del> </p>
-<p><strong>3.清洗数据</strong><br><em>1.查找缺失值</em><br><img src="/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/20210121135832795.png" alt="在这里插入图片描述"></p>
+<p><strong>3.清洗数据</strong><br><em>1.查找缺失值</em><br><img src="/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/20210121135832795.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>可以看到这个数据并包括一些缺失值，并不是很多，所以直接删掉就好了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">house_price1=house_price.dropna().reset_index()</span><br><span class="line"><span class="keyword">del</span> house_price1[<span class="string">&quot;index&quot;</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">house_price1=house_price.dropna().reset_index()<br><span class="hljs-keyword">del</span> house_price1[<span class="hljs-string">&quot;index&quot;</span>]<br></code></pre></td></tr></table></figure>
 
 <p><em>2.突变值查找</em></p>
-<p><img src="/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/20210121140155149.png" alt="在这里插入图片描述"><br>一般是看看特征值里面是否包含等于零的数据。其实说的直接一点就是看看数据里面是否包含不符合实际的数值，比如像是犯罪率，实际中不可能出现犯罪率等于0的片区。那么从上面的结果来看，这份数据并没有其它问题。<br><del>这份数据里面的ZN和CHAS都是利用0和1来当作一种指标，所以包含0是很正常的。</del><br><strong>4.建模</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">train=house_price1.drop([<span class="string">&quot;MEDV&quot;</span>],axis=<span class="number">1</span>)</span><br><span class="line">X_train,X_test,y_train,y_test=train_test_split(train,house_price1[<span class="string">&quot;MEDV&quot;</span>],random_state=<span class="number">1</span>)</span><br><span class="line"><span class="comment">#将MEDV划分为预测值，其它的属性划分为特征值，并将数据划分成训练集和测试集。</span></span><br><span class="line">ridge=Ridge(alpha=<span class="number">10</span>)<span class="comment">#确定约束参数</span></span><br><span class="line">ridge.fit(X_train,y_train)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;岭回归训练模型得分：&quot;</span>+<span class="built_in">str</span>(r2_score(y_train,ridge.predict(X_train))))<span class="comment">#训练集</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;岭回归待测模型得分：&quot;</span>+<span class="built_in">str</span>(r2_score(y_test,ridge.predict(X_test))))<span class="comment">#待测集</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/20210121140155149.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>一般是看看特征值里面是否包含等于零的数据。其实说的直接一点就是看看数据里面是否包含不符合实际的数值，比如像是犯罪率，实际中不可能出现犯罪率等于0的片区。那么从上面的结果来看，这份数据并没有其它问题。<br><del>这份数据里面的ZN和CHAS都是利用0和1来当作一种指标，所以包含0是很正常的。</del><br><strong>4.建模</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">train=house_price1.drop([<span class="hljs-string">&quot;MEDV&quot;</span>],axis=<span class="hljs-number">1</span>)<br>X_train,X_test,y_train,y_test=train_test_split(train,house_price1[<span class="hljs-string">&quot;MEDV&quot;</span>],random_state=<span class="hljs-number">1</span>)<br><span class="hljs-comment">#将MEDV划分为预测值，其它的属性划分为特征值，并将数据划分成训练集和测试集。</span><br>ridge=Ridge(alpha=<span class="hljs-number">10</span>)<span class="hljs-comment">#确定约束参数</span><br>ridge.fit(X_train,y_train)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;岭回归训练模型得分：&quot;</span>+<span class="hljs-built_in">str</span>(r2_score(y_train,ridge.predict(X_train))))<span class="hljs-comment">#训练集</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;岭回归待测模型得分：&quot;</span>+<span class="hljs-built_in">str</span>(r2_score(y_test,ridge.predict(X_test))))<span class="hljs-comment">#待测集</span><br></code></pre></td></tr></table></figure>
 
-<p>引入ridge算法，进行建模后，对测试集进行精度评分，得到的结果如下：<br><img src="/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/20210121142032926.png" alt="在这里插入图片描述"></p>
+<p>引入ridge算法，进行建模后，对测试集进行精度评分，得到的结果如下：<br><img src="/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/20210121142032926.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>可以看到，该模型的训练精度为79%左右，对于新的数据来说，模型精度在63%左右。<br>至此，这个数据集的将建模就算是完成了。</p>
 <h2 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h2><p><strong>1.参数的讨论</strong></p>
-<p>由于岭回归与线性回归（最小二乘法）的模型公式是一样的，所以这里我们与线性回归做一个比较。不了解线性回归的朋友可以看一下我的另一篇文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/112271333">最小二乘算法之回归实操</a><br><img src="/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/20210121142126579.png" alt="在这里插入图片描述"></p>
+<p>由于岭回归与线性回归（最小二乘法）的模型公式是一样的，所以这里我们与线性回归做一个比较。不了解线性回归的朋友可以看一下我的另一篇文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/112271333">最小二乘算法之回归实操</a><br><img src="/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/20210121142126579.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>之前我们设立的约束参数是10，而上面模型参数设的是0，可以看出模型的训练精度有所提高，但泛化能力有所降低。同时与线性回归模型相比，二者的分数是完全一样的。所以，当岭回归的约束参数设为0时，失去约束的岭回归与普通最小二乘法就是同一个算法。</p>
 <p><strong>2.与普通最小二乘法的比较</strong></p>
 <p>我们通过变换约束参数的取值，来具体看一下岭回归与普通最小二乘法的优缺点。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">result_b=pd.DataFrame(columns=[<span class="string">&quot;参数&quot;</span>,<span class="string">&quot;岭回归训练模型得分&quot;</span>,<span class="string">&quot;岭回归待测模型得分&quot;</span>,<span class="string">&quot;线性回归训练模型得分&quot;</span>,<span class="string">&quot;线性回归待测模型得分&quot;</span>])</span><br><span class="line">train=house_price1.drop([<span class="string">&quot;MEDV&quot;</span>],axis=<span class="number">1</span>)</span><br><span class="line">X_train,X_test,y_train,y_test=train_test_split(train,house_price1[<span class="string">&quot;MEDV&quot;</span>],random_state=<span class="number">23</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">21</span>):</span><br><span class="line">    alpha=i/<span class="number">10</span><span class="comment">#约定参数可以选定为小数</span></span><br><span class="line">    ridge=Ridge(alpha=alpha)</span><br><span class="line">    ridge.fit(X_train,y_train)</span><br><span class="line">    linear=LinearRegression()</span><br><span class="line">    linear.fit(X_train,y_train)</span><br><span class="line">    result_b=result_b.append([&#123;<span class="string">&quot;参数&quot;</span>:alpha,<span class="string">&quot;岭回归训练模型得分&quot;</span>:r2_score(y_train,ridge.predict(X_train)),<span class="string">&quot;岭回归待测模型得分&quot;</span>:r2_score(y_test,ridge.predict(X_test)),<span class="string">&quot;线性回归训练模型得分&quot;</span>:r2_score(y_train,linear.predict(X_train)),<span class="string">&quot;线性回归待测模型得分&quot;</span>:r2_score(y_test,linear.predict(X_test))&#125;])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">result_b=pd.DataFrame(columns=[<span class="hljs-string">&quot;参数&quot;</span>,<span class="hljs-string">&quot;岭回归训练模型得分&quot;</span>,<span class="hljs-string">&quot;岭回归待测模型得分&quot;</span>,<span class="hljs-string">&quot;线性回归训练模型得分&quot;</span>,<span class="hljs-string">&quot;线性回归待测模型得分&quot;</span>])<br>train=house_price1.drop([<span class="hljs-string">&quot;MEDV&quot;</span>],axis=<span class="hljs-number">1</span>)<br>X_train,X_test,y_train,y_test=train_test_split(train,house_price1[<span class="hljs-string">&quot;MEDV&quot;</span>],random_state=<span class="hljs-number">23</span>)<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">21</span>):<br>    alpha=i/<span class="hljs-number">10</span><span class="hljs-comment">#约定参数可以选定为小数</span><br>    ridge=Ridge(alpha=alpha)<br>    ridge.fit(X_train,y_train)<br>    linear=LinearRegression()<br>    linear.fit(X_train,y_train)<br>    result_b=result_b.append([&#123;<span class="hljs-string">&quot;参数&quot;</span>:alpha,<span class="hljs-string">&quot;岭回归训练模型得分&quot;</span>:r2_score(y_train,ridge.predict(X_train)),<span class="hljs-string">&quot;岭回归待测模型得分&quot;</span>:r2_score(y_test,ridge.predict(X_test)),<span class="hljs-string">&quot;线性回归训练模型得分&quot;</span>:r2_score(y_train,linear.predict(X_train)),<span class="hljs-string">&quot;线性回归待测模型得分&quot;</span>:r2_score(y_test,linear.predict(X_test))&#125;])<br></code></pre></td></tr></table></figure>
 
-<p>结果如下所示：<br><img src="/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/20210121143002294.png" alt="在这里插入图片描述"><br>可以看出如果只是针对训练模型的精度，最小二乘法是要优于岭回归的，但是对新的数据作出预测时，也就是考虑模型的泛化能力上，可以看出岭回归的模型得分比最小二乘法要好一点。<br>我们通过一个折线图来更直观地表现上面的数据：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line">plt.style.use(<span class="string">&quot;fivethirtyeight&quot;</span>)</span><br><span class="line">sns.set_style(&#123;<span class="string">&#x27;font.sans-serif&#x27;</span>:[<span class="string">&#x27;SimHei&#x27;</span>,<span class="string">&#x27;Arial&#x27;</span>]&#125;)<span class="comment">#设定汉字字体，防止出现方框</span></span><br><span class="line">%matplotlib inline</span><br><span class="line"><span class="comment">#在jupyter notebook上直接显示图表</span></span><br><span class="line">fig= plt.subplots(figsize=(<span class="number">15</span>,<span class="number">5</span>))</span><br><span class="line">plt.plot(result_b[<span class="string">&quot;参数&quot;</span>],result_b[<span class="string">&quot;岭回归训练模型得分&quot;</span>],label=<span class="string">&quot;岭回归训练模型得分&quot;</span>)<span class="comment">#画折线图</span></span><br><span class="line">plt.plot(result_b[<span class="string">&quot;参数&quot;</span>],result_b[<span class="string">&quot;岭回归待测模型得分&quot;</span>],label=<span class="string">&quot;岭回归待测模型得分&quot;</span>)</span><br><span class="line">plt.plot(result_b[<span class="string">&quot;参数&quot;</span>],result_b[<span class="string">&quot;线性回归训练模型得分&quot;</span>],label=<span class="string">&quot;线性回归训练模型得分&quot;</span>)</span><br><span class="line">plt.plot(result_b[<span class="string">&quot;参数&quot;</span>],result_b[<span class="string">&quot;线性回归待测模型得分&quot;</span>],label=<span class="string">&quot;线性回归待测模型得分&quot;</span>)</span><br><span class="line">plt.rcParams.update(&#123;<span class="string">&#x27;font.size&#x27;</span>: <span class="number">12</span>&#125;)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.xticks(fontsize=<span class="number">15</span>)<span class="comment">#设置坐标轴上的刻度字体大小</span></span><br><span class="line">plt.yticks(fontsize=<span class="number">15</span>)</span><br><span class="line">plt.xlabel(<span class="string">&quot;参数&quot;</span>,fontsize=<span class="number">15</span>)<span class="comment">#设置坐标轴上的标签内容和字体</span></span><br><span class="line">plt.ylabel(<span class="string">&quot;得分&quot;</span>,fontsize=<span class="number">15</span>)</span><br></pre></td></tr></table></figure>
+<p>结果如下所示：<br><img src="/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/20210121143002294.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>可以看出如果只是针对训练模型的精度，最小二乘法是要优于岭回归的，但是对新的数据作出预测时，也就是考虑模型的泛化能力上，可以看出岭回归的模型得分比最小二乘法要好一点。<br>我们通过一个折线图来更直观地表现上面的数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br>plt.style.use(<span class="hljs-string">&quot;fivethirtyeight&quot;</span>)<br>sns.set_style(&#123;<span class="hljs-string">&#x27;font.sans-serif&#x27;</span>:[<span class="hljs-string">&#x27;SimHei&#x27;</span>,<span class="hljs-string">&#x27;Arial&#x27;</span>]&#125;)<span class="hljs-comment">#设定汉字字体，防止出现方框</span><br>%matplotlib inline<br><span class="hljs-comment">#在jupyter notebook上直接显示图表</span><br>fig= plt.subplots(figsize=(<span class="hljs-number">15</span>,<span class="hljs-number">5</span>))<br>plt.plot(result_b[<span class="hljs-string">&quot;参数&quot;</span>],result_b[<span class="hljs-string">&quot;岭回归训练模型得分&quot;</span>],label=<span class="hljs-string">&quot;岭回归训练模型得分&quot;</span>)<span class="hljs-comment">#画折线图</span><br>plt.plot(result_b[<span class="hljs-string">&quot;参数&quot;</span>],result_b[<span class="hljs-string">&quot;岭回归待测模型得分&quot;</span>],label=<span class="hljs-string">&quot;岭回归待测模型得分&quot;</span>)<br>plt.plot(result_b[<span class="hljs-string">&quot;参数&quot;</span>],result_b[<span class="hljs-string">&quot;线性回归训练模型得分&quot;</span>],label=<span class="hljs-string">&quot;线性回归训练模型得分&quot;</span>)<br>plt.plot(result_b[<span class="hljs-string">&quot;参数&quot;</span>],result_b[<span class="hljs-string">&quot;线性回归待测模型得分&quot;</span>],label=<span class="hljs-string">&quot;线性回归待测模型得分&quot;</span>)<br>plt.rcParams.update(&#123;<span class="hljs-string">&#x27;font.size&#x27;</span>: <span class="hljs-number">12</span>&#125;)<br>plt.legend()<br>plt.xticks(fontsize=<span class="hljs-number">15</span>)<span class="hljs-comment">#设置坐标轴上的刻度字体大小</span><br>plt.yticks(fontsize=<span class="hljs-number">15</span>)<br>plt.xlabel(<span class="hljs-string">&quot;参数&quot;</span>,fontsize=<span class="hljs-number">15</span>)<span class="hljs-comment">#设置坐标轴上的标签内容和字体</span><br>plt.ylabel(<span class="hljs-string">&quot;得分&quot;</span>,fontsize=<span class="hljs-number">15</span>)<br></code></pre></td></tr></table></figure>
 
-<p>结果如下所示：<br><img src="/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/20210121144729267.png" alt="在这里插入图片描述"><br>可以看出岭回归模型在模型的简单性（系数都接近于0）与训练集性能之间作出权衡。简单性和训练性能二者对于模型的重要程度可以由用户通过设置aplha参数来制定。增大alpha会使得系数更加趋向于0，从而降低训练集性能，但会提高泛化性能。</p>
+<p>结果如下所示：<br><img src="/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/20210121144729267.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>可以看出岭回归模型在模型的简单性（系数都接近于0）与训练集性能之间作出权衡。简单性和训练性能二者对于模型的重要程度可以由用户通过设置aplha参数来制定。增大alpha会使得系数更加趋向于0，从而降低训练集性能，但会提高泛化性能。</p>
 <p>而且无论是岭回归还是线性回归，所有数据集大小对应的训练分数都要高于预测分数。由于岭回归是正则化的，所以它的训练分数要整体低于线性回归的训练分数。但岭回归的测试分数高，特别是对于较小的数据集。如果数据量小于一定程度的时候，线性回归将学不到任何内容，随着模型可用数据越来越多，两个模型的性能都在提升，最终线性回归的性能追上了岭回归。所以如果有足够多的训练内容，<strong>正则化</strong>变得不那么重要，并且岭回归和线性回归将具有相同的性能。</p>
 <p>以上就是关于岭回归的实际操作与看法了，有很多地方做的不是很好，欢迎网友来提出建议，也希望可以遇到些朋友来一起交流讨论。</p>
-</div><div class="post-copyright"><div class="post-copyright-author"><span class="post-copyright-meta">本文作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Yyb</a></span></div><div class="post-copyright-type"><span class="post-copyright-meta">本文链接: </span><span class="post-copyright-info"><a href="https://yb705.github.io/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/">https://yb705.github.io/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/</a></span></div><div class="post-copyright-notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://yb705.github.io">Yyb的花园</a>！</span></div></div><div class="post-copyright valine" id="comments-container"><script src="//unpkg.com/valine@1.4.14/dist/Valine.min.js"></script><script>let arr = location.href.split('/#more')[0].split('/');
-let title = arr[arr.length - 1];
-if (title === '') {
-    title = arr[arr.length - 2];
-}
-var flag = false;
-var gitFun = function () {
-    try {
-        var valineObj = window.GLOBAL_CONFIG.valine;
-        new Valine({
-            el: "#comments-container",
-            ...valineObj
-        });
-        flag = true;
-    } catch (e) {
-        flag = false;
-    }
-}
-var setIn = setInterval(() => {
-    if (!flag) {
-        gitFun();
-    } else {
-        clearInterval(setIn);
-    }
-}, 200);</script></div></article><div id="pagination"><div class="prev-post pull-left"><span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span><a href="/2021/06/15/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8/"><i class="fas fa-angle-left">&nbsp;</i><span>朴素贝叶斯分类器</span></a></div><div class="next-post pull-right"><span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span><a href="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8B%EF%BC%89/"><span>决策树算法-单棵树（下）</span><span>&nbsp;</span><i class="fas fa-angle-right"></i></a></div></div><!--div!= paginator()--></div></div><div class="button-hover" id="return-top"><i class="fas fa-arrow-up" aria-hidden="true"></i></div><footer><div id="footer"><div class="button-hover" id="side-button"><i class="fas fa-arrow-right"></i></div><div class="right-content"><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fas fa-file-o"></i></span><span id="busuanzi_value_page_pv"></span><span></span></div><div class="copyright">&copy;2017 ～ 2021 By Yyb</div></div></div></footer></div><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery-3.3.1.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/velocity.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery.mCustomScrollbar.concat.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/fan.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/canvas_bg.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/utils.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/scroll.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/sidebar.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/copy.js"></script><!--script(src=url)--><div class="search-dialog"><div id="algolia-search-title">Algolia</div><div class="search-close-button"><i class="fa fa-times"></i></div><!--div#current-refined-values--><!--div#clear-all--><div id="search-box"></div><!--div#refinement-list--><hr><div id="hits"></div><div id="algolia-pagination"></div></div><div class="search-mask"></div><script src="/js/search/algolia.js"></script></body></html>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/">线性模型</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/python/">python</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B/">回归模型</a>
+                    
+                      <a class="hover-with-bg" href="/tags/L2%E6%AD%A3%E5%88%99%E5%8C%96/">L2正则化</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/06/15/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">朴素贝叶斯分类器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8B%EF%BC%89/">
+                        <span class="hidden-mobile">决策树算法-单棵树（下）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","appKey":"dJ07LxI5XAsyjJ3DB7zmCUL3","placeholder":"走过路过不要错过,买不买的瞧一瞧也好啊!","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"requiredFields":[]},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://blog.csdn.net/weixin_43580339?spm=1010.2135.3001.5343" target="_blank" rel="nofollow noopener"><span>CSDN</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/yb705" target="_blank" rel="nofollow noopener"><span>Github</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

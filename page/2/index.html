@@ -1,68 +1,830 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content=""><meta name="keywords"><meta name="author" content="Yyb,undefined"><meta name="copyright" content="Yyb"><title>【Yyb的花园】</title><link rel="stylesheet" href="/css/fan.css"><link rel="stylesheet" href="/css/thirdparty/jquery.mCustomScrollbar.min.css"><link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.4/dist/instantsearch.min.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.4/dist/instantsearch-theme-algolia.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.4"></script><!-- link(rel="dns-prefetch" href="https://cdn.jsdelivr.net")--><!-- link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.1.1/dist/instantsearch.min.css")--><!-- script(src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.1.1/dist/instantsearch.min.js" defer)--><!-- script(src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")--><script src="/js/mathjax/mathjax.js"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
-    tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
-});
-</script><script>var isPassword = '' || false;
-if (isPassword) {
-    if (prompt('请输入文章密码') !== '') {
-        alert('密码错误！');
-        history.back();
-    }
-}</script><script>window.GLOBAL_CONFIG = {
-  root: '/',
-  algolia: {"appId":"VN5QYUXW8S","apiKey":"7bb2817029d8aaa580ce39e2aef50ce7","indexName":"search","hits":{"per_page":10},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容:${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
-  localSearch: undefined,
-  copy: {
-    success: '复制成功',
-    error: '复制错误',
-    noSupport: '浏览器不支持'
-  },
-  gitment: {},
-  valine: {"appId":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","appKey":"dJ07LxI5XAsyjJ3DB7zmCUL3","placeholder":"走过路过不要错过,买不买的瞧一瞧啊!","pageSize":10},
-}</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Yyb的花园" type="application/atom+xml">
-</head><body><canvas id="universe"></canvas><!--#body--><div id="sidebar"><div class="author-info"><div class="author-info-avatar"><img class="author-info-avatar-img" src="/avatar.png"></div><div class="author-info-name">Yyb</div><div class="author-info-description"></div><div class="links-buttons"><a class="links-button button-hover" href="https://mp.csdn.net/console/article?spm=1010.2135.3001.5416" target="_blank">CSDN<i class="icon-dot bg-color9"></i></a><a class="links-button button-hover" href="1994yybsr@sina.com" target="_blank">E-Mail<i class="icon-dot bg-color3"></i></a><a class="links-button button-hover" href="https://github.com/yb705" target="_blank">GitHub<i class="icon-dot bg-color6"></i></a></div><div class="author-info-articles"><a class="author-info-articles-archives article-meta" href="/archives"><span class="pull-top">日志</span><span class="pull-bottom">19</span></a><a class="author-info-articles-tags article-meta" href="/tags"><span class="pull-top">标签</span><span class="pull-bottom">20</span></a><a class="author-info-articles-categories article-meta" href="/categories"><span class="pull-top">分类</span><span class="pull-bottom">13</span></a></div><div class="friend-link"><a class="friend-link-text" href="https://github.com/yb705" target="_blank">不怎么用的github</a><a class="friend-link-text" href="https://i.csdn.net/#/user-center/profile?spm=1010.2135.3001.5111" target="_blank">定期更新的CSDN</a><a class="friend-link-text" href="1994yybsr@sina.com" target="_blank">只用来接收消息的邮箱</a></div></div></div><div id="main-container"><header><div id="menu-outer"><i class="menu-list-icon fas fa-bars"></i><nav id="menu-inner"><a class="menu-item" href="/">首页</a><a class="menu-item" href="/tags">标签</a><a class="menu-item" href="/categories">分类</a><a class="menu-item" href="/archives">归档</a><a class="menu-item" href="/about">关于</a></nav><div class="right-info"><a class="search social-icon"><i class="fas fa-search"></i><span> 搜索</span></a><a class="title-name" href="/">Yyb的花园</a><span id="now-time"></span></div></div></header><div id="content-outer"><div id="content-inner"><div id="recent-posts"><!-- each post in page.posts.sort('date', -1).limit(10).toArray()--><!-- config中配置按照什么排序--><div class="recent-post-item"><a class="post-title" href="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E9%9B%86%E6%88%90-%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/">决策树集成-随机森林</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2021-06-15</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E5%86%B3%E7%AD%96%E6%A0%91%E9%9B%86%E6%88%90/">决策树集成</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/python/">python</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/">随机森林</a></div></div><div class="post-content"><div class="main-content content"><h1 id="决策树集成-随机森林算法"><a href="#决策树集成-随机森林算法" class="headerlink" title="决策树集成-随机森林算法"></a>决策树集成-随机森林算法</h1><h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p><strong>集成</strong></p>
-<p>集成是合并多个机器学习模型来构建更强大模型的方法。在机器学习算法中有许多模型属于这一类，但已证明有两种集成模型对大量分类和回归的数据集都是有效的，二者都以决策树为基础，分别是<strong>随机森林（random forest）</strong>和<strong>梯度提升决策树决策（gradiet boosted decision tree）</strong>。</p>
-<p>本片文章先讲解一下随机森林。在了解随机森林之前建议先去看一下我的另外两篇讲解<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/115696198">决策树的文章决策树算法之讲解实操（上）</a>和<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/115939923">决策树算法之讲解实操（下）</a>，重复的东西，我这里就不在赘述了。<br>ps：接下来会花费很长的篇幅来讲解随机森林的思想和构造原理，已经有所了解的小伙伴可以直接跳过。</p>
-<h2 id="思想简介"><a href="#思想简介" class="headerlink" title="思想简介"></a>思想简介</h2><p>在之前的一篇文章<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/115696198">决策树的文章决策树算法之讲解实操（上）</a>中我们提到过，决策树的一个主要缺点在于经常对训练数据过拟合。那么随机森林就是解决这个问题的一种方法。随机森林本质上是许多决策树的集合，其中每棵树都和其它的树略有不同。</p>
-<p>它的思想是：<strong>每棵树的预测可能都相对较好，但可能对部分数据过拟合。如果构造很多树，并且每棵树的预测都很好，但都以不同的方式过拟合，那么我们可以对树的结果取平均值来降低过拟合</strong>。这样做，既能减少过拟合又能保持树的预测能力。</p>
-<p>为了实现上面的思想，我们需要构造很多决策树，并且每棵树都与其它的树保持不同，即树的<strong>随机化</strong>。而树的随机化方法有两种：一种是通过选择用于构造树的数据点，另一种是通过选择每次划分测试的特征。接下来，我们来更深入地讲解这一块。</p></div></div><a class="button-hover more" href="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E9%9B%86%E6%88%90-%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/2021/06/15/%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8D%E7%A1%AE%E5%AE%9A%E5%BA%A6%E4%BC%B0%E8%AE%A1%EF%BC%8C%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/">分类器不确定度估计，监督学习算法小结</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2021-06-15</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8D%E7%A1%AE%E5%AE%9A%E5%BA%A6%E4%BC%B0%E8%AE%A1/">分类器不确定度估计</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/python/">python</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/">算法小结</a></div></div><div class="post-content"><div class="main-content content"><h1 id="分类器不确定度估计及监督学习算法小结"><a href="#分类器不确定度估计及监督学习算法小结" class="headerlink" title="分类器不确定度估计及监督学习算法小结"></a>分类器不确定度估计及监督学习算法小结</h1><h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>我们之前用到的所有机器学习的算法均来自于scikit—learn库，但是这个接口还有另一个用处，就是能够给出分类器预测结果的不确定性估计。有的时候，我们不仅要关心一个测试数据点究竟属于哪个类别，还要考虑这个预测的置信区间。譬如，在最近新冠疫情中出现的无症状感染，如果是假阳性预测，那么可能只会让患者接受额外的测试，但是如果是假阴性感染却有可能导致患者没有得到治疗。<strong>（</strong>机器学习的大部分算法均是建立在概率统计的基础上的，而概率等于99.9%却并不意味着事件一定会发生。<strong>）</strong></p>
-<p>scikit—learn中有两个函数可用于获取分类器的不确定估计：<strong>decision_function和predict_proba</strong>。大多数分类器都至少有其中一个函数，很多分类器两个都有。接下来我们找一个数据集来构造一个<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/116522395">梯度提升回归树</a>的分类器。（这个算法之前有讲过，不了解的小伙伴可以跳转到相应的文章去了解下。）</p></div></div><a class="button-hover more" href="/2021/06/15/%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8D%E7%A1%AE%E5%AE%9A%E5%BA%A6%E4%BC%B0%E8%AE%A1%EF%BC%8C%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/2021/06/15/LogisticRegression%E7%AE%97%E6%B3%95/">LogisticRegression算法</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2021-06-15</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/">线性模型</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B/">分类模型</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/python/">python</a></div></div><div class="post-content"><div class="main-content content"><h1 id="Logistic算法"><a href="#Logistic算法" class="headerlink" title="Logistic算法"></a>Logistic算法</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>先简单介绍一下机器学习里面的两个概念</p>
-<p><strong>1.损失函数</strong></p>
-<p>损失函数是机器学习里最基础也是最为关键的一个要素，它的作用就是衡量模型预测的好坏。<br>我们举个简单地例子来说明这个函数：</p>
-<p>假设我们对一家公司的销售情况进行建模，分别得出了实际模型和预测模型，这两者之间的差距就是损失函数，可以用绝对损失函数来表示：</p>
-<p><strong>L(Y-f(X))=|Y-f(X)|——公式Y-实际Y的绝对值</strong></p>
-<p>对于不同的模型，损失函数也不尽相同，比如使用平方损失函数代替绝对损失函数：</p>
-<p><strong>L(Y-f(X))=（Y-f(X))^2——公式Y-实际Y的平方</strong></p>
-<p>损失函数是很好的反映模型与实际数据差距的工具，理解损失函数能够更好得对后续优化工具（梯度下降等）进行分析与理解。很多时候遇到复杂的问题，最难的一关就是如何写出损失函数。</p>
-<p><strong>2.正则化</strong></p>
-<p>正则化是指对模型做显式约束，以避免过拟合。正则化的具体原理就不在这里多叙述了，感兴趣的朋友可以看一下这篇文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/jinping_shi/article/details/52433975">机器学习中正则化项L1和L2的直观理解。</a></p>
-<h2 id="算法简介"><a href="#算法简介" class="headerlink" title="算法简介"></a>算法简介</h2><p><em><strong>LogisticRegression</strong></em></p>
-<p>该模型的预测公式如下：</p>
-<blockquote>
-<p><em>y=w[0]x[0]+w[1]x[1]+w[2]x[2]+……+w[p]x[p]+b&gt;0</em></p>
-</blockquote>
-<p>这个公式看起来和线性回归的公式非常相似。虽然LogisticRegression的名字中含有回归（Regression），但它是一种分类算法，并不是回归算法，不要与LinearRegression混淆。在这个公式中我们并没有返回特征的加权求和，而是为预测设置了阈值（0）。如果函数值小于0，我们就预测类别为-1，如果函数值大于0，我们就预测类别+1。对于所有用于分类的线性模型，这个预测规则都是通用的。</p></div></div><a class="button-hover more" href="/2021/06/15/LogisticRegression%E7%AE%97%E6%B3%95/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/2021/06/15/lasso%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95/">lasso回归算法</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2021-06-15</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/">线性模型</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/python/">python</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B/">回归模型</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/L1%E6%AD%A3%E5%88%99%E5%8C%96/">L1正则化</a></div></div><div class="post-content"><div class="main-content content"><h1 id="lasso回归算法"><a href="#lasso回归算法" class="headerlink" title="lasso回归算法"></a>lasso回归算法</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p><strong>正则化</strong></p>
-<p><strong>正则化</strong>是指对模型做显式约束，以避免过拟合。本文用到的lasso回归就是L1正则化。（从数学的观点来看，lasso惩罚了系数向量的L1范数，换句话说，就是系数的绝对值之和。）</p>
-<p>正则化的具体原理就不在这里多叙述了，感兴趣的朋友可以看一下这篇文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/jinping_shi/article/details/52433975">机器学习中正则化项L1和L2的直观理解</a>。</p>
-<h2 id="算法简介"><a href="#算法简介" class="headerlink" title="算法简介"></a>算法简介</h2><p><strong>lasso回归</strong></p>
-<p>在了解lasso回归之前，建议朋友们先对普通最小二乘法和岭回归做一些了解，可以参考这两篇文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/112271333">最小二乘法-回归实操</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/112931842">岭回归-回归实操</a>。</p>
-<p>除了岭回归之外，lasso是另一种正则化的线性回归模型，因此它的模型公式与最小二乘法的相同，如下式所示：</p>
-<blockquote>
-<p><em>y=w[0]x[0]+w[1]x[1]+w[2]x[2]+……+w[p]x[p]+b</em></p>
-</blockquote>
-<p>与岭回归相同，使用lasso也是约束系数w使其接近于0，但用到的方法不同，叫做L1正则化。L1正则化的结果是，使用lasso时某些系数刚好是0。这说明某些特征被模型完全忽略。这可以看作是一种自动化的特征选择。某些系数刚好为0，这样模型更容易被理解，也可以呈现模型最重要的特征。</p></div></div><a class="button-hover more" href="/2021/06/15/lasso%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/2021/06/15/k%E4%B8%B4%E8%BF%91%E7%AE%97%E6%B3%95-%E5%9B%9E%E5%BD%92/">k临近算法-回归</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2021-06-15</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/k%E9%82%BB%E8%BF%91/">k邻近</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/python/">python</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B/">回归模型</a></div></div><div class="post-content"><div class="main-content content"><h1 id="k相邻近算法-回归"><a href="#k相邻近算法-回归" class="headerlink" title="k相邻近算法-回归"></a>k相邻近算法-回归</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>先简单介绍一下机器学习里面的两个概念</p>
-<p><strong>1.分类与回归</strong></p>
-<p>分类模型和回归模型本质一样，分类模型是将回归模型的输出离散化。</p>
-<p>一般来说，回归问题通常是用来预测一个值，如预测房价、未来的天气情况等等，例如一个产品的实际价格为500元，通过回归分析预测值为499元，我们认为这是一个比较好的回归分析。回归是对真实值的一种逼近预测。</p>
-<p>分类问题是用于将事物打上一个标签，通常结果为离散值。例如判断一幅图片上的动物是一只猫还是一只狗。分类并没有逼近的概念，最终正确结果只有一个，错误的就是错误的，不会有相近的概念。</p>
-<p>简言之：</p>
-<p>　　<strong>定量输出称为回归，或者说是连续变量预测，预测明天的气温是多少度，这是一个回归任务<br>定性输出称为分类，或者说是离散变量预测，预测明天是阴、晴还是雨，就是一个分类任务</strong></p>
-<p><strong>2.拟合</strong><br><strong>泛化</strong>：如果一个模型能够对没见过的新数据作出准确预测，我们就能够说它能够从训练集<strong>泛化</strong>到测试集<br><strong>拟合</strong>：模型是否可以很好的描述某些样本，并且有较好的泛化能力<br><strong>欠拟合</strong>：测试样本的特性没有学到，或模型过于简单无法拟合<br><strong>过拟合</strong>：太过贴近于训练数据的特性，在训练集上优秀，但在测试集上不行，不具有泛化性</p>
-<h2 id="算法简介"><a href="#算法简介" class="headerlink" title="算法简介"></a>算法简介</h2><p><strong>KNN回归</strong></p>
-<p>KNN算法不仅可以用于分类，还可以用于回归。通过找出一个样本的k个最近邻居，将这些邻居的某个（些）属性的平均值赋给该样本，就可以得到该样本对应属性的值。</p>
-<p>knn分类实操可以参考这一篇文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/111628241">k邻近算法-分类实操</a></p></div></div><a class="button-hover more" href="/2021/06/15/k%E4%B8%B4%E8%BF%91%E7%AE%97%E6%B3%95-%E5%9B%9E%E5%BD%92/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/2021/06/15/k%E9%82%BB%E8%BF%91%E7%AE%97%E6%B3%95-%E5%88%86%E7%B1%BB/">k邻近算法-分类</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2021-06-15</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/k%E9%82%BB%E8%BF%91/">k邻近</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B/">分类模型</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/python/">python</a></div></div><div class="post-content"><div class="main-content content"><h1 id="k相邻近算法-分类"><a href="#k相邻近算法-分类" class="headerlink" title="k相邻近算法-分类"></a>k相邻近算法-分类</h1><h2 id="算法简介"><a href="#算法简介" class="headerlink" title="算法简介"></a>算法简介</h2><p>k邻近算法是最简单的算法之一，该算法的思路是：在特征空间中，如果一个样本附近的k个最近(即特征空间中最邻近)样本的大多数属于某一个类别，则该样本也属于这个类别。该算法主要用于解决分类问题，无论是二分类或者是多分类都可以应用。<br>本文主要记录实际操作，想了解具体的算法原理可以自己查找，或者可以参考这篇博客：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/pinard/p/6061661.html">KNN原理小结</a></p></div></div><a class="button-hover more" href="/2021/06/15/k%E9%82%BB%E8%BF%91%E7%AE%97%E6%B3%95-%E5%88%86%E7%B1%BB/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/2021/06/14/2021-06-14%E6%97%A5%E8%AE%B0/">2021-06-14日记</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2021-06-14</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/%E4%B8%AA%E4%BA%BA%E6%97%A5%E8%AE%B0/">个人日记</a></div></div><div class="post-content"><div class="main-content content">日记可不能随便看哦o(￣ヘ￣o＃)</div></div><a class="button-hover more" href="/2021/06/14/2021-06-14%E6%97%A5%E8%AE%B0/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/2021/06/14/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2021-06-14</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/">注意事项</a></div></div><div class="post-content"><div class="main-content content"><h4 id="博客搭建"><a href="#博客搭建" class="headerlink" title="博客搭建"></a>博客搭建</h4><p>目前网络上有两种主流的搭建方法,一个是<strong>jekyll+github</strong>,另一个是<strong>hexo+github</strong>,这两种框架均是利用静态网页编辑器将生成的静态网页上传到github上,从而实现网页展示,跳转等功能.</p>
-<p>本网站是采用hexo+github的方法搭建的,过程很简单,哪怕是完全不懂java,js的小白也可以轻松搭建出来.网络上有很多关于利用hexo搭建博客的文章,譬如:<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43270074/article/details/95392429">搭建GitHub免费个人网站（详细教程）</a>,有需要的朋友自行百度下就好了.</p>
-<p>不过,虽然搭建过程很简单,但是里面的小坑是真不少,接下来我会简单说一下搭建过程中遇到的问题.</p></div></div><a class="button-hover more" href="/2021/06/14/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/2021/06/14/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">第一篇博客</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2021-06-14</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">第一篇博客</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/">生活记录</a></div></div><div class="post-content"><div class="main-content content"><h4 id="第一篇博客"><a href="#第一篇博客" class="headerlink" title="第一篇博客"></a>第一篇博客</h4><p> 从21年年初,我开始自学数据分析,数据挖掘方面的东西.为了能够坚持下去,同时也是想要将学到的东西记录下来,我便给自己定了一个规矩:每周至少要更新一篇博客.开始的时候是在CSDN和知乎上面更新,毕竟是知名技术网站,而且编辑器什么的也都是搭建好的,撰写发布很方便.</p>
-<p>可时间久了,就发现这两个网站的markdown编辑器还是有一些限制的,譬如说标题,字体等种类很少,布局简陋等等.在加上自己平常有写日记的习惯,所以搭建一个属于自己的博客网站便提上了日程.最终,在经历了7个多小时的折磨之后,本网站就此诞生了.</p>
-<p>以后,我会在CSDN和个人博客同步更新技术博客,偶尔也会在个人博客上分享一些生活的事情.</p>
-<p>希望可以和各路大佬多多交流.</p>
-</div></div><a class="button-hover more" href="/2021/06/14/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/#more">阅读全文</a></div></div><div id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fas fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span></div></div></div></div><div class="button-hover" id="return-top"><i class="fas fa-arrow-up" aria-hidden="true"></i></div><footer><div id="footer"><div class="button-hover" id="side-button"><i class="fas fa-arrow-right"></i></div><div class="right-content"><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_uv"><i class="fas fa-user"></i></span><span id="busuanzi_value_site_uv"></span><span></span><span class="footer-separator">|</span><span id="busuanzi_container_site_pv"><i class="fas fa-eye"></i></span><span id="busuanzi_value_site_pv"></span><span></span></div><div class="copyright">&copy;2017 ～ 2021 By Yyb</div></div></div></footer></div><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery-3.3.1.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/velocity.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery.mCustomScrollbar.concat.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/fan.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/canvas_bg.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/utils.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/scroll.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/sidebar.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/copy.js"></script><!--script(src=url)--><div class="search-dialog"><div id="algolia-search-title">Algolia</div><div class="search-close-button"><i class="fa fa-times"></i></div><!--div#current-refined-values--><!--div#clear-all--><div id="search-box"></div><!--div#refinement-list--><hr><div id="hits"></div><div id="algolia-pagination"></div></div><div class="search-mask"></div><script src="/js/search/algolia.js"></script></body></html>
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Yyb">
+  <meta name="keywords" content="">
+  
+  <title>Yyb的花园</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yb705.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","app_key":"dJ07LxI5XAsyjJ3DB7zmCUL3","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Yyb的花园" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Yyb的花园</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="心不妥协,行不受限.">
+              
+            </span>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/" target="_self">
+          决策树算法-单棵树（上）
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/" target="_self">
+          
+          
+            
+          
+          决策树算法-单棵树（上）序这次讲解机器学习里面非常经典的一个算法模型——分类树。由于篇幅比较长，所以特分为上下两篇讲解。本篇主要讲解决策树的原理，实际应用以及参数。
+算法介绍1.分类树原理
+决策树是广泛应用于分类和回归任务的模型。本质上，它从一层层的if/else问题中进行学习，并得出结论。
+想像一下，你想要区分下面四种动物：熊，鹰，企鹅和海豚。你的目标是通过提出尽可能少的if/else问题来得到
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-15 19:59" pubdate>
+              2021-06-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E5%86%B3%E7%AD%96%E6%A0%91/">决策树</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/%E5%8D%95%E6%A3%B5%E6%A0%91/">单棵树</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E9%9B%86%E6%88%90-%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/" target="_self">
+          决策树集成-随机森林
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E9%9B%86%E6%88%90-%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/" target="_self">
+          
+          
+            
+          
+          决策树集成-随机森林算法基础概念集成
+集成是合并多个机器学习模型来构建更强大模型的方法。在机器学习算法中有许多模型属于这一类，但已证明有两种集成模型对大量分类和回归的数据集都是有效的，二者都以决策树为基础，分别是随机森林（random forest）和梯度提升决策树决策（gradiet boosted decision tree）。
+本片文章先讲解一下随机森林。在了解随机森林之前建议先去看一下我的
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-15 19:55" pubdate>
+              2021-06-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E5%86%B3%E7%AD%96%E6%A0%91%E9%9B%86%E6%88%90/">决策树集成</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/">随机森林</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/15/%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8D%E7%A1%AE%E5%AE%9A%E5%BA%A6%E4%BC%B0%E8%AE%A1%EF%BC%8C%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/" target="_self">
+          分类器不确定度估计，监督学习算法小结
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/15/%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8D%E7%A1%AE%E5%AE%9A%E5%BA%A6%E4%BC%B0%E8%AE%A1%EF%BC%8C%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/" target="_self">
+          
+          
+            
+          
+          分类器不确定度估计及监督学习算法小结序我们之前用到的所有机器学习的算法均来自于scikit—learn库，但是这个接口还有另一个用处，就是能够给出分类器预测结果的不确定性估计。有的时候，我们不仅要关心一个测试数据点究竟属于哪个类别，还要考虑这个预测的置信区间。譬如，在最近新冠疫情中出现的无症状感染，如果是假阳性预测，那么可能只会让患者接受额外的测试，但是如果是假阴性感染却有可能导致患者没有得到治疗
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-15 19:51" pubdate>
+              2021-06-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8D%E7%A1%AE%E5%AE%9A%E5%BA%A6%E4%BC%B0%E8%AE%A1/">分类器不确定度估计</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/">算法小结</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/15/LogisticRegression%E7%AE%97%E6%B3%95/" target="_self">
+          LogisticRegression算法
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/15/LogisticRegression%E7%AE%97%E6%B3%95/" target="_self">
+          
+          
+            
+          
+          Logistic算法基本概念先简单介绍一下机器学习里面的两个概念
+1.损失函数
+损失函数是机器学习里最基础也是最为关键的一个要素，它的作用就是衡量模型预测的好坏。我们举个简单地例子来说明这个函数：
+假设我们对一家公司的销售情况进行建模，分别得出了实际模型和预测模型，这两者之间的差距就是损失函数，可以用绝对损失函数来表示：
+L(Y-f(X))=|Y-f(X)|——公式Y-实际Y的绝对值
+对于不同的模
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-15 19:48" pubdate>
+              2021-06-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/">线性模型</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B/">分类模型</a>
+            
+              <a href="/tags/python/">python</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/15/lasso%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95/" target="_self">
+          lasso回归算法
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/15/lasso%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95/" target="_self">
+          
+          
+            
+          
+          lasso回归算法基本概念正则化
+正则化是指对模型做显式约束，以避免过拟合。本文用到的lasso回归就是L1正则化。（从数学的观点来看，lasso惩罚了系数向量的L1范数，换句话说，就是系数的绝对值之和。）
+正则化的具体原理就不在这里多叙述了，感兴趣的朋友可以看一下这篇文章：机器学习中正则化项L1和L2的直观理解。
+算法简介lasso回归
+在了解lasso回归之前，建议朋友们先对普通最小二乘法和岭
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-15 19:45" pubdate>
+              2021-06-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/">线性模型</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B/">回归模型</a>
+            
+              <a href="/tags/L1%E6%AD%A3%E5%88%99%E5%8C%96/">L1正则化</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/15/k%E9%82%BB%E8%BF%91%E7%AE%97%E6%B3%95-%E5%88%86%E7%B1%BB/" target="_self">
+          k邻近算法-分类
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/15/k%E9%82%BB%E8%BF%91%E7%AE%97%E6%B3%95-%E5%88%86%E7%B1%BB/" target="_self">
+          
+          
+            
+          
+          k相邻近算法-分类算法简介k邻近算法是最简单的算法之一，该算法的思路是：在特征空间中，如果一个样本附近的k个最近(即特征空间中最邻近)样本的大多数属于某一个类别，则该样本也属于这个类别。该算法主要用于解决分类问题，无论是二分类或者是多分类都可以应用。本文主要记录实际操作，想了解具体的算法原理可以自己查找，或者可以参考这篇博客：KNN原理小结
+数据来源玻璃分类（Kaggle）：https://www
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-15 19:34" pubdate>
+              2021-06-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/k%E9%82%BB%E8%BF%91/">k邻近</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B/">分类模型</a>
+            
+              <a href="/tags/python/">python</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/14/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" target="_self">
+          博客搭建
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/14/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" target="_self">
+          
+          
+            
+          
+          博客搭建目前网络上有两种主流的搭建方法,一个是jekyll+github,另一个是hexo+github,这两种框架均是利用静态网页编辑器将生成的静态网页上传到github上,从而实现网页展示,跳转等功能.
+本网站是采用hexo+github的方法搭建的,过程很简单,哪怕是完全不懂java,js的小白也可以轻松搭建出来.网络上有很多关于利用hexo搭建博客的文章,譬如:搭建GitHub免费个人网站
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-14 12:34" pubdate>
+              2021-06-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a>
+            
+              <a href="/tags/%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/">注意事项</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/14/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" target="_self">
+          第一篇博客
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/14/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" target="_self">
+          
+          
+            
+          
+          第一篇博客 从21年年初,我开始自学数据分析,数据挖掘方面的东西.为了能够坚持下去,同时也是想要将学到的东西记录下来,我便给自己定了一个规矩:每周至少要更新一篇博客.开始的时候是在CSDN和知乎上面更新,毕竟是知名技术网站,而且编辑器什么的也都是搭建好的,撰写发布很方便.
+可时间久了,就发现这两个网站的markdown编辑器还是有一些限制的,譬如说标题,字体等种类很少,布局简陋等等.在加上自己平常
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-14 11:45" pubdate>
+              2021-06-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">第一篇博客</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/">生活记录</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://blog.csdn.net/weixin_43580339?spm=1010.2135.3001.5343" target="_blank" rel="nofollow noopener"><span>CSDN</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/yb705" target="_blank" rel="nofollow noopener"><span>Github</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

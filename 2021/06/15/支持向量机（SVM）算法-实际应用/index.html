@@ -1,47 +1,290 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="支持向量机（SVM）算法-实际应用"><meta name="keywords" content="python,SVM,实际应用"><meta name="author" content="Yyb,undefined"><meta name="copyright" content="Yyb"><title>支持向量机（SVM）算法-实际应用【Yyb的花园】</title><link rel="stylesheet" href="/css/fan.css"><link rel="stylesheet" href="/css/thirdparty/jquery.mCustomScrollbar.min.css"><link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.4/dist/instantsearch.min.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.4/dist/instantsearch-theme-algolia.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.4"></script><!-- link(rel="dns-prefetch" href="https://cdn.jsdelivr.net")--><!-- link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.1.1/dist/instantsearch.min.css")--><!-- script(src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.1.1/dist/instantsearch.min.js" defer)--><!-- script(src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")--><script src="/js/mathjax/mathjax.js"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
-    tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
-});
-</script><script>var isPassword = '' || false;
-if (isPassword) {
-    if (prompt('请输入文章密码') !== '') {
-        alert('密码错误！');
-        history.back();
-    }
-}</script><script>window.GLOBAL_CONFIG = {
-  root: '/',
-  algolia: {"appId":"VN5QYUXW8S","apiKey":"7bb2817029d8aaa580ce39e2aef50ce7","indexName":"search","hits":{"per_page":10},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容:${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
-  localSearch: undefined,
-  copy: {
-    success: '复制成功',
-    error: '复制错误',
-    noSupport: '浏览器不支持'
-  },
-  gitment: {},
-  valine: {"appId":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","appKey":"dJ07LxI5XAsyjJ3DB7zmCUL3","placeholder":"走过路过不要错过,买不买的瞧一瞧啊!","pageSize":10},
-}</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Yyb的花园" type="application/atom+xml">
-</head><body><canvas id="universe"></canvas><!--#body--><div id="sidebar"><div class="toggle-sidebar-info button-hover"><span data-toggle="文章目录">站点概览</span></div><div class="sidebar-toc"><div class="sidebar-toc-title">目录</div><div class="sidebar-toc-progress"><span class="progress-notice">您已阅读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc-progress-bar"></div></div><div class="sidebar-toc-content" id="sidebar-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">支持向量机（SVM）算法-实际应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">算法简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9D%A5%E6%BA%90"><span class="toc-number">1.2.</span> <span class="toc-text">数据来源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98"><span class="toc-number">1.3.</span> <span class="toc-text">数据挖掘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">1.4.</span> <span class="toc-text">小结</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info-avatar"><img class="author-info-avatar-img" src="/avatar.png"></div><div class="author-info-name">Yyb</div><div class="author-info-description"></div><div class="links-buttons"><a class="links-button button-hover" href="https://mp.csdn.net/console/article?spm=1010.2135.3001.5416" target="_blank">CSDN<i class="icon-dot bg-color8"></i></a><a class="links-button button-hover" href="1994yybsr@sina.com" target="_blank">E-Mail<i class="icon-dot bg-color1"></i></a><a class="links-button button-hover" href="https://github.com/yb705" target="_blank">GitHub<i class="icon-dot bg-color8"></i></a></div><div class="author-info-articles"><a class="author-info-articles-archives article-meta" href="/archives"><span class="pull-top">日志</span><span class="pull-bottom">19</span></a><a class="author-info-articles-tags article-meta" href="/tags"><span class="pull-top">标签</span><span class="pull-bottom">20</span></a><a class="author-info-articles-categories article-meta" href="/categories"><span class="pull-top">分类</span><span class="pull-bottom">13</span></a></div><div class="friend-link"><a class="friend-link-text" href="https://github.com/yb705" target="_blank">不怎么用的github</a><a class="friend-link-text" href="https://i.csdn.net/#/user-center/profile?spm=1010.2135.3001.5111" target="_blank">定期更新的CSDN</a><a class="friend-link-text" href="1994yybsr@sina.com" target="_blank">只用来接收消息的邮箱</a></div></div></div><div id="main-container"><header><div id="menu-outer"><i class="menu-list-icon fas fa-bars"></i><nav id="menu-inner"><a class="menu-item" href="/">首页</a><a class="menu-item" href="/tags">标签</a><a class="menu-item" href="/categories">分类</a><a class="menu-item" href="/archives">归档</a><a class="menu-item" href="/about">关于</a></nav><div class="right-info"><a class="search social-icon"><i class="fas fa-search"></i><span> 搜索</span></a><a class="title-name" href="/">Yyb的花园</a><span id="now-time"></span></div></div></header><div id="content-outer"><div id="content-inner"><article id="post"><div class="post-header"><div class="title">支持向量机（SVM）算法-实际应用</div><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 发表于 2021-06-15 | 更新于 2021-06-15</time><!--time.button-hover.post-date #[i.fas.fa-calendar-alt.article-icon(aria-hidden="true")] #[=__('post.modified')] #[=date(page['updated'], config.date_format)]--><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E6%A0%B8%E5%90%91%E9%87%8F%E6%9C%BA/">核向量机</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/python/">python</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/SVM/">SVM</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/">实际应用</a></div></div></div><div class="main-content"><h1 id="支持向量机（SVM）算法-实际应用"><a href="#支持向量机（SVM）算法-实际应用" class="headerlink" title="支持向量机（SVM）算法-实际应用"></a>支持向量机（SVM）算法-实际应用</h1><h2 id="算法简介"><a href="#算法简介" class="headerlink" title="算法简介"></a>算法简介</h2><p><em><strong>SVM</strong></em></p>
-<p>之前我们用了很多线性算法来做预测模型，像是<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/112277248">逻辑算法（LogisticRegression)</a>,<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/112983192">lasso</a>,<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/112931842">岭回归</a>。但现实生活中，很多事情不是线性可分的（即画一条直线就能分类的），而SVM就是专治线性不可分，把分类问题转化为平面分类问题。这个算法中，我们将每一个数据项作为一个点，而在n维空间中(其中n是你拥有的特征数)作为一个点，每一个特征值都是一个特定坐标的值。然后，我们通过查找区分这两个类的超平面来进行分类。</p>
-<p>我们用一张图形来说明这一点：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331144958674.png" alt="在这里插入图片描述"><br>在实际使用过程中，我们并不需要了解确定最佳分类平面的原理，只需要记住一个经验法则来确定正确的超平面:“选择能更好地隔离两个类的超平面”。在这个场景中，蓝色超平面“A”出色地完成了这项工作。</p>
-<span id="more"></span>
 
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Yyb">
+  <meta name="keywords" content="">
+  
+  <title>支持向量机（SVM）算法-实际应用 - Yyb的花园</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yb705.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","app_key":"dJ07LxI5XAsyjJ3DB7zmCUL3","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Yyb的花园" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Yyb的花园</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/post.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="支持向量机（SVM）算法-实际应用">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Yyb
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-15 20:14" pubdate>
+        2021年6月15日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      22
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">支持向量机（SVM）算法-实际应用</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：6 小时前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h1 id="支持向量机（SVM）算法-实际应用"><a href="#支持向量机（SVM）算法-实际应用" class="headerlink" title="支持向量机（SVM）算法-实际应用"></a>支持向量机（SVM）算法-实际应用</h1><h2 id="算法简介"><a href="#算法简介" class="headerlink" title="算法简介"></a>算法简介</h2><p><em><strong>SVM</strong></em></p>
+<p>之前我们用了很多线性算法来做预测模型，像是<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/112277248">逻辑算法（LogisticRegression)</a>,<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/112983192">lasso</a>,<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/112931842">岭回归</a>。但现实生活中，很多事情不是线性可分的（即画一条直线就能分类的），而SVM就是专治线性不可分，把分类问题转化为平面分类问题。这个算法中，我们将每一个数据项作为一个点，而在n维空间中(其中n是你拥有的特征数)作为一个点，每一个特征值都是一个特定坐标的值。然后，我们通过查找区分这两个类的超平面来进行分类。</p>
+<p>我们用一张图形来说明这一点：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331144958674.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>在实际使用过程中，我们并不需要了解确定最佳分类平面的原理，只需要记住一个经验法则来确定正确的超平面:“选择能更好地隔离两个类的超平面”。在这个场景中，蓝色超平面“A”出色地完成了这项工作。</p>
 <h2 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h2><p><a target="_blank" rel="noopener" href="https://www.kaggle.com/andrewmvd/fetal-health-classification">胎儿健康分类：https://www.kaggle.com/andrewmvd/fetal-health-classification</a></p>
-<p><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210326150227435.jpg" alt="在这里插入图片描述"></p>
+<p><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210326150227435.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>该数据包含胎儿心电图，胎动，子宫收缩等特征值，而我们所需要做的就是通过这些特征值来对胎儿的健康状况(fetal_health)进行分类。</p>
-<p><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210326150323351.jpg" alt="在这里插入图片描述"></p>
+<p><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210326150323351.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>数据集包含从心电图检查中提取的2126条特征记录，然后由三名产科专家将其分为3类，并用数字来代表：1-普通的，2-疑似病理，3-确定病理。</p>
 <h2 id="数据挖掘"><a href="#数据挖掘" class="headerlink" title="数据挖掘"></a>数据挖掘</h2><p><strong>1.导入第三方库并读取文件</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> winreg</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split<span class="comment">#划分数据集与测试集</span></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm<span class="comment">#导入算法模块</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score<span class="comment">#导入评分模块</span></span><br><span class="line"><span class="comment">###################</span></span><br><span class="line">real_address = winreg.OpenKey(winreg.HKEY_CURRENT_USER,<span class="string">r&#x27;Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders&#x27;</span>,)</span><br><span class="line">file_address=winreg.QueryValueEx(real_address, <span class="string">&quot;Desktop&quot;</span>)[<span class="number">0</span>]</span><br><span class="line">file_address+=<span class="string">&#x27;\\&#x27;</span></span><br><span class="line">file_origin=file_address+<span class="string">&quot;\\源数据-分析\\fetal_health.csv&quot;</span></span><br><span class="line">health=pd.read_csv(file_origin)</span><br><span class="line"><span class="comment">#设立桌面绝对路径，读取源数据文件，这样将数据直接下载到桌面上就可以了，省得还要去找</span></span><br><span class="line"><span class="comment">###################</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> winreg<br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<span class="hljs-comment">#划分数据集与测试集</span><br><span class="hljs-keyword">from</span> sklearn <span class="hljs-keyword">import</span> svm<span class="hljs-comment">#导入算法模块</span><br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score<span class="hljs-comment">#导入评分模块</span><br><span class="hljs-comment">###################</span><br>real_address = winreg.OpenKey(winreg.HKEY_CURRENT_USER,<span class="hljs-string">r&#x27;Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders&#x27;</span>,)<br>file_address=winreg.QueryValueEx(real_address, <span class="hljs-string">&quot;Desktop&quot;</span>)[<span class="hljs-number">0</span>]<br>file_address+=<span class="hljs-string">&#x27;\\&#x27;</span><br>file_origin=file_address+<span class="hljs-string">&quot;\\源数据-分析\\fetal_health.csv&quot;</span><br>health=pd.read_csv(file_origin)<br><span class="hljs-comment">#设立桌面绝对路径，读取源数据文件，这样将数据直接下载到桌面上就可以了，省得还要去找</span><br><span class="hljs-comment">###################</span><br></code></pre></td></tr></table></figure>
 
 <p>老规矩，上来先依次导入建模需要的各个模块，并读取文件。</p>
 <p><strong>2.清洗数据</strong></p>
-<p>查找缺失值：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210326150702818.jpg" alt="在这里插入图片描述"><br>从上面的结果来看，数据中没有缺失值。</p>
+<p>查找缺失值：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210326150702818.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>从上面的结果来看，数据中没有缺失值。</p>
 <p><strong>3.建模</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">train=health.drop([<span class="string">&quot;fetal_health&quot;</span>],axis=<span class="number">1</span>)</span><br><span class="line">X_train,X_test,y_train,y_test=train_test_split(train,health[<span class="string">&quot;fetal_health&quot;</span>],random_state=<span class="number">1</span>)</span><br><span class="line"><span class="comment">###考虑到接下来可能需要进行其他的操作，所以定了一个随机种子，保证接下来的train和test是同一组数</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">train=health.drop([<span class="hljs-string">&quot;fetal_health&quot;</span>],axis=<span class="hljs-number">1</span>)<br>X_train,X_test,y_train,y_test=train_test_split(train,health[<span class="hljs-string">&quot;fetal_health&quot;</span>],random_state=<span class="hljs-number">1</span>)<br><span class="hljs-comment">###考虑到接下来可能需要进行其他的操作，所以定了一个随机种子，保证接下来的train和test是同一组数</span><br></code></pre></td></tr></table></figure>
 
 <p>划分列索引为特征值和预测值，并将数据划分成训练集和测试集。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">svm_linear=svm.SVC(C=<span class="number">10</span>,kernel=<span class="string">&quot;linear&quot;</span>,decision_function_shape=<span class="string">&quot;ovr&quot;</span>)<span class="comment">#参数部分会在下面进行讲解</span></span><br><span class="line">svm_linear.fit(X_train,y_train)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;SVM训练模型评分：&quot;</span>+<span class="built_in">str</span>(accuracy_score(y_train,svm_linear.predict(X_train))))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;SVM待测模型评分：&quot;</span>+<span class="built_in">str</span>(accuracy_score(y_test,svm_linear.predict(X_test))))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">svm_linear=svm.SVC(C=<span class="hljs-number">10</span>,kernel=<span class="hljs-string">&quot;linear&quot;</span>,decision_function_shape=<span class="hljs-string">&quot;ovr&quot;</span>)<span class="hljs-comment">#参数部分会在下面进行讲解</span><br>svm_linear.fit(X_train,y_train)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;SVM训练模型评分：&quot;</span>+<span class="hljs-built_in">str</span>(accuracy_score(y_train,svm_linear.predict(X_train))))<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;SVM待测模型评分：&quot;</span>+<span class="hljs-built_in">str</span>(accuracy_score(y_test,svm_linear.predict(X_test))))<br></code></pre></td></tr></table></figure>
 
-<p>引入SVM算法，并将算法中的参数依次设立好，进行建模后，对测试集进行精度评分，得到的结果如下：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331145934753.png" alt="在这里插入图片描述"><br>可以看到，该模型的精度为89%左右。</p>
+<p>引入SVM算法，并将算法中的参数依次设立好，进行建模后，对测试集进行精度评分，得到的结果如下：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331145934753.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>可以看到，该模型的精度为89%左右。</p>
 <p><strong>4.参数</strong></p>
 <p>在这里我们只讲解几个重要的参数，对于其它的参数，朋友们可以自行探究。</p>
 <blockquote>
@@ -50,46 +293,303 @@ if (isPassword) {
 <p>1.<strong>C</strong> ：惩罚参数，通常默认为1。 C越大，表明越不允许分类出错，但是C越大可能会造成过拟合，泛化效果太低。C越小，正则化越强，分类将不会关注分类是否正确的问题，只要求间隔越大越好，此时分类也没有意义。所以，这其中需要朋友们做一些调整。</p>
 <p>2.<strong>kernel（核函数）</strong> ：核函数的引入是为了解决线性不可分的问题，将分类点映射到高维空间中以后，转化为可线性分割的问题。</p>
 <p>我们用一张表来说明核函数的几个参数：</p>
-<p><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331152357255.jpg" alt="在这里插入图片描述"><br>这其中最常用的核函数是<strong>Linear核</strong>与<strong>RBF核</strong>：</p>
+<p><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331152357255.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>这其中最常用的核函数是<strong>Linear核</strong>与<strong>RBF核</strong>：</p>
 <p>（1）<strong>Linear核</strong>：主要用于线性可分的情形，参数少，速度快，对于一般数据，分类效果已经很理想了。</p>
 <p>（2）<strong>RBF核</strong>：主要用于线性不可分的情形，相比其它线性算法来说这也是一个非常突出的一个优点了。无论是小样本还是大样本，高维还是低维，RBF核函数均适用。</p>
 <p>接下来用一段分类边界函数，就能很明显地展现出这两者的区别：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> make_moons</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line">plt.style.use(<span class="string">&quot;fivethirtyeight&quot;</span>)</span><br><span class="line">np.random.seed(<span class="number">0</span>)</span><br><span class="line">X, y = make_moons(<span class="number">200</span>, noise=<span class="number">0.20</span>)</span><br><span class="line">plt.scatter(X[:,<span class="number">0</span>], X[:,<span class="number">1</span>], s=<span class="number">40</span>, c=y, cmap=plt.cm.Spectral)</span><br><span class="line">plt.show()<span class="comment"># 手动生成一个随机的平面点分布，并画出来</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_decision_boundary</span>(<span class="params">pred_func</span>):</span></span><br><span class="line">	x_min, x_max = X[:, <span class="number">0</span>].<span class="built_in">min</span>() - <span class="number">.5</span>, X[:, <span class="number">0</span>].<span class="built_in">max</span>() + <span class="number">.5</span></span><br><span class="line">    y_min, y_max = X[:, <span class="number">1</span>].<span class="built_in">min</span>() - <span class="number">.5</span>, X[:, <span class="number">1</span>].<span class="built_in">max</span>() + <span class="number">.5</span></span><br><span class="line">    h = <span class="number">0.01</span></span><br><span class="line">    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))</span><br><span class="line">    Z = pred_func(np.c_[xx.ravel(), yy.ravel()])</span><br><span class="line">    Z = Z.reshape(xx.shape)</span><br><span class="line">    plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral)</span><br><span class="line">    plt.scatter(X[:, <span class="number">0</span>], X[:, <span class="number">1</span>], c=y, cmap=plt.cm.Spectral)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> make_moons<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br>plt.style.use(<span class="hljs-string">&quot;fivethirtyeight&quot;</span>)<br>np.random.seed(<span class="hljs-number">0</span>)<br>X, y = make_moons(<span class="hljs-number">200</span>, noise=<span class="hljs-number">0.20</span>)<br>plt.scatter(X[:,<span class="hljs-number">0</span>], X[:,<span class="hljs-number">1</span>], s=<span class="hljs-number">40</span>, c=y, cmap=plt.cm.Spectral)<br>plt.show()<span class="hljs-comment"># 手动生成一个随机的平面点分布，并画出来</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">plot_decision_boundary</span>(<span class="hljs-params">pred_func</span>):</span><br>	x_min, x_max = X[:, <span class="hljs-number">0</span>].<span class="hljs-built_in">min</span>() - <span class="hljs-number">.5</span>, X[:, <span class="hljs-number">0</span>].<span class="hljs-built_in">max</span>() + <span class="hljs-number">.5</span><br>    y_min, y_max = X[:, <span class="hljs-number">1</span>].<span class="hljs-built_in">min</span>() - <span class="hljs-number">.5</span>, X[:, <span class="hljs-number">1</span>].<span class="hljs-built_in">max</span>() + <span class="hljs-number">.5</span><br>    h = <span class="hljs-number">0.01</span><br>    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))<br>    Z = pred_func(np.c_[xx.ravel(), yy.ravel()])<br>    Z = Z.reshape(xx.shape)<br>    plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral)<br>    plt.scatter(X[:, <span class="hljs-number">0</span>], X[:, <span class="hljs-number">1</span>], c=y, cmap=plt.cm.Spectral)<br></code></pre></td></tr></table></figure>
 
 <p>手动设定一个随机的平面分布点</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</span><br><span class="line">clf = svm.SVC(C=<span class="number">1</span>,kernel=<span class="string">&quot;linear&quot;</span>,decision_function_shape=<span class="string">&quot;ovo&quot;</span>)</span><br><span class="line">clf.fit(X, y)</span><br><span class="line">plot_decision_boundary(<span class="keyword">lambda</span> x: clf.predict(x))</span><br><span class="line">plt.title(<span class="string">&quot;SVM-Linearly&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn <span class="hljs-keyword">import</span> svm<br>clf = svm.SVC(C=<span class="hljs-number">1</span>,kernel=<span class="hljs-string">&quot;linear&quot;</span>,decision_function_shape=<span class="hljs-string">&quot;ovo&quot;</span>)<br>clf.fit(X, y)<br>plot_decision_boundary(<span class="hljs-keyword">lambda</span> x: clf.predict(x))<br>plt.title(<span class="hljs-string">&quot;SVM-Linearly&quot;</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
 
-<p>咱们先来瞄一眼线性核分类对于它的分类效果：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331153225903.png" alt="在这里插入图片描述"><br>接下来看看rbf核对它进行非线性分类：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">clf = svm.SVC(C=<span class="number">1</span>,kernel=<span class="string">&quot;rbf&quot;</span>,decision_function_shape=<span class="string">&quot;ovo&quot;</span>)</span><br><span class="line">clf.fit(X, y)</span><br><span class="line">plot_decision_boundary(<span class="keyword">lambda</span> x: clf.predict(x))</span><br><span class="line">plt.title(<span class="string">&quot;SVM-Nonlinearity&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>咱们先来瞄一眼线性核分类对于它的分类效果：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331153225903.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>接下来看看rbf核对它进行非线性分类：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">clf = svm.SVC(C=<span class="hljs-number">1</span>,kernel=<span class="hljs-string">&quot;rbf&quot;</span>,decision_function_shape=<span class="hljs-string">&quot;ovo&quot;</span>)<br>clf.fit(X, y)<br>plot_decision_boundary(<span class="hljs-keyword">lambda</span> x: clf.predict(x))<br>plt.title(<span class="hljs-string">&quot;SVM-Nonlinearity&quot;</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
 
-<p>结果如下所示：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331153412296.png" alt="在这里插入图片描述"><br>从上面两个图可以很轻松的看出来linear核与rbf核的区别，在上面的两个结果中，很明显rbf核函数的模型精度更好一些。但是在运行过程中，却可以感觉到选用rbf核函数比linear核函数运行速度要稍慢一些，并且随着数据量的增大，运行时间是会一直增加的。</p>
+<p>结果如下所示：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331153412296.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>从上面两个图可以很轻松的看出来linear核与rbf核的区别，在上面的两个结果中，很明显rbf核函数的模型精度更好一些。但是在运行过程中，却可以感觉到选用rbf核函数比linear核函数运行速度要稍慢一些，并且随着数据量的增大，运行时间是会一直增加的。</p>
 <p>3.<strong>decision_function_shape</strong>:原始的svm只是用于二分类的问题，如果将其扩展到多分类问题，就要采取一定的融合策略，<strong>‘ovo’一对一</strong>，就是两两之间进行划分，<strong>‘ovr’一对多</strong>就是一类与其他类别进行划分。<br>这里重点讲一下<strong>一对多</strong>:对每个类别都学习一个二分类模型，将这个类别与其它类别都尽量分开，这样就生成了与类别个数一样多的二分类模型。在测试点上运行所有二分类分类器来进行预测。在对应类别上分数最高的分类器胜出，将这个类别标签返回作为预测结果。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>SVM是一种二分类模型，处理的数据可以分为三类：</p>
 <p>1.线性可分，通过硬间隔最大化，学习线性分类器，在平面上对应直线<br>2.近似线性可分，通过软间隔最大化，学习线性分类器<br>3.线性不可分，通过核函数以及软间隔最大化，学习非线性分类器，在平面上对应曲线</p>
-<p>而svm比线性模型要优秀的一个点就是可以处理非线性分类数据，甚至是更高维的数据，例如这样的数据分类：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/2021033116142616.jpg" alt="在这里插入图片描述"></p>
+<p>而svm比线性模型要优秀的一个点就是可以处理非线性分类数据，甚至是更高维的数据，例如这样的数据分类：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/2021033116142616.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>有很多地方做的不是很好，欢迎网友来提出建议，也希望可以遇到些朋友来一起交流讨论。</p>
-</div><div class="post-copyright"><div class="post-copyright-author"><span class="post-copyright-meta">本文作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Yyb</a></span></div><div class="post-copyright-type"><span class="post-copyright-meta">本文链接: </span><span class="post-copyright-info"><a href="https://yb705.github.io/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/">https://yb705.github.io/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/</a></span></div><div class="post-copyright-notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://yb705.github.io">Yyb的花园</a>！</span></div></div><div class="post-copyright valine" id="comments-container"><script src="//unpkg.com/valine@1.4.14/dist/Valine.min.js"></script><script>let arr = location.href.split('/#more')[0].split('/');
-let title = arr[arr.length - 1];
-if (title === '') {
-    title = arr[arr.length - 2];
-}
-var flag = false;
-var gitFun = function () {
-    try {
-        var valineObj = window.GLOBAL_CONFIG.valine;
-        new Valine({
-            el: "#comments-container",
-            ...valineObj
-        });
-        flag = true;
-    } catch (e) {
-        flag = false;
-    }
-}
-var setIn = setInterval(() => {
-    if (!flag) {
-        gitFun();
-    } else {
-        clearInterval(setIn);
-    }
-}, 200);</script></div></article><div id="pagination"><div class="prev-post pull-left"><span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span><a href="/2021/06/15/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/"><i class="fas fa-angle-left">&nbsp;</i><span>最小二乘法</span></a></div><div class="next-post pull-right"><span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span><a href="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E8%A1%A5%E5%85%85%E8%AF%B4%E6%98%8E/"><span>支持向量机（SVM）算法-补充说明</span><span>&nbsp;</span><i class="fas fa-angle-right"></i></a></div></div><!--div!= paginator()--></div></div><div class="button-hover" id="return-top"><i class="fas fa-arrow-up" aria-hidden="true"></i></div><footer><div id="footer"><div class="button-hover" id="side-button"><i class="fas fa-arrow-right"></i></div><div class="right-content"><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fas fa-file-o"></i></span><span id="busuanzi_value_page_pv"></span><span></span></div><div class="copyright">&copy;2017 ～ 2021 By Yyb</div></div></div></footer></div><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery-3.3.1.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/velocity.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery.mCustomScrollbar.concat.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/fan.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/canvas_bg.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/utils.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/scroll.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/sidebar.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/copy.js"></script><!--script(src=url)--><div class="search-dialog"><div id="algolia-search-title">Algolia</div><div class="search-close-button"><i class="fa fa-times"></i></div><!--div#current-refined-values--><!--div#clear-all--><div id="search-box"></div><!--div#refinement-list--><hr><div id="hits"></div><div id="algolia-pagination"></div></div><div class="search-mask"></div><script src="/js/search/algolia.js"></script></body></html>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E6%A0%B8%E5%90%91%E9%87%8F%E6%9C%BA/">核向量机</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/python/">python</a>
+                    
+                      <a class="hover-with-bg" href="/tags/SVM/">SVM</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/">实际应用</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/06/15/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">最小二乘法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E8%A1%A5%E5%85%85%E8%AF%B4%E6%98%8E/">
+                        <span class="hidden-mobile">支持向量机（SVM）算法-补充说明</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","appKey":"dJ07LxI5XAsyjJ3DB7zmCUL3","placeholder":"走过路过不要错过,买不买的瞧一瞧也好啊!","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"requiredFields":[]},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://blog.csdn.net/weixin_43580339?spm=1010.2135.3001.5343" target="_blank" rel="nofollow noopener"><span>CSDN</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/yb705" target="_blank" rel="nofollow noopener"><span>Github</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
