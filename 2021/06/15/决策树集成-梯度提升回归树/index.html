@@ -259,12 +259,12 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：8 天前
+                  本文最后更新于：2 分钟前
                 
               </p>
             
             <div class="markdown-body">
-              <h1 id="决策树集成-梯度提升回归树"><a href="#决策树集成-梯度提升回归树" class="headerlink" title="决策树集成-梯度提升回归树"></a>决策树集成-梯度提升回归树</h1><h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p><strong>集成</strong></p>
+              <h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p><strong>集成</strong></p>
 <p>集成是合并多个机器学习模型来构建更强大模型的方法。在机器学习算法中有许多模型属于这一类，但已证明有两种集成模型对大量分类和回归的数据集都是有效的，二者都以决策树为基础，分别是<strong>随机森林（random forest）</strong>和<strong>梯度提升决策树（gradiet boosted decision tree）</strong>。</p>
 <p>之前已经讲解过了随机森林(<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/116231286">决策树集成-随机森林之分类实操</a>),这次讲解<strong>梯度提升决策树</strong>。在了解梯度提升决策树之前,建议先去看一下我的另外两篇讲解决策树的文章<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/115696198">决策树算法之讲解实操（上）</a>和<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/115939923">决策树算法之讲解实操（下）</a>，重复的东西，我这里就不在赘述了。</p>
 <h2 id="思想简介"><a href="#思想简介" class="headerlink" title="思想简介"></a>思想简介</h2><p>在之前的一篇文章<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/115696198">决策树算法之讲解实操（上）</a>中我们提到过，决策树的一个主要缺点在于经常对训练数据过拟合。那么除了随机森林之外,梯度提升回归树就是解决这个问题的另一种方法。</p>

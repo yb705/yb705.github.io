@@ -259,12 +259,12 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：8 天前
+                  本文最后更新于：3 分钟前
                 
               </p>
             
             <div class="markdown-body">
-              <h1 id="k相邻近算法-分类"><a href="#k相邻近算法-分类" class="headerlink" title="k相邻近算法-分类"></a>k相邻近算法-分类</h1><h2 id="算法简介"><a href="#算法简介" class="headerlink" title="算法简介"></a>算法简介</h2><p>k邻近算法是最简单的算法之一，该算法的思路是：在特征空间中，如果一个样本附近的k个最近(即特征空间中最邻近)样本的大多数属于某一个类别，则该样本也属于这个类别。该算法主要用于解决分类问题，无论是二分类或者是多分类都可以应用。<br>本文主要记录实际操作，想了解具体的算法原理可以自己查找，或者可以参考这篇博客：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/pinard/p/6061661.html">KNN原理小结</a></p>
+              <h2 id="算法简介"><a href="#算法简介" class="headerlink" title="算法简介"></a>算法简介</h2><p>k邻近算法是最简单的算法之一，该算法的思路是：在特征空间中，如果一个样本附近的k个最近(即特征空间中最邻近)样本的大多数属于某一个类别，则该样本也属于这个类别。该算法主要用于解决分类问题，无论是二分类或者是多分类都可以应用。<br>本文主要记录实际操作，想了解具体的算法原理可以自己查找，或者可以参考这篇博客：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/pinard/p/6061661.html">KNN原理小结</a></p>
 <h2 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h2><p><a target="_blank" rel="noopener" href="https://www.kaggle.com/uciml/glass">玻璃分类（Kaggle）：https://www.kaggle.com/uciml/glass</a></p>
 <p><img src="/2021/06/15/k%E9%82%BB%E8%BF%91%E7%AE%97%E6%B3%95-%E5%88%86%E7%B1%BB/20201224115620339.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>该数据按照玻璃的组成成分(RI,Na,Mg,Al,SI,K,Ca,Ba,Fe)的不同划分了7种玻璃，每种玻璃（Type)以数字1~7来命名。<br>依照这些数据建立一个knn多分类模型。</p>
 <h2 id="数据挖掘"><a href="#数据挖掘" class="headerlink" title="数据挖掘"></a>数据挖掘</h2><p><strong>1.导入第三方库</strong></p>
