@@ -1,0 +1,583 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Yyb">
+  <meta name="keywords" content="">
+  
+  <title>无监督学习——非负矩阵分解（NMF） - Yyb的花园</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yb705.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","app_key":"dJ07LxI5XAsyjJ3DB7zmCUL3","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Yyb的花园" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Yyb的花园</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/post.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="无监督学习——非负矩阵分解（NMF）">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Yyb
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-26 12:44" pubdate>
+        2021年7月26日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      24
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">无监督学习——非负矩阵分解（NMF）</h1>
+            
+            <div class="markdown-body">
+              <h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>非负矩阵分解（NMF）是一种无监督学习算法，其目的在于提取有用的特征。它的工作原理类似于<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/117960112">PCA</a>，也可以用于降维。与PCA相同，我们试图将每个数据点写成一些分量的加权求和。但<strong>在PCA中，我们想要的是正负分量，并且能够解释尽可能多的数据方差；而在NMF中，我们希望分量和系数均为负，也就是说，我们希望分量和系数都大于或等于0</strong>。因此，<strong>NMF只能应用于每个特征都是非负的数据，因为非负分量的非负求和不可能变为负值。</strong></p>
+<p>将数据分解成非负加权求和的这个过程，对由多个独立源相加（或叠加）创建而成的数据特别有用，比如多人说话的音轨或包含很多乐器的音乐。在这种情况下，NMF可以识别出组合成数据的原始分量。总的来说，与PCA相比，NMF得到的分量更容易解释，因为负的分量和系数可能会导致难以解释的抵消效应。</p>
+<p>PCA原理传送门：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/117960112">无监督学习与主成分分析（PCA）</a></p>
+<p>接下来，我们将NMF应用于人脸识别。</p>
+<h2 id="NMF实际应用"><a href="#NMF实际应用" class="headerlink" title="NMF实际应用"></a>NMF实际应用</h2><p><strong>1.数据源</strong></p>
+<p>数据是之前我们已经处理好的人脸图像数据，一共有15个人物，每个人有10张头像。想了解具体处理过程的可以去看一下<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/118222281">主成分分析（PCA）应用——特征提取_人脸识别（上）</a>。</p>
+<p>提数代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br>all_folds = os.listdir(<span class="hljs-string">r&#x27;C:\Users\Administrator\Desktop\源数据-分析\lfw_funneled&#x27;</span>)<span class="hljs-comment">###https://www.kaggle.com/atulanandjha/lfwpeople?select=pairs.txt</span><br>all_folds = [x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> all_folds <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;.&#x27;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> x]<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd <br>numbers_img=pd.DataFrame(columns=[<span class="hljs-string">&quot;文件名称&quot;</span>,<span class="hljs-string">&quot;图片数量&quot;</span>])<span class="hljs-comment">####统计各个文件夹里面的图片数量</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(all_folds)):<br>    path = <span class="hljs-string">&#x27;C:\\Users\\Administrator\\Desktop\\源数据-分析\\lfw_funneled\\&#x27;</span>+all_folds[i]<br>    all_files = os.listdir(path)<br>    numbers_img.loc[i]=[all_folds[i],<span class="hljs-built_in">len</span>(all_files)]   <br>img_10=numbers_img[numbers_img[<span class="hljs-string">&quot;图片数量&quot;</span>]==<span class="hljs-number">10</span>].reset_index()<span class="hljs-comment">#####为了降低数据偏斜，选取图片数量为10的文件（否则，特征提取会被图片数量过多的数据影响）</span><br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image <br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br>image_arr_list=[]<span class="hljs-comment">###存放灰度值numpy数组</span><br>flat_arr_list=[]<span class="hljs-comment">###存放灰度值一维数组</span><br>target_list=[]<span class="hljs-comment">###存放目标值</span><br><span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(img_10[<span class="hljs-string">&quot;文件名称&quot;</span>])):<br>    file_address=<span class="hljs-string">&#x27;C:\\Users\\Administrator\\Desktop\\源数据-分析\\lfw_funneled\\&#x27;</span>+img_10[<span class="hljs-string">&quot;文件名称&quot;</span>][m]+<span class="hljs-string">&quot;\\&quot;</span><span class="hljs-comment">####指定特定的文件地址</span><br>    image_name=os.listdir(file_address)<span class="hljs-comment">###获得指定文件夹下的左右文件名称</span><br>    <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> image_name:<br>        image=Image.<span class="hljs-built_in">open</span>(file_address+n)<br>        image=image.convert(<span class="hljs-string">&#x27;L&#x27;</span>)<span class="hljs-comment">###RGB（红绿蓝）像素值转换成灰度值</span><br>        image_arr=np.array(image,<span class="hljs-string">&quot;f&quot;</span>)<span class="hljs-comment">###灰度值转化成numpy数组（二维）</span><br>        flat_arr=image_arr.ravel()<span class="hljs-comment">###将数组扁平化处理，返回的是一个一维数组的非副本视图，就是将几行的数据强行拉成一行</span><br>        image_arr_list.append(image_arr)<br>        flat_arr_list.append(flat_arr)<br>        target_list.append(m)<span class="hljs-comment">###这里的m设定是数字，如果是文本的话后面的算法会报错</span><br>faces_dict=&#123;<span class="hljs-string">&quot;images&quot;</span>:np.array(image_arr_list),<span class="hljs-string">&quot;data&quot;</span>:np.array(flat_arr_list),<span class="hljs-string">&quot;target&quot;</span>:np.array(target_list)&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>2.建模</strong></p>
+<p>提取完数据集之后，我们划分数据集为训练集和测试集，并用核向量算法SVM来进行建模和评估。</p>
+<p>SVM算法讲解传送门：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/116704969">支持向量机（SVM）算法之补充说明</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score<br><span class="hljs-keyword">from</span> sklearn.svm <span class="hljs-keyword">import</span> SVC<br>train=faces_dict[<span class="hljs-string">&quot;data&quot;</span>]/<span class="hljs-number">255</span><br>X_train,X_test,y_train,y_test=train_test_split(train,faces_dict[<span class="hljs-string">&quot;target&quot;</span>],random_state=<span class="hljs-number">0</span>)<span class="hljs-comment">###划分训练集和测试集</span><br>clf = SVC(kernel=<span class="hljs-string">&quot;linear&quot;</span>,random_state=<span class="hljs-number">0</span>)<br>clf.fit(X_train, y_train)<span class="hljs-comment">#训练</span><br>y_predict = clf.predict(X_test)<span class="hljs-comment">#预测</span><br><span class="hljs-built_in">print</span>(accuracy_score(y_test, y_predict))<span class="hljs-comment">#评分</span><br></code></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<p><img src="/2021/07/26/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E9%9D%9E%E8%B4%9F%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3%EF%BC%88NMF%EF%BC%89/20210702144125570.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>这样，我们就得到了一个精度为23.6%的模型。</p>
+<p><strong>3.NMF处理</strong></p>
+<p>NMF的主要参数是我们想要提取的分量个数——<strong>n_components</strong>。通常来说，这个数字要小于输入特征的个数（否则的话，将每个像素作为单独的分量就可以对数据进行解释）。代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.decomposition <span class="hljs-keyword">import</span> NMF<br>nmf=NMF(n_components=<span class="hljs-number">20</span>,random_state=<span class="hljs-number">0</span>,max_iter=<span class="hljs-number">10000</span>).fit(X_train)<span class="hljs-comment">###增加最大迭代次数，不然会预警</span><br>X_train_nmf=nmf.transform(X_train)<br>X_test_nmf=nmf.transform(X_test)<br>clf=SVC(kernel=<span class="hljs-string">&quot;linear&quot;</span>,random_state=<span class="hljs-number">0</span>)<br>clf.fit(X_train_nmf,y_train)<span class="hljs-comment">#训练</span><br>clf_predict=clf.predict(X_test_nmf)<br><span class="hljs-built_in">print</span>(accuracy_score(y_test,clf_predict))<br></code></pre></td></tr></table></figure>
+
+<p>需要注意的是，如果特征值过多的话，NMF默认的迭代次数便会限制模型的精度，并且预警。所以我们还需要设立下NMF的最大迭代次数。最后得到的结果如下：</p>
+<p><img src="/2021/07/26/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E9%9D%9E%E8%B4%9F%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3%EF%BC%88NMF%EF%BC%89/20210702144752949.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>通常来说，提取的特征越多，即n_components越大，模型的精度就越高，但是模型的训练时间也就越长。这里我就不再继续尝试了，感兴趣的朋友们可以试试改变n_components的值来提高模型精度。</p>
+<h2 id="与PCA的比较"><a href="#与PCA的比较" class="headerlink" title="与PCA的比较"></a>与PCA的比较</h2><p>PCA对于数据特征的处理是找到特征重建的最佳方向。而NMF通常并不用于对数据进行重建或者编码。而是寻找用于数据中的有趣的模式。正如我们之前提到的一样，<strong>NMF最适合于具有叠加结构的数据，包括音频，基因表达和文本数据</strong>。接下来我们通过一段模拟信号来与PCA比较一下。</p>
+<p>假设有一段信号，它是由三个不同的信号源组成的，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> mglearn<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br>plt.rcParams[<span class="hljs-string">&#x27;font.sans-serif&#x27;</span>] = [<span class="hljs-string">&#x27;SimHei&#x27;</span>]<span class="hljs-comment">###防止中文显示不出来</span><br>plt.rcParams[<span class="hljs-string">&#x27;axes.unicode_minus&#x27;</span>] = <span class="hljs-literal">False</span><span class="hljs-comment">###防止坐标轴符号显示不出来</span><br>S=mglearn.datasets.make_signals()<br>plt.figure(figsize=(<span class="hljs-number">10</span>,<span class="hljs-number">1</span>))<br>plt.plot(S,<span class="hljs-string">&quot;_&quot;</span>)<br>plt.xlabel(<span class="hljs-string">&quot;Time&quot;</span>)<br>plt.ylabel(<span class="hljs-string">&quot;Signal&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2021/07/26/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E9%9D%9E%E8%B4%9F%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3%EF%BC%88NMF%EF%BC%89/20210702145638480.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>不幸的是，我们无法观测到原始信号，只能观测到三个信号的叠加混合。而我们的目的便是<strong>将混合信号分解成原信号</strong>。假设我们有100台测量装置，每个测量装置都为我们提供了一系列测量结果。所以接下来我们将数据混合成100维的状态：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">A=np.random.RandomState(<span class="hljs-number">0</span>).uniform(size=(<span class="hljs-number">100</span>,<span class="hljs-number">3</span>))<span class="hljs-comment">###假设有100台装置测量混合信号</span><br>X=np.dot(S,A.T)<span class="hljs-comment">###将数据混合成100维的状态</span><br></code></pre></td></tr></table></figure>
+
+<p>接下来，我们分别用NMF和PCA来还原这三个信号：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.decomposition <span class="hljs-keyword">import</span> PCA<br>pca=PCA(n_components=<span class="hljs-number">3</span>)<br>H=pca.fit_transform(X)<br>nmf=NMF(n_components=<span class="hljs-number">3</span>,max_iter=<span class="hljs-number">10000</span>,random_state=<span class="hljs-number">0</span>)<br>S_=nmf.fit_transform(X)<br></code></pre></td></tr></table></figure>
+
+<p>最后，我们将结果画出来：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">models=[X,S,S_,H]<br>names=[<span class="hljs-string">&quot;观测信号&quot;</span>,<span class="hljs-string">&quot;真实信号&quot;</span>,<span class="hljs-string">&quot;非负矩阵（NMF）还原信号&quot;</span>,<span class="hljs-string">&quot;主成分分析（PCA）还原信号&quot;</span>]<br>fig,axes=plt.subplots(<span class="hljs-number">4</span>,figsize=(<span class="hljs-number">10</span>,<span class="hljs-number">10</span>),gridspec_kw=&#123;<span class="hljs-string">&quot;hspace&quot;</span>:<span class="hljs-number">1</span>&#125;,subplot_kw=&#123;<span class="hljs-string">&quot;xticks&quot;</span>:(),<span class="hljs-string">&quot;yticks&quot;</span>:()&#125;)<br>plt.figure(figsize=(<span class="hljs-number">6</span>,<span class="hljs-number">1</span>))<br><span class="hljs-keyword">for</span> model,name,ax <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(models,names,axes):<br>    ax.set_title(name)<br>    ax.plot(model[:,:<span class="hljs-number">3</span>],<span class="hljs-string">&quot;_&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2021/07/26/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E9%9D%9E%E8%B4%9F%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3%EF%BC%88NMF%EF%BC%89/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>可以看到，NMF在发现原始信号源是得到了不错的成果，而PCA的表现却很差，仅使用第一个成分来解释数据中的大部分变化。</p>
+<p>这里需要注意的是，<strong>NMF生成的分量是没有顺序的</strong>。在上面的例子中，NMF分量的顺序与原始信号完全相同（可以从三条线的颜色看出来），但这纯属偶然。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>除了PCA和NMF之外，还有许多算法可用于将每个数据点分解为一系列固定分量的加权求和。通常描述对分量和系数的约定会涉及到概率论。如果朋友们对这种类型的模式感兴趣，可以去看下scikit-learn中关于独立成分分析（ICA），因子分析（FA）和稀疏编码（字典学习）等。</p>
+<p>有很多地方做的不是很好，欢迎网友来提出建议，也希望可以遇到些朋友来一起交流讨论。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">无监督学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E9%9D%9E%E8%B4%9F%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3/">非负矩阵分解</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%88%86%E8%A7%A3%E6%B7%B7%E5%90%88%E4%BF%A1%E5%8F%B7/">分解混合信号</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%89%B9%E5%BE%81%E9%87%8D%E5%BB%BA/">特征重建</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/26/%E6%95%B0%E6%8D%AE%E6%8B%9F%E5%90%88%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">数据拟合实际应用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/27/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90%EF%BC%88PCA%EF%BC%89%E5%BA%94%E7%94%A8%E2%80%94%E2%80%94%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96-%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%EF%BC%88%E4%B8%8B%EF%BC%89/">
+                        <span class="hidden-mobile">主成分分析（PCA）应用——特征提取_人脸识别（下）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","appKey":"dJ07LxI5XAsyjJ3DB7zmCUL3","placeholder":"走过路过不要错过,买不买的瞧一瞧也好啊!","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"requiredFields":[]},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://blog.csdn.net/weixin_43580339?spm=1010.2135.3001.5343" target="_blank" rel="nofollow noopener"><span>CSDN</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/yb705" target="_blank" rel="nofollow noopener"><span>Github</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

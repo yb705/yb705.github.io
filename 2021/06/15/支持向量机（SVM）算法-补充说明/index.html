@@ -257,12 +257,6 @@
             <!-- SEO header -->
             <h1 style="display: none">支持向量机（SVM）算法-补充说明</h1>
             
-              <p class="note note-info">
-                
-                  本文最后更新于：1 分钟前
-                
-              </p>
-            
             <div class="markdown-body">
               <h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>之前我有写过一篇关于svm的使用流程和基本概念讲解——<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/115350097">支持向量机（SVM）算法之分类实操</a>。不过最近又接触了一些关于svm的基础概念和预处理数据的使用，所以在这里做一下简单地补充。在接触本篇文章之前，建议先去看完<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/115350097">支持向量机（SVM）算法之分类实操</a>，一些我之前讲过的东西，这里就不在赘述了。</p>
 <h2 id="核技巧"><a href="#核技巧" class="headerlink" title="核技巧"></a>核技巧</h2><p>首先需要声明的一点是，向数据表示中添加非线性特征，可以让线性模型变得更强大。但是，通常来说我们并不知道要添加哪些特征，而添加许多特征（比如100维特征空间所有可能的交互项）的计算开销可能会很大。幸运的是，有一种巧妙的数学技巧，让我们可以在更高维空间中学习分类器，而不用实际计算可能非常大的新的数据表示。这种技巧叫做<strong>核技巧</strong>，它的原理是直接计算特征表示中数据点之间的距离（更准确地说是内积），而不用实际对扩展进行计算。</p>

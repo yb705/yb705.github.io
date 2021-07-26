@@ -1,0 +1,598 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Yyb">
+  <meta name="keywords" content="">
+  
+  <title>金字塔-思维结构 - Yyb的花园</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yb705.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","app_key":"dJ07LxI5XAsyjJ3DB7zmCUL3","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Yyb的花园" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Yyb的花园</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/post.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="金字塔-思维结构">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Yyb
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-26 13:15" pubdate>
+        2021年7月26日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      19
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">金字塔-思维结构</h1>
+            
+            <div class="markdown-body">
+              <h3 id="归类分组"><a href="#归类分组" class="headerlink" title="归类分组"></a>归类分组</h3><h4 id="共性"><a href="#共性" class="headerlink" title="共性"></a>共性</h4><p>在日常生活中,我们经常会或主动或被动地接受信息.而对于这些信息,大脑便会自发的按照某种关系将其归类划分.譬如古希腊人便将夜晚看到的星星,按照彼此之间的距离长短,并参考生活中的图像,划分成12个星座.</p>
+<p>再譬如下面的图形:</p>
+<p><img src="/2021/07/26/%E9%87%91%E5%AD%97%E5%A1%94-%E6%80%9D%E7%BB%B4%E7%BB%93%E6%9E%84/image-20210713134006230.png" srcset="/img/loading.gif" lazyload alt="image-20210713134006230"></p>
+<p>大部分人第一眼看到上面图像的时候,便会依据散点之间的距离,自动将散点划分成左右两个图像,而我却并没有设置任何前提条件.而这便是刚才所说的:<strong>人们在接受信息的时候,会自动依据信息的共性,将其归类分组</strong>.</p>
+<h4 id="奇妙数字”7”"><a href="#奇妙数字”7”" class="headerlink" title="奇妙数字”7”"></a>奇妙数字”7”</h4><p>曾经有位科学家通过实验得出来一个结论:在一般情况下,人类大脑能够同时接收到的信息数量是有限的,通常不会超过7条.</p>
+<p>举个例子:我去便利店购物,要买”<strong>橘子,香蕉,苹果,纸巾,牙刷,毛巾,薯片,虾条,干脆面,筷子,碗,勺</strong>“.</p>
+<p>就上面提到的12样东西来说,朋友们第一次看下来可以记住几个?</p>
+<p>如果记住了5-7个,那说明你的记忆力已经达到平均水平了;如果都记住了,那我只能说你很强!!!</p>
+<p>那通过上面的例子我们可以得出一个结论:那就是人类的短期记忆力是有限的.</p>
+<p>但是假如我们将它用金字塔的形式进行归类分组呢?</p>
+<p><img src="/2021/07/26/%E9%87%91%E5%AD%97%E5%A1%94-%E6%80%9D%E7%BB%B4%E7%BB%93%E6%9E%84/image-20210713141003449.png" srcset="/img/loading.gif" lazyload alt="image-20210713141003449" style="zoom:50%;"><img src="/2021/07/26/%E9%87%91%E5%AD%97%E5%A1%94-%E6%80%9D%E7%BB%B4%E7%BB%93%E6%9E%84/image-20210713141111222.png" srcset="/img/loading.gif" lazyload alt="image-20210713141111222" style="zoom:50%;"></p>
+<p><img src="/2021/07/26/%E9%87%91%E5%AD%97%E5%A1%94-%E6%80%9D%E7%BB%B4%E7%BB%93%E6%9E%84/image-20210713141308015.png" srcset="/img/loading.gif" lazyload alt="image-20210713141308015" style="zoom:50%;"><img src="/2021/07/26/%E9%87%91%E5%AD%97%E5%A1%94-%E6%80%9D%E7%BB%B4%E7%BB%93%E6%9E%84/image-20210713141350913.png" srcset="/img/loading.gif" lazyload alt="image-20210713141350913" style="zoom:50%;"></p>
+<p>好的,那么现在你能记住的多少?<del>反正我都能记住.</del></p>
+<h4 id="逻辑关系"><a href="#逻辑关系" class="headerlink" title="逻辑关系"></a>逻辑关系</h4><p>其实上面的分组过程并不复杂,就是通过物品的共性来寻找一个名词,然后再去划分每样物品的类别,譬如香蕉,橘子和苹果都属于水果.这样一来,我们便将需要记住的12个物品划分成了4类,而我们只需要记住这4类就可以了.然后每一类名字下面有三个从属物品,我们再去以此记忆每类从属.</p>
+<p>这种方法之所以会加强我们的记忆量,主要有三个原因:</p>
+<ol>
+<li>我们的大脑是有联想功能的.依据总结出来的抽象名词,我们自发的联想到与这个名词有关系的共性事物,譬如说看到”水果”这个词,脑海里便会自觉的浮现出经常吃的水果,像是香蕉啊,苹果什么的.这种联想减轻了我们的记忆负担.高层次的思想总会提示低层次的思想.</li>
+<li>需要记忆的东西数量减少了,需要大脑处理的东西由原来的12样变成了4样.</li>
+<li>参考每样事物之间的抽象的逻辑关系,将无序便成了有序.而我们的大脑总是很容易记住有某种顺序的东西(逻辑顺序也是顺序的一种).譬如数字12345比32541要好记的多.</li>
+</ol>
+<h3 id="自上而下-结论先行"><a href="#自上而下-结论先行" class="headerlink" title="自上而下,结论先行"></a>自上而下,结论先行</h3><p>其实人们在表述的时候,一般会先说最重要的东西.而对大多数情况下,结论比过程更重要.所以<strong>理清表达思想的顺序,先总结后具体的表达顺序是十分重要的</strong>.</p>
+<p>鉴于每个人的生活,工作,环境等不同,对于同一样事,每个人的认知是会出现差异的.实际上,人们在理解一段话的时候,一部分的精力用来识别文字本身,另一部分精力便是用来构造每句话之间的逻辑关系.而如果不考虑每个人的文化水平的差异,那么这种认知偏差便是来源于每句话之间的逻辑关系.既然如此,我们为什么不在一开始就将结论或者说逻辑架构提前说清楚呢?</p>
+<p>有的时候,与其说读者容易接收理解作者整体的思维顺序,倒不如说是读者在跟着作者的顺序走,继而去理解作者的思维.</p>
+<h3 id="自下而上-思考分析"><a href="#自下而上-思考分析" class="headerlink" title="自下而上,思考分析"></a>自下而上,思考分析</h3><p>平常,我们在阅读或者是写作的时候,发现文章会按照表达思想的不同划分成不同的段落,而每个段落所表达的思想最后汇总成全篇文章的中心思想,这就是作者要告诉我们的东西,同时整篇文章遵循金字塔结构:</p>
+<p><img src="/2021/07/26/%E9%87%91%E5%AD%97%E5%A1%94-%E6%80%9D%E7%BB%B4%E7%BB%93%E6%9E%84/image-20210719133157281.png" srcset="/img/loading.gif" lazyload alt="image-20210719133157281"></p>
+<p>所谓的思考分析就是这样:</p>
+<p>将表达同一思想的语句放在一起,组成一个段落,生成一个观点.在这个段落里,每句话都为这个观点的成立提供了论述,或者说是证明;</p>
+<p>而每个段落的观点最后汇总在一起,推导/证明全篇文章的中心思想.</p>
+<p>简单来说就是:<strong>自上而下,每一层都是下一层的抽象总结;自下而上,每一层都对上一层的思想提供了支持.</strong></p>
+<p>但是在我们搭建金字塔的过程中要注意三点:</p>
+<blockquote>
+<p>纵向:每一层的思想均是下一层思想的概括总结</p>
+<p>横向:每个组别都要按照正确的分类放在一起</p>
+<p>横向:每个组别/段落之间要有正确的逻辑顺序</p>
+</blockquote>
+<p>接下来,我们分别简单地解释一下.</p>
+<h4 id="1-每一层的思想均是下一层思想的概括总结"><a href="#1-每一层的思想均是下一层思想的概括总结" class="headerlink" title="1.每一层的思想均是下一层思想的概括总结"></a>1.每一层的思想均是下一层思想的概括总结</h4><p>这一点实际上并不需要过多的解释.每个段落依照共性总结出一个思想,不然的话就会南辕北辙,逻辑混乱.</p>
+<p>郭德纲之前说过一个包袱:</p>
+<blockquote>
+<p>某人去水果店买水果,指着苹果问售货员:”这个苹果甜吗?”</p>
+<p>售货员说:”甜.”</p>
+<p>问:”这种苹果产地在哪里?”</p>
+<p>售货员说:”这个苹果是国外进口的,您看上面还有英文呢.”</p>
+<p>问:”那这个苹果多少钱一斤?”</p>
+<p>售货员说:”国外的就贵一点,20块钱一斤.”</p>
+<p>某人说:”我还真没吃过国外的苹果.行吧,那给我拿二斤葡萄.”</p>
+</blockquote>
+<p>很有意思,这就是典型的逻辑混乱.全篇在说苹果的事,但是最后却买了葡萄.</p>
+<h4 id="2-每个组别都要按照正确的分类放在一起"><a href="#2-每个组别都要按照正确的分类放在一起" class="headerlink" title="2.每个组别都要按照正确的分类放在一起"></a>2.每个组别都要按照正确的分类放在一起</h4><p>在阅读/写作的时候,我们为什么要将这两句话放在一个段落里面呢?就是因为这两句话有共性,或者说是表达了同一个意思.譬如说,椅子和桌子都属于家具,牙膏和毛巾都属于洗漱用品,汉堡和薯条都属于肯德基(PS:我想应该没有人去肯德基买皮鞋吧…..).</p>
+<p>那么如何比较两个事物之间的共性呢?就看他们的共性名词大不大.譬如说:牙刷和沐浴露都属于生活用品,但是牙刷属于洗漱用品,沐浴露属于洗浴用品,而生活用品包含洗漱和洗浴用品.这样一来,就可以比较牙刷和沐浴露之间的共性相关了.</p>
+<h4 id="3-每个组别-段落之间要有正确的逻辑顺序"><a href="#3-每个组别-段落之间要有正确的逻辑顺序" class="headerlink" title="3.每个组别/段落之间要有正确的逻辑顺序"></a>3.每个组别/段落之间要有正确的逻辑顺序</h4><p>每个段落或者说段落中的每句话都要按照一定的逻辑顺序去排列.而我们通常所用到的逻辑顺序通常有以下几种:</p>
+<blockquote>
+<p>顺序逻辑:首先,然后,最后,</p>
+<p>时间逻辑:第一天,第二天,昨天,今天,明天</p>
+<p>空间逻辑:在水下,在水上,在沙滩上,在山底,在半山腰,在山顶</p>
+<p>结构逻辑:最重要的,重要的,其次,最差</p>
+<p>因果逻辑:因为,所以,虽然,但是</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/">金字塔思维</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/%E8%A1%A8%E8%BE%BE%E7%9A%84%E9%80%BB%E8%BE%91/">表达的逻辑</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/%E8%A1%A8%E8%BE%BE%E7%9A%84%E9%80%BB%E8%BE%91/%E7%AC%AC%E4%B8%80%E7%AB%A0/">第一章</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%86%85%E5%8C%96%E7%AC%94%E8%AE%B0/">内化笔记</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/26/%E9%87%91%E5%AD%97%E5%A1%94-%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">金字塔-内部结构</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/26/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E6%B5%81%E5%BD%A2%E5%AD%A6%E4%B9%A0%EF%BC%88t-SNE%EF%BC%89/">
+                        <span class="hidden-mobile">无监督学习——流形学习（t-SNE）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","appKey":"dJ07LxI5XAsyjJ3DB7zmCUL3","placeholder":"走过路过不要错过,买不买的瞧一瞧也好啊!","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"requiredFields":[]},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://blog.csdn.net/weixin_43580339?spm=1010.2135.3001.5343" target="_blank" rel="nofollow noopener"><span>CSDN</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/yb705" target="_blank" rel="nofollow noopener"><span>Github</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

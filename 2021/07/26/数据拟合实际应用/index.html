@@ -1,0 +1,581 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Yyb">
+  <meta name="keywords" content="">
+  
+  <title>数据拟合实际应用 - Yyb的花园</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yb705.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","app_key":"dJ07LxI5XAsyjJ3DB7zmCUL3","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Yyb的花园" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Yyb的花园</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/post.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="数据拟合实际应用">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Yyb
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-26 12:44" pubdate>
+        2021年7月26日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      22
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">数据拟合实际应用</h1>
+            
+            <div class="markdown-body">
+              <h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>之前我们已经学习了很多关于监督学习的算法，但是最近博主在看有关于数据分析的书籍的时候，忽然觉得在实际应用中，我们很少会用得到机器学习，数据挖掘方面的东西。我们所需要做的就是得到实际生活中的数据，并找出数据之间的关系，然后再根据这个关系去做一些运营，决策等行为，仅此而已。所以这篇我要说一下关于数据拟合的一些东西。（其实与监督学习的那些算法相比，数据拟合可以说是非常简单了。）</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>数据拟合又称曲线拟合</strong>，俗称<strong>拉曲线</strong>，是一种把现有数据透过数学方法来代入一条数式的表示方式。科学和工程问题可以通过诸如采样、实验等方法获得若干离散的数据，根据这些数据，我们往往希望得到一个连续的函数（也就是曲线）或者更加密集的离散方程与已知数据相吻合，这过程就叫做**拟合(fitting)**。</p>
+<p><del>PS：上面的解释是从百度上抄的。</del></p>
+<p>用通俗一点的话来说，就是我们通过某种方法得到了一些未知关系的数据，然后找到一条函数曲线，来表达数据之间的关系，并保证大部分的数据点可以落在曲线上。</p>
+<p>这里我说一下用python来实现多项式拟合数据的方法。网上还有用最小二乘法和高斯算法来进行数据拟合的方法，但是实际工作中并不需要这么复杂的应用，所以这里就不再赘述了，感兴趣的朋友可以自行学习。</p>
+<h2 id="数据拟合"><a href="#数据拟合" class="headerlink" title="数据拟合"></a>数据拟合</h2><p>而我之所以要说多项式拟合数据，最重要的原因便是<strong>数学上可以证明，任意函数都可以表示为多项式形式</strong>。</p>
+<p>接下来，我们将数据拟合成2次多项式，具体代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br>x=[<span class="hljs-number">10</span>,<span class="hljs-number">20</span>,<span class="hljs-number">30</span>,<span class="hljs-number">40</span>,<span class="hljs-number">50</span>,<span class="hljs-number">60</span>,<span class="hljs-number">70</span>,<span class="hljs-number">80</span>]<span class="hljs-comment">#定义x、y散点坐标</span><br>x=np.array(x)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;自变量x :\n&#x27;</span>,x)<br>y=np.sin(x)+np.tan(x)<span class="hljs-comment">#三角函数任意加减</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;因变量y :\n&#x27;</span>,y)<br>f=np.polyfit(x,y,<span class="hljs-number">2</span>)<span class="hljs-comment"># 用2次多项式拟合，可改变多项式阶数</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;多项式系数:\n&#x27;</span>,f)<br>p=np.poly1d(f)<span class="hljs-comment">#得到多项式系数，按照阶数从高到低排列</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;多项式表达式:\n&#x27;</span>,p)<br><span class="hljs-comment">#也可使用yvals=np.polyval(f1, x)</span><br>yvals = p(x) <span class="hljs-comment">#求对应x的各项拟合函数值</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;函数拟合出来的数值:\n&#x27;</span>,yvals)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2021/07/26/%E6%95%B0%E6%8D%AE%E6%8B%9F%E5%90%88%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>我们将拟合出来的函数用图像表示出来：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br>plt.rcParams[<span class="hljs-string">&#x27;font.sans-serif&#x27;</span>] = [<span class="hljs-string">&#x27;SimHei&#x27;</span>]<span class="hljs-comment">###防止中文显示不出来</span><br>plt.rcParams[<span class="hljs-string">&#x27;axes.unicode_minus&#x27;</span>] = <span class="hljs-literal">False</span><span class="hljs-comment">###防止坐标轴符号显示不出来</span><br>plt.figure(figsize=(<span class="hljs-number">10</span>,<span class="hljs-number">8</span>))<br>plot1=plt.plot(x,y,<span class="hljs-string">&#x27;s&#x27;</span>,label=<span class="hljs-string">&#x27;原对应值&#x27;</span>)<br>plot2=plt.plot(x,yvals,<span class="hljs-string">&#x27;r&#x27;</span>,label=<span class="hljs-string">&#x27;拟合函数&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;x&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;y&#x27;</span>)<br>plt.legend(loc=<span class="hljs-number">4</span>) <span class="hljs-comment">#指定legend的位置右下角</span><br>plt.title(<span class="hljs-string">&#x27;数据拟合&#x27;</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2021/07/26/%E6%95%B0%E6%8D%AE%E6%8B%9F%E5%90%88%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70-16272760940342" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>之前我有提到，任意函数都可以表示为多项式形式。而<strong>如果拟合效果不理想，那只能说明多项式的次数不够</strong>，接下来我们试试拟合成7次多项式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">f=np.polyfit(x,y,<span class="hljs-number">7</span>)<br>p=np.poly1d(f)<br>yvals = p(x)<br>plt.figure(figsize=(<span class="hljs-number">10</span>,<span class="hljs-number">8</span>))<br>plot1=plt.plot(x,y,<span class="hljs-string">&#x27;s&#x27;</span>,label=<span class="hljs-string">&#x27;原对应值&#x27;</span>)<br>plot2=plt.plot(x,yvals,<span class="hljs-string">&#x27;r&#x27;</span>,label=<span class="hljs-string">&#x27;拟合函数&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;x&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;y&#x27;</span>)<br>plt.legend(loc=<span class="hljs-number">4</span>) <span class="hljs-comment">#指定legend的位置右下角</span><br>plt.title(<span class="hljs-string">&#x27;数据拟合&#x27;</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2021/07/26/%E6%95%B0%E6%8D%AE%E6%8B%9F%E5%90%88%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70-16272760973004" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>可以看出结果较之前好了不少。</p>
+<h2 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h2><p>其实我之所以写下这篇文章便是因为最近看书的时候，看到了一个星巴克关于咖啡市场的A/B实验。这个实验是想要验证某富人区，咖啡价格对于新客户转化率的影响，并根据影响执行相应的运营决策。在这个实验中，我们只知道咖啡价格以及该区域门店的客户转化率：</p>
+<blockquote>
+<p>咖啡单价—10,20,30,40,50,60,70,80</p>
+<p>客户转化率—2.30258509, 2.99573227, 3.40119738, 3.68887945, 3.91202301,4.09434456, 4.24849524, 4.38202663</p>
+</blockquote>
+<p>看到这个实验，我的第一反应就是用监督学习里面的逻辑回归去进行拟合建模。可是转念一想，貌似并没有必要搞的这么复杂，我只需要将这两个数据之间的关系用一个多项式函数表示出来就可以了。</p>
+<p>PS：或许这个函数的次数会非常高，系数也会非常复杂，但是那有怎么样，反正也不是人工手算，有什么头痛难解的计算统统丢给电脑就可以了，不然的话我学编程干什么。</p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python">log_y=np.array([<span class="hljs-number">2.30258509</span>, <span class="hljs-number">2.99573227</span>, <span class="hljs-number">3.40119738</span>, <span class="hljs-number">3.68887945</span>, <span class="hljs-number">3.91202301</span>,<span class="hljs-number">4.09434456</span>, <span class="hljs-number">4.24849524</span>, <span class="hljs-number">4.38202663</span>])<br>f=np.polyfit(x,log_y,<span class="hljs-number">2</span>)<span class="hljs-comment"># 用6次多项式拟合，可改变多项式阶数</span><br>p=np.poly1d(f)<span class="hljs-comment">#得到多项式系数，按照阶数从高到低排列</span><br><span class="hljs-comment">#也可使用yvals=np.polyval(f1, x)</span><br>yvals = p(x) <span class="hljs-comment">#求对应x的各项拟合函数值</span><br>plt.figure(figsize=(<span class="hljs-number">10</span>,<span class="hljs-number">8</span>))<br>plot1=plt.plot(x,log_y,<span class="hljs-string">&#x27;s&#x27;</span>,label=<span class="hljs-string">&#x27;原对应值&#x27;</span>)<br>plot2=plt.plot(x,yvals,<span class="hljs-string">&#x27;r&#x27;</span>,label=<span class="hljs-string">&#x27;拟合函数&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;价格提高&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;客户转化率&#x27;</span>)<br>plt.legend(loc=<span class="hljs-number">4</span>) <span class="hljs-comment">#指定legend的位置右下角</span><br>plt.title(<span class="hljs-string">&#x27;A/B测试&#x27;</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2021/07/26/%E6%95%B0%E6%8D%AE%E6%8B%9F%E5%90%88%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70-16272761009236" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>结果如上所示，可以看出<strong>随着价格的提高，新客户转化率是逐渐提高的（该说真不愧是有钱人），但是转化率的增长速度是逐渐降低的</strong>。</p>
+<p>也就是说，<strong>当咖啡价格提高到一定程度的时候，富人们便不会再倾心于昂贵的咖啡。而星巴克所需要做的便是要找出这个价格的临界值，并在该区域根据这个价格展开一些运营手段。这样做既可以最高限度地提高新客户转化率，同时也能将销售利润最大化。</strong></p>
+<p><del>PS：这就是数据分析的魅力所在。</del></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>数据拟合是用来观察某一自变量归对因变量造成的影响，或者是二者之间的关系，适用于x与y的这种一对一关系:</p>
+<blockquote>
+<p>y=a<em>x^n+bx^(n-1)+…+m</em>x^2+n*x+d</p>
+<p>x-自变量     y-因变量</p>
+</blockquote>
+<p>而在数据挖掘/机器学习中，我们往往探讨多个特征值对目标值的共同作用，单独的去研究每个特征值的影响是非常麻烦的，而且用数据拟合去处理是非常片面的，因为有些特征值之间也会相互作用:</p>
+<blockquote>
+<p>y=w[0]x[0]+w[1]x[1]+w[2]x[2]+…+w[p]x[p]+b </p>
+<p>这里x[0]到x[p]表示耽搁数据点的特征(本例中特征个数为p+1),w和b是学习模型的参数，y是预测结果</p>
+</blockquote>
+<p>有很多地方做的不是很好，欢迎网友来提出建议，也希望可以遇到些朋友来一起交流讨论。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E6%95%B0%E6%8D%AE%E6%8B%9F%E5%90%88/">数据拟合</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%8B%9F%E5%90%88/">多项式拟合</a>
+                    
+                      <a class="hover-with-bg" href="/tags/A-B%E6%B5%8B%E8%AF%95/">A/B测试</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/26/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E6%B5%81%E5%BD%A2%E5%AD%A6%E4%B9%A0%EF%BC%88t-SNE%EF%BC%89/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">无监督学习——流形学习（t-SNE）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/26/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E9%9D%9E%E8%B4%9F%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3%EF%BC%88NMF%EF%BC%89/">
+                        <span class="hidden-mobile">无监督学习——非负矩阵分解（NMF）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","appKey":"dJ07LxI5XAsyjJ3DB7zmCUL3","placeholder":"走过路过不要错过,买不买的瞧一瞧也好啊!","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"requiredFields":[]},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://blog.csdn.net/weixin_43580339?spm=1010.2135.3001.5343" target="_blank" rel="nofollow noopener"><span>CSDN</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/yb705" target="_blank" rel="nofollow noopener"><span>Github</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

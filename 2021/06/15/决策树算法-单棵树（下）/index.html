@@ -257,12 +257,6 @@
             <!-- SEO header -->
             <h1 style="display: none">决策树算法-单棵树（下）</h1>
             
-              <p class="note note-info">
-                
-                  本文最后更新于：2 分钟前
-                
-              </p>
-            
             <div class="markdown-body">
               <h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>在上篇的文章<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/115696198?spm=1001.2014.3001.5501">决策树算法之讲解实操（上）</a>当中，我们主要了解了决策树的算法原理，实际应用，以及简单介绍了下决策树的复杂度参数。而这篇我们主要讲解决策树的分析可视化，特征值重要程度，以及讨论回归决策树。</p>
 <h2 id="决策树的分析与可视化"><a href="#决策树的分析与可视化" class="headerlink" title="决策树的分析与可视化"></a>决策树的分析与可视化</h2><p>树的可视化有助于深入理解算法是如何进行预测的，也是易于向非专家解释的机器学习算法的优秀示例。我们可以利用tree模块的export_graphviz函数来将树可视化。这个函数会生成一个.dot格式的文件，这是一种用于保存图形的文本文件格式。我们设置为结点添加颜色的选项，颜色表示每个结点中的多数类别，同时传入类别名称和特征名称，这样可以对树进行标记，代码如下：</p>

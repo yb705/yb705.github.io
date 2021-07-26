@@ -257,12 +257,6 @@
             <!-- SEO header -->
             <h1 style="display: none">分类器不确定度估计，监督学习算法小结</h1>
             
-              <p class="note note-info">
-                
-                  本文最后更新于：3 分钟前
-                
-              </p>
-            
             <div class="markdown-body">
               <h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>我们之前用到的所有机器学习的算法均来自于scikit—learn库，但是这个接口还有另一个用处，就是能够给出分类器预测结果的不确定性估计。有的时候，我们不仅要关心一个测试数据点究竟属于哪个类别，还要考虑这个预测的置信区间。譬如，在最近新冠疫情中出现的无症状感染，如果是假阳性预测，那么可能只会让患者接受额外的测试，但是如果是假阴性感染却有可能导致患者没有得到治疗。<strong>（</strong>机器学习的大部分算法均是建立在概率统计的基础上的，而概率等于99.9%却并不意味着事件一定会发生。<strong>）</strong></p>
 <p>scikit—learn中有两个函数可用于获取分类器的不确定估计：<strong>decision_function和predict_proba</strong>。大多数分类器都至少有其中一个函数，很多分类器两个都有。接下来我们找一个数据集来构造一个<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/116522395">梯度提升回归树</a>的分类器。（这个算法之前有讲过，不了解的小伙伴可以跳转到相应的文章去了解下。）</p>

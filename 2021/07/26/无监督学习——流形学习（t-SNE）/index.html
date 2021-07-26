@@ -1,0 +1,568 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Yyb">
+  <meta name="keywords" content="">
+  
+  <title>无监督学习——流形学习（t-SNE） - Yyb的花园</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yb705.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","app_key":"dJ07LxI5XAsyjJ3DB7zmCUL3","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Yyb的花园" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Yyb的花园</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/post.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="无监督学习——流形学习（t-SNE）">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Yyb
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-26 12:50" pubdate>
+        2021年7月26日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      18
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">无监督学习——流形学习（t-SNE）</h1>
+            
+            <div class="markdown-body">
+              <h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>之前我们已经说过<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/117960112">PCA</a>通常是用于数据变换的首选方法，使人能够用散点图将其可视化，但这一方法的性质（先旋转然后减少方向）限制了其有效性。而有一类可用于可视化的算法叫做<strong>流形学习算法</strong>，它允许进行更复杂的映射，通常也可以给出更好的可视化。其中一个特别有用的算法就是<strong>t-SNE算法</strong>。</p>
+<p>PCA原理传送门：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/117960112">无监督学习与主成分分析（PCA）</a></p>
+<h2 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h2><p><strong>流形学习算法主要用于可视化，因此很少用来生成两个以上的新特征</strong>。其中一些算法（包括t-SNE）计算训练数据的一种新表示，但不允许变换新数据。这意味着这些算法不能用于测试集：<strong>准确地说，它们只能用于训练数据</strong>。流形学习对探索性数据分析是很有用的，但如果最终目的是监督学习的话，则很少使用。</p>
+<p>t-SNE背后的思想是找到数据的一个二维表示，尽可能地保持数据点之间的距离。t-SNE首先给出每个数据点的随机二维表示，然后尝试让原始特征空间中距离较近的点更加靠近，原始特征空间中相距较远的点更加远离。t-SNE重点关注距离较近的点，而不是保持距离较远的点之间的距离。换句话说，它试图保存那些保存表示哪些点比较靠近的信息。</p>
+<h2 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h2><p>数据是来自于scikit-learn包含的一个手写数字数据集，在这个数据集中，每个数据点都是0到9之间手写数字的一张8x8的灰度图像，图像如下：<br><del>PS：最近博主很忙，实在是没有时间找新数据来做了。。。</del> </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> load_digits<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br>plt.rcParams[<span class="hljs-string">&#x27;font.sans-serif&#x27;</span>] = [<span class="hljs-string">&#x27;SimHei&#x27;</span>]<span class="hljs-comment">###防止中文显示不出来</span><br>plt.rcParams[<span class="hljs-string">&#x27;axes.unicode_minus&#x27;</span>] = <span class="hljs-literal">False</span><span class="hljs-comment">###防止坐标轴符号显示不出来</span><br>digits=load_digits()<br>fig,axes=plt.subplots(<span class="hljs-number">2</span>,<span class="hljs-number">5</span>,figsize=(<span class="hljs-number">10</span>,<span class="hljs-number">5</span>),subplot_kw=&#123;<span class="hljs-string">&quot;xticks&quot;</span>:(),<span class="hljs-string">&quot;yticks&quot;</span>:()&#125;)<br><span class="hljs-keyword">for</span> ax,img <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(axes.ravel(),digits.images):<br>    ax.imshow(img)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2021/07/26/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E6%B5%81%E5%BD%A2%E5%AD%A6%E4%B9%A0%EF%BC%88t-SNE%EF%BC%89/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="数据操作"><a href="#数据操作" class="headerlink" title="数据操作"></a>数据操作</h2><p>为了与PCA进行比较，我们先用PCA将降到二维的数据可视化。对前两个主成分作图，并按照类别对数据点着色：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.decomposition <span class="hljs-keyword">import</span> PCA<br>pca=PCA(n_components=<span class="hljs-number">2</span>)<span class="hljs-comment">###构建一个PCA模型</span><br>pca.fit(digits.data)<span class="hljs-comment">###将digits数据变换到前两个主成分上</span><br>digits_pca=pca.transform(digits.data)<br>colors=[<span class="hljs-string">&quot;#476A2A&quot;</span>,<span class="hljs-string">&quot;#7851B8&quot;</span>,<span class="hljs-string">&quot;#BD3430&quot;</span>,<span class="hljs-string">&quot;#4A2D4E&quot;</span>,<span class="hljs-string">&quot;#875525&quot;</span>,<span class="hljs-string">&quot;#A83683&quot;</span>,<span class="hljs-string">&quot;#4E656E&quot;</span>,<span class="hljs-string">&quot;#853541&quot;</span>,<span class="hljs-string">&quot;#3A3120&quot;</span>,<span class="hljs-string">&quot;#535D8E&quot;</span>]<br>plt.figure(figsize=(<span class="hljs-number">10</span>,<span class="hljs-number">10</span>))<br>plt.xlim(digits_pca[:,<span class="hljs-number">0</span>].<span class="hljs-built_in">min</span>(),digits_pca[:,<span class="hljs-number">0</span>].<span class="hljs-built_in">max</span>())<br>plt.ylim(digits_pca[:,<span class="hljs-number">1</span>].<span class="hljs-built_in">min</span>(),digits_pca[:,<span class="hljs-number">1</span>].<span class="hljs-built_in">max</span>())<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(digits.data)):<span class="hljs-comment">###将数据绘制成文本散点</span><br>    plt.text(digits_pca[i,<span class="hljs-number">0</span>],digits_pca[i,<span class="hljs-number">1</span>],<span class="hljs-built_in">str</span>(digits.target[i]),color=colors[digits.target[i]],fontdict=&#123;<span class="hljs-string">&quot;weight&quot;</span>:<span class="hljs-string">&quot;bold&quot;</span>,<span class="hljs-string">&quot;size&quot;</span>:<span class="hljs-number">9</span>&#125;)<br>plt.xlabel(<span class="hljs-string">&quot;第一主成分&quot;</span>)<br>plt.ylabel(<span class="hljs-string">&quot;第二主成分&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<p><img src="/2021/07/26/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E6%B5%81%E5%BD%A2%E5%AD%A6%E4%B9%A0%EF%BC%88t-SNE%EF%BC%89/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70-16272756071762" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>这里我们将每个类别对应的数字作为符号来显示每个类别的位置。从上图可以看出，除了0，4，6以外，大部分数字都是重叠在一起的。</p>
+<p>接下来我们将t-SNE应用于同一数据集，并对结果进行比较。由于t-SNE不支持变换新数据，所以TSNE类没有transfrom方法。我们可以调用fit_transform方法来代替，它会构建模型并立刻返回变换后的数据，代码如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.manifold <span class="hljs-keyword">import</span> TSNE<br>tsne=TSNE(random_state=<span class="hljs-number">42</span>)<span class="hljs-comment">###使用fit_transform而不是fit,因为TSNE没有transform方法</span><br>digits_tsne=tsne.fit_transform(digits.data)<span class="hljs-comment">###运行时间较久</span><br></code></pre></td></tr></table></figure>
+
+<p>接下来我们也将处理过的数据可视化：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">plt.figure(figsize=(<span class="hljs-number">10</span>,<span class="hljs-number">10</span>))<br>plt.xlim(digits_tsne[:,<span class="hljs-number">0</span>].<span class="hljs-built_in">min</span>(),digits_tsne[:,<span class="hljs-number">0</span>].<span class="hljs-built_in">max</span>()+<span class="hljs-number">1</span>)<br>plt.ylim(digits_tsne[:,<span class="hljs-number">1</span>].<span class="hljs-built_in">min</span>(),digits_tsne[:,<span class="hljs-number">1</span>].<span class="hljs-built_in">max</span>()+<span class="hljs-number">1</span>)<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(digits.data)):<span class="hljs-comment">###将数据绘制成文本散点</span><br>    plt.text(digits_tsne[i,<span class="hljs-number">0</span>],digits_tsne[i,<span class="hljs-number">1</span>],<span class="hljs-built_in">str</span>(digits.target[i]),color=colors[digits.target[i]],fontdict=&#123;<span class="hljs-string">&quot;weight&quot;</span>:<span class="hljs-string">&quot;bold&quot;</span>,<span class="hljs-string">&quot;size&quot;</span>:<span class="hljs-number">9</span>&#125;)<br>plt.xlabel(<span class="hljs-string">&quot;第一分量&quot;</span>)<br>plt.ylabel(<span class="hljs-string">&quot;第二分量&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2021/07/26/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E6%B5%81%E5%BD%A2%E5%AD%A6%E4%B9%A0%EF%BC%88t-SNE%EF%BC%89/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70-16272756111304" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>结果自不必多说，与PCA相比，t-SNE的结果非常棒。所有类型都被明确分开。数字1到9被分成几块，但大多数类别都形成一个密集的组。<strong>要记住，这种方法并不知道类别标签：它完全是无监督的。但它能够找到数据的一种二维表示，仅根据原始空间中数据点之间的靠近程度就能够将各个类别明确分开</strong>。</p>
+<p>t-SNE算法有一些调节参数，不过默认参数的效果通常就很好。感兴趣的朋友可以尝试修改perplexity和early_exaggeration，但作用一般很小。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实博主在了解这个算法的时候就在思考，这个算法有什么作用。毕竟说的再好听，也要在现实中有用才行。</p>
+<p>实际上，t-SNE直接用于降维，并后接分类器比较少见。</p>
+<p>当我们意识到需要降维时，一般是发现了特征间的高度线性相关，而t-SNE主打的是非线性降维。如果我们发现了线性相关，可能用PCA处理就可以了。即使发现了“非线性相关性”，我们也不会尝试用t-SNE降维再搭配一个线性分类模型，而会直接选择非线性的分类模型去处理。复杂的非线性关系不适合强行降维再做分类，而应该用非线性模型直接处理。如果是高度稀疏的矩阵，也有适合的分类器直接用，也没必要降维。</p>
+<p>所以想了想，觉得t-SNE应该比较适合可视化，就像上面的图像一样，了解和验证数据或者模型。至于降维的话，还有很多局限性有待解决。</p>
+<p>有很多地方做的不是很好，欢迎网友来提出建议，也希望可以遇到些朋友来一起交流讨论。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">无监督学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E6%B5%81%E5%BD%A2%E5%AD%A6%E4%B9%A0/">流形学习</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/">数据可视化</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9B%BE%E7%89%87%E5%88%86%E7%B1%BB/">图片分类</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/26/%E9%87%91%E5%AD%97%E5%A1%94-%E6%80%9D%E7%BB%B4%E7%BB%93%E6%9E%84/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">金字塔-思维结构</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/26/%E6%95%B0%E6%8D%AE%E6%8B%9F%E5%90%88%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/">
+                        <span class="hidden-mobile">数据拟合实际应用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","appKey":"dJ07LxI5XAsyjJ3DB7zmCUL3","placeholder":"走过路过不要错过,买不买的瞧一瞧也好啊!","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"requiredFields":[]},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://blog.csdn.net/weixin_43580339?spm=1010.2135.3001.5343" target="_blank" rel="nofollow noopener"><span>CSDN</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/yb705" target="_blank" rel="nofollow noopener"><span>Github</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
