@@ -1,0 +1,580 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Yyb">
+  <meta name="keywords" content="">
+  
+  <title>无监督学习——凝聚聚类 - Yyb的花园</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yb705.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","app_key":"dJ07LxI5XAsyjJ3DB7zmCUL3","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Yyb的花园" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Yyb的花园</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/post.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="无监督学习——凝聚聚类">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Yyb
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-08-15 12:35" pubdate>
+        2021年8月15日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      19
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">无监督学习——凝聚聚类</h1>
+            
+            <div class="markdown-body">
+              <h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p><strong>凝聚聚类</strong>指的是许多基于相同原则构建的聚类算法，这一原则是：算法首先声明每个点是自己的簇，然后合并两个最相似的簇，直到满足某种停止规则为止。scikit-learn中实现的停止规则是簇的个数，因此相似的簇被合并，直到仅剩下指定个数的簇。还有一些<strong>链接准则</strong>，规定如何度量”最相似的簇“。这种度量总是定义在两个现有的簇之间。</p>
+<p>scikit-learn中实现了以下三种选项：<br><strong>ward</strong>：默认选项。ward挑选两个簇来合并，使得所有簇中的方差增加最小。这通常会得到大小差不多相等的簇。<br><strong>average</strong>:average链接将簇中所有点之间的平均距离最小的两个簇合并。<br><strong>complete</strong>：complete链接（也称为最大链接）将簇中点之间最大距离最小的两个簇合并。</p>
+<p>ward适用于大多数数据集，在我们的例子中将使用它。如果簇中的成员个数非常不同（比如其中一个比其他所有都大得多），那么average或complete可能效果更好。</p>
+<p>接下来，我通过一个实际例子来说明这个算法。</p>
+<h2 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h2><p><strong>1.数据来源</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/shub99/student-marks">Student Marks：https://www.kaggle.com/shub99/student-marks</a></p>
+<p><img src="https://img-blog.csdnimg.cn/5f55d77402304711b55160282d76ebc1.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>这是一个简单的二维数据集，通过学生的学期成绩来判断这名学生最后可不可以升级（毕业）。该数据集包含100条数据记录，共有三个特征维度，分别是期中成绩（MID-SEM-MARKS），期末成绩（END-SEM-MARKS）以及升级结果（“0”:失败；“1”:成功)。</p>
+<p><strong>2.数据处理</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> winreg<br><span class="hljs-comment">###################</span><br>real_address = winreg.OpenKey(winreg.HKEY_CURRENT_USER,<span class="hljs-string">r&#x27;Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders&#x27;</span>,)<br>file_address=winreg.QueryValueEx(real_address, <span class="hljs-string">&quot;Desktop&quot;</span>)[<span class="hljs-number">0</span>]<br>file_address+=<span class="hljs-string">&#x27;\\&#x27;</span><br>file_origin=file_address+<span class="hljs-string">&quot;\\源数据-分析\\marks.txt&quot;</span><span class="hljs-comment">###https://www.kaggle.com/shub99/student-marks</span><br>marks=pd.read_csv(file_origin,sep=<span class="hljs-string">&#x27;\t&#x27;</span>,header=<span class="hljs-literal">None</span>)<br><span class="hljs-comment">#设立桌面绝对路径，读取源数据文件，这样将数据直接下载到桌面上就可以了，省得还要去找</span><br><span class="hljs-comment">###################</span><br></code></pre></td></tr></table></figure>
+
+<p>老规矩，上来先依次导入建模需要的各个模块，并读取文件。</p>
+<p>需要注意的是，这份数据集的文件格式是txt，所以用<strong>pd.read_csv</strong>读取出来的数据是这个样子的：</p>
+<p><img src="https://img-blog.csdnimg.cn/09c62b10516a4593b9393f690eb50c1f.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>所以接下来还需要用方法<strong>split</strong>来依据特定字符“**,**”进行划分，示例代码如下所示：</p>
+<p><img src="https://img-blog.csdnimg.cn/f9f9217012d246b7a4c72452489c1bb7.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>同时，每条数据记录都是以字符串（string）的格式存储的，因此我们还需要用格式转换方法astype(“float”)来将原本的字符串格式（string）强制转换成浮点型（float），最终代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">marks[<span class="hljs-string">&quot;期中成绩&quot;</span>]=marks[<span class="hljs-number">0</span>].<span class="hljs-built_in">str</span>.split(<span class="hljs-string">&quot;,&quot;</span>).<span class="hljs-built_in">str</span>[<span class="hljs-number">0</span>].astype(<span class="hljs-string">&quot;float&quot;</span>)<br>marks[<span class="hljs-string">&quot;期末成绩&quot;</span>]=marks[<span class="hljs-number">0</span>].<span class="hljs-built_in">str</span>.split(<span class="hljs-string">&quot;,&quot;</span>).<span class="hljs-built_in">str</span>[<span class="hljs-number">1</span>].astype(<span class="hljs-string">&quot;float&quot;</span>)<br>marks[<span class="hljs-string">&quot;是否通过考试&quot;</span>]=marks[<span class="hljs-number">0</span>].<span class="hljs-built_in">str</span>.split(<span class="hljs-string">&quot;,&quot;</span>).<span class="hljs-built_in">str</span>[<span class="hljs-number">2</span>]<br><span class="hljs-keyword">del</span> marks[<span class="hljs-number">0</span>]<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/4f1e20f133084221b1c824d63e62b679.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><strong>3.使用凝聚聚类</strong></p>
+<p>我们看一下凝聚聚类对这个数据集的效果如何。要注意，由于算法的工作原理，凝聚算法不能对新数据点作出预测。因此AgglomerativeClustering没有predict方法。为了构造模型并得到训练集上簇的成员关系，可以改用fit_predict方法，代码如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.cluster <span class="hljs-keyword">import</span> AgglomerativeClustering<br>agg=AgglomerativeClustering(n_clusters=<span class="hljs-number">2</span>)<br>X=marks.iloc[:,:-<span class="hljs-number">1</span>].values<span class="hljs-comment">####values方法很有用，专门用于将dataframe格式的某几列转化成相应维度的矩阵数组</span><br>assignment=agg.fit_predict(X)<br></code></pre></td></tr></table></figure>
+
+<p>PS：推荐大家记一下values方法，这个方法可以把dataframe格式的数据完美转化成相应维度的矩阵数据（array），非常好用。</p>
+<p>接下来，我们将聚类结果可视化：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> mglearn<br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br><span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> pyplot <span class="hljs-keyword">as</span> plt<br>plt.style.use(<span class="hljs-string">&quot;fivethirtyeight&quot;</span>)<br>sns.set_style(&#123;<span class="hljs-string">&#x27;font.sans-serif&#x27;</span>:[<span class="hljs-string">&#x27;SimHei&#x27;</span>,<span class="hljs-string">&#x27;Arial&#x27;</span>]&#125;)<br>mglearn.discrete_scatter(X[:,<span class="hljs-number">0</span>],X[:,<span class="hljs-number">1</span>],assignment)<br>plt.xlabel(<span class="hljs-string">&quot;期中成绩&quot;</span>)<br>plt.ylabel(<span class="hljs-string">&quot;期末成绩&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/bb665ea4318847ea8f0e1d10a37d057e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>可以看到，算法完成了数据集的聚类。但是上面的图片并没有体现出分类的准确性，所以接下来我们通过对比源数据集中的特征分类来评估算法的精度：</p>
+<p><img src="https://img-blog.csdnimg.cn/7d9c591ba8ec4d1bb16e508169935046.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>这里主要是通过统计已知结果和聚类结果的差值，来评估算法精度。所以最后，我们可以知道算法的精度为83%。</p>
+<p><strong>4.层次聚类与树状图</strong></p>
+<p>凝聚聚类生成了所谓的<strong>层次聚类</strong>。聚类过程迭代进行，每个点都从一个单点簇变为属于最终的某个簇。每个中间步骤都提供了数据的一种聚类（簇的个数也不相同）。有时候，同时查看所有可能的聚类是有帮助的。所以接下来，我们考虑用一种工具来将层次聚类可视化。</p>
+<p>不幸的是，目前scikit-learn没有绘制这种图像的功能。但可以利用SciPy轻松生成树状图。SciPy的聚类算法接口与scikit-learn的聚类算法稍有不同。SciPy提供了一个函数，接受数据数组X并计算出一个<strong>链接数组</strong>，它对层次聚类的相似度进行编码，然后我们可以将这个链接数组提供给SciPy的dendrogram函数来绘制树状图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> scipy.cluster.hierarchy <span class="hljs-keyword">import</span> dendrogram,ward<br>linkage_array=ward(X)<span class="hljs-comment">###将ward聚类应用于数据数组X，返回一个数组，制定执行凝聚聚类是跨离的距离</span><br>dendrogram(linkage_array)<span class="hljs-comment">###现在为包含簇之间距离的linkage_array绘制树状图</span><br><br><span class="hljs-comment">###开始画图</span><br>ax=plt.gca()<br><br>bounds=ax.get_xbound()<br>ax.plot(bounds)<br>ax.plot(bounds)<br>plt.xlabel(<span class="hljs-string">&quot;样本&quot;</span>)<br>plt.ylabel(<span class="hljs-string">&quot;簇之间的距离&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+
+<p><img src="https://img-blog.csdnimg.cn/3bbb8e547c164212bf36248c3692b767.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>树状图在底部显示数据点。然后以这些点（表示单点簇)作为叶节点绘制一棵树，每合并两个簇就添加一个新的父节点。</p>
+<p>从下往上看，每层的数据点两两合并，依次类推，直到在顶层生成两个分支。这对应于算法中两个最大的簇。</p>
+<p>树状图的y轴不仅说明凝聚算法中两个簇何时合并，每个分支的长度还表示被合并的簇之间的距离。同时我们还可以看到，最大的三个簇（绿色，红色，兰色）在合并成两个簇的过程中跨越了相对较远的距离。</p>
+<p>不幸的是，凝聚聚类依然无法分析图形复杂的数据集，如下图所示：</p>
+<p><img src="https://img-blog.csdnimg.cn/bc96c7c74a2346c281cf69914a1ed8b8.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>但是，DBSCAN可以解决这个问题。碍于篇幅限制，下一篇文章我再来说一说这个算法。</p>
+<p>有很多地方做的不是很好，欢迎网友来提出建议，也希望可以遇到些朋友来一起交流讨论。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">无监督学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E5%87%9D%E8%81%9A%E8%81%9A%E7%B1%BB/">凝聚聚类</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%81%9A%E7%B1%BB%E5%8F%AF%E8%A7%86%E5%8C%96/">聚类可视化</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%B1%82%E6%AC%A1%E8%81%9A%E7%B1%BB/">层次聚类</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/08/15/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94K%E5%9D%87%E5%80%BC%E8%81%9A%E7%B1%BB%EF%BC%88%E4%B8%8B%EF%BC%89/">
+                        <span class="hidden-mobile">无监督学习——K均值聚类（下）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","appKey":"dJ07LxI5XAsyjJ3DB7zmCUL3","placeholder":"走过路过不要错过,买不买的瞧一瞧也好啊!","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"requiredFields":[]},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://blog.csdn.net/weixin_43580339?spm=1010.2135.3001.5343" target="_blank" rel="nofollow noopener"><span>CSDN</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/yb705" target="_blank" rel="nofollow noopener"><span>Github</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

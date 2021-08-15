@@ -265,14 +265,22 @@
 <blockquote>
 <p><em><strong>y=w[0]x[0]+w[1]x[1]+w[2]x[2]+…+w[p]x[p]+b</strong></em></p>
 </blockquote>
-<p>简单来说，y是输入特征x[0]到x[p]的加权求和，权重为学到的系数w[0]到w[p]。我们可以将这个公式可视化，如下图所示：<br><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525113728442.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>图中，左边的每个点代表一个输入特征，连线代表学到的系数，右边的结点代表输出，是输入的加权求和。</p>
-<p>在MLP中，多次重复这个计算加权求和的过程，首先计算代表中间过程的<strong>隐单元</strong>，然后再计算这些<strong>隐单元</strong>的加权求和并得到最终结果，如下图所示：<br><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525114044617.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>毫无疑问，在中间加了一层隐单元之后，模型变得更加精细了。但是这也意味着，这个模型在学习过程中需要考虑更多的系数：在每个输入与每个隐单元（隐单元组成了<strong>隐层</strong>）之间有一个系数，在每个隐单元与输出之间也有一个系数。</p>
+<p>简单来说，y是输入特征x[0]到x[p]的加权求和，权重为学到的系数w[0]到w[p]。我们可以将这个公式可视化，如下图所示：</p>
+<p><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525113728442.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>图中，左边的每个点代表一个输入特征，连线代表学到的系数，右边的结点代表输出，是输入的加权求和。</p>
+<p>在MLP中，多次重复这个计算加权求和的过程，首先计算代表中间过程的<strong>隐单元</strong>，然后再计算这些<strong>隐单元</strong>的加权求和并得到最终结果，如下图所示：</p>
+<p><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525114044617.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>毫无疑问，在中间加了一层隐单元之后，模型变得更加精细了。但是这也意味着，这个模型在学习过程中需要考虑更多的系数：在每个输入与每个隐单元（隐单元组成了<strong>隐层</strong>)之间有一个系数，在每个隐单元与输出之间也有一个系数。</p>
 <p>实际上，从数学的角度看，计算一系列加权求和与只计算一个加权求和是完全相同的，因此，为了让这个模型真正比线性模型更为强大，我们还需要一个技巧。在计算完每个隐单元的加权求和之后，对结果再应用一个非线性函数-通常是<strong>校正非线性（也叫校正线性单元或relu）</strong>或<strong>正切双曲线（也叫tanh）</strong>。然后将这个函数的结果用于加权求和，计算得到输出y。<strong>有了这两种非线性函数，神经网络可以学习比线性模型复杂得多的函数</strong>。具体的公式如下所示：</p>
 <blockquote>
 <p>h[0]=tanh(w[0,0]*x[0]+w[1,0]*x[1]+w[2,0]*x[2]+w[3,0]*x[3]+b[0])<br>h[1]=tanh(w[0,0]*x[0]+w[1,0]*x[1]+w[2,0]*x[2]+w[3,0]*x[3]+b[1])<br>h[2]=tanh(w[0,0]*x[0]+w[1,0]*x[1]+w[2,0]*x[2]+w[3,0]*x[3]+b[2])<br>y=v[0]*h[0]+v[1]*h[1]+v[2]*h[2]+b</p>
 </blockquote>
-<p>其中，w是输入x与隐层h之间的权重，v是隐层h与输出y之间的权重。权重w和v要从数据中学习得到，x是输入特征，y是计算得到的输出，h是计算的中间结果。需要用户设置的一个重要参数是隐层中的结点个数。对于非常小或非常简单的数据集，这个值可以小到10；对于非常复杂的数据，这个值可以大到10000。当然，模型中可以添加多个隐层，如下图所示：<br><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525115842644.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>这些由许多计算层组成的大型神经网络，正是术语“深度学习”的灵感来源。</strong></p>
-<h2 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h2><p><a target="_blank" rel="noopener" href="https://www.kaggle.com/sakshigoyal7/credit-card-customers">信用卡客户分类：https://www.kaggle.com/sakshigoyal7/credit-card-customers</a><br><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525131658157.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>该数据包括信用卡客户的性别，年龄，收入，消费金额，学历等维度的数据，而我们所需要做的就是通过这些特征值来区分有哪些客户还在继续使用信用卡，哪些已经放弃使用，</p>
+<p>其中，w是输入x与隐层h之间的权重，v是隐层h与输出y之间的权重。权重w和v要从数据中学习得到，x是输入特征，y是计算得到的输出，h是计算的中间结果。需要用户设置的一个重要参数是隐层中的结点个数。对于非常小或非常简单的数据集，这个值可以小到10；对于非常复杂的数据，这个值可以大到10000。当然，模型中可以添加多个隐层，如下图所示：</p>
+<p><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525115842644.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><strong>这些由许多计算层组成的大型神经网络，正是术语“深度学习”的灵感来源。</strong></p>
+<h2 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h2><p><a target="_blank" rel="noopener" href="https://www.kaggle.com/sakshigoyal7/credit-card-customers">信用卡客户分类：https://www.kaggle.com/sakshigoyal7/credit-card-customers</a></p>
+<p><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525131658157.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>该数据包括信用卡客户的性别，年龄，收入，消费金额，学历等维度的数据，而我们所需要做的就是通过这些特征值来区分有哪些客户还在继续使用信用卡，哪些已经放弃使用，</p>
 <p><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210326150323351.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>数据集包含23个特征维度，10127条特征记录，然后客户分为2类：Existing Customer-还在使用的客户，Attrited Customer-不使用的客户。</p>
 <h2 id="数据挖掘"><a href="#数据挖掘" class="headerlink" title="数据挖掘"></a>数据挖掘</h2><p><strong>1.导入第三方库并读取文件</strong></p>
@@ -280,7 +288,8 @@
 
 <p>老规矩，上来先依次导入建模需要的各个模块，并读取文件。</p>
 <p><strong>2.清洗数据</strong></p>
-<p>查找缺失值：<br><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/2021052513235077.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>查找缺失值：</p>
+<p><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/2021052513235077.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>从上面的结果来看，数据中没有缺失值。但是有三列数据需要注意，特征CLIENTNUM代表客户编号，而最后两列只是源数据作者的贝叶斯分类计算的草稿，这三列属于无用的特征，可以直接删掉，代码如下所示：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">Credit_Card=Credit_Card.drop(Credit_Card.columns[[<span class="hljs-number">0</span>,-<span class="hljs-number">1</span>,-<span class="hljs-number">2</span>]],axis=<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
 
@@ -293,30 +302,36 @@
 <p>划分列索引为特征值和预测值，并将数据划分成训练集和测试集。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">mlp=MLPClassifier(solver=<span class="hljs-string">&quot;lbfgs&quot;</span>,random_state=<span class="hljs-number">1</span>).fit(X_train,y_train)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;mlp训练模型评分：&quot;</span>+<span class="hljs-built_in">str</span>(accuracy_score(y_train,mlp.predict(X_train))))<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;mlp待测模型评分：&quot;</span>+<span class="hljs-built_in">str</span>(accuracy_score(y_test,mlp.predict(X_test))))<span class="hljs-comment">###警告是增大最大迭代次数，或者对数据进行标准化</span><br></code></pre></td></tr></table></figure>
 
-<p>引入MLP算法，并将算法中的参数依次设立好，进行建模后，对测试集进行精度评分，得到的结果如下：<br><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525133125120.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>可以看到，该模型的精度为84%左右。<br>注意：红色警告是算法提示要增大最大迭代次数，或者对数据进行标准化，这些问题我们稍后解决。</p>
+<p>引入MLP算法，并将算法中的参数依次设立好，进行建模后，对测试集进行精度评分，得到的结果如下：</p>
+<p><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525133125120.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>可以看到，该模型的精度为84%左右。<br>注意：红色警告是算法提示要增大最大迭代次数，或者对数据进行标准化，这些问题我们稍后解决。</p>
 <p><strong>4.数据标准化</strong></p>
 <p>可以看出MLP的精度还可以，但没有其它模型好。与之前说的<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/116704969">svm</a>一样，原因就在于数据需要缩放。神经网络也要求所有输入特征的变化范围相似，最理想的情况是均值为0，方差为1，也就是标准化。我们必须对数据进行缩放以满足这些要求。为了让大家更好地理解，这里我们先人工进行处理（以后可以用StandardScaler来完成），代码如下所示：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">mean_on_train=X_train.mean(axis=<span class="hljs-number">0</span>)<span class="hljs-comment">##计算每个特征的平均值</span><br>std_on_train=X_train.std(axis=<span class="hljs-number">0</span>)<span class="hljs-comment">##计算每个特征的标准差</span><br>X_train_scald=(X_train-mean_on_train)/std_on_train<span class="hljs-comment">##减去平均值，然后乘以标准差的倒数，之后，mean=0，std=1</span><br>X_test_scald=(X_test-mean_on_train)/std_on_train<span class="hljs-comment">##对测试集做同样的处理（使用训练集的平均值和标准差）</span><br></code></pre></td></tr></table></figure>
 
 <p>之后，我们对缩放完成的数据进行建模，代码及结果如下所示：</p>
-<p><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525135819269.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>可以看出模型精度较之前有了提高，达到了93%。不仅如此，我还设定了最大迭代次数参数max_iter。实际上增加迭代次数仅提高了训练集性能，而不会提高泛化性能。不过由于数据缩放，所以模型的表现较之前有了提升。由于训练性能和测试性能之间仍有一定差距，甚至是出现了<strong>过拟合</strong>的情况，所以我们可以通过调整其它参数，来提高模型的泛化性能。</p>
+<p><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525135819269.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>可以看出模型精度较之前有了提高，达到了93%。不仅如此，我还设定了最大迭代次数参数max_iter。实际上增加迭代次数仅提高了训练集性能，而不会提高泛化性能。不过由于数据缩放，所以模型的表现较之前有了提升。由于训练性能和测试性能之间仍有一定差距，甚至是出现了<strong>过拟合</strong>的情况，所以我们可以通过调整其它参数，来提高模型的泛化性能。</p>
 <p><strong>5.参数</strong></p>
 <p>通常来说，对于模型MLP的定义主要需要4个参数：<strong>隐层数，每层的结点，正则化和非线性函数</strong>的选择。当然还有一个问题是，如何学习模型或用来学习参数的算法，这一点由<strong>solver</strong>参数设定。接下来我们依次讲解这些参数。</p>
 <p><em><strong>1.solver</strong></em></p>
 <p>solver有两个好用的选项。默认选项是“adam”，在大多数情况下效果都很好，但对数据的缩放相当敏感（因此，始终将数据缩放为均值为0，方差为1是很重要的）。另一个选项是“lbfgs”，其鲁棒性相当好，但在大型模型或者大型数据集上的时间会比较长。还有更高级的“sgd”选项，许多深度学习研究人员都会用到。“sgd”选项还有许多其它参数需要调节，以便获得最佳结果。不过一般情况下，“adma”和“lbfgs”已经足够满足我们的日常使用。</p>
 <p><em><strong>2.activation</strong></em></p>
 <p>该参数表示的是之前我们提到过的<strong>非线性校正函数（relu/tanh）</strong>，默认参数是relu。调参后的结果如下所示：</p>
-<p><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525142018105.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>可以看到结果较之前反而有所下降，既然如此，我们依旧选择relu参数。</p>
+<p><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525142018105.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>可以看到结果较之前反而有所下降，既然如此，我们依旧选择relu参数。</p>
 <p><em><strong>3.hidden_layer_sizes</strong></em></p>
 <p>该参数代表我们之前提到过的<strong>隐结点的个数和层数</strong>。默认情况下，MLP使用100个隐结点（hidden_layer_sizes=[100]）。这对于一个小型数据集来说已经相当多了，我们可以通过减少隐结点数量，增加隐层数，来降低模型复杂度，提高模型的泛化能力，代码及结果如下所示：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">mlp=MLPClassifier(solver=<span class="hljs-string">&quot;lbfgs&quot;</span>,activation=<span class="hljs-string">&quot;relu&quot;</span>,random_state=<span class="hljs-number">1</span>,hidden_layer_sizes=[<span class="hljs-number">10</span>,<span class="hljs-number">5</span>],max_iter=<span class="hljs-number">100000</span>).fit(X_train_scald,y_train)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;mlp训练模型评分：&quot;</span>+<span class="hljs-built_in">str</span>(accuracy_score(y_train,mlp.predict(X_train_scald))))<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;mlp待测模型评分：&quot;</span>+<span class="hljs-built_in">str</span>(accuracy_score(y_test,mlp.predict(X_test_scald))))<br></code></pre></td></tr></table></figure>
 
-<p><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525142729331.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>hidden_layer_sizes=[10,5]的意思是该模型有两个隐层数，第一层有10个隐结点，第二层有5个隐结点，最后所得结果较之前也有了些提高。当然，感兴趣的小伙伴还可以试试设立三个隐层，以及其它数量的隐结点（如hidden_layer_sizes=[10,10,5]），看看结果较之前有没有变化。</p>
+<p><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525142729331.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>hidden_layer_sizes=[10,5]的意思是该模型有两个隐层数，第一层有10个隐结点，第二层有5个隐结点，最后所得结果较之前也有了些提高。当然，感兴趣的小伙伴还可以试试设立三个隐层，以及其它数量的隐结点（如hidden_layer_sizes=[10,10,5])，看看结果较之前有没有变化。</p>
 <p><em><strong>4.alpha</strong></em></p>
 <p>正如我们在<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/112931842">岭回归</a>和<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/112277248">线性分类器</a>中所做的那样，MLPClassifier中正则化调节L2惩罚系数的参数是alpha（与线性回归模型中的相同），它的默认值很小（弱正则化），下面我们通过遍历来选取一个合适的alpha参数：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">result=pd.DataFrame(columns=[<span class="hljs-string">&quot;alpha&quot;</span>,<span class="hljs-string">&quot;mlp训练模型评分&quot;</span>,<span class="hljs-string">&quot;mlp待测模型评分&quot;</span>])<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,<span class="hljs-number">20</span>):<br>    m=i/<span class="hljs-number">10</span><br>    mlp=MLPClassifier(solver=<span class="hljs-string">&quot;lbfgs&quot;</span>,activation=<span class="hljs-string">&quot;tanh&quot;</span>,random_state=<span class="hljs-number">1</span>,hidden_layer_sizes=[<span class="hljs-number">10</span>,<span class="hljs-number">5</span>],alpha=m,max_iter=<span class="hljs-number">100000</span>).fit(X_train_scald,y_train)<br>    result=result.append([&#123;<span class="hljs-string">&quot;alpha&quot;</span>:m,<span class="hljs-string">&quot;mlp训练模型评分&quot;</span>:accuracy_score(y_train,mlp.predict(X_train_scald)),<span class="hljs-string">&quot;mlp待测模型评分&quot;</span>:accuracy_score(y_test,mlp.predict(X_test_scald))&#125;])<br>result[result[<span class="hljs-string">&quot;mlp待测模型评分&quot;</span>]==result[<span class="hljs-string">&quot;mlp待测模型评分&quot;</span>].<span class="hljs-built_in">max</span>()]<br></code></pre></td></tr></table></figure>
 
-<p><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525143758114.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>结果如上所示，当我们将alpha参数设立为1.9时，可以得到mlp的待测模型精度96%，较之前又有了些许提升。</p>
+<p><img src="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/20210525143758114.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>结果如上所示，当我们将alpha参数设立为1.9时，可以得到mlp的待测模型精度96%，较之前又有了些许提升。</p>
 <p>现在可能大家已经意识到了，控制神经网络复杂度的方法有很多种：隐层的个数，每个隐层中的单元个数与正则化（alpha）。实际上还有很多，但这里就不在过多介绍了。</p>
 <p>除了上述的参数之外，神经网络还有一个重要参数是<strong>random_state</strong>。在开始学习之前，神经网络的权重是随机设置的。也就是说，即使使用完全相同的参数，如果随机种子不同的话，我们也可能得到非常不一样的模型。如果网络很大，并且复杂度选择合理的话，那么这应该不会对精度有太大影响，但应该记住这一点（特别是对于较小的网络）。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>在机器学习的许多应用中，神经网络再次成为最先进的模型。它的主要优点之一是能够获取大量数据中包含的信息，并且构建无比复杂的模型。给定足够的计算时间和数据，并且仔细调节参数，神经网络通常可以打败其它机器学习算法（无论是分类任务还是回归任务）。</p>

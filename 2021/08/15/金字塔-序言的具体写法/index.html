@@ -1,0 +1,640 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Yyb">
+  <meta name="keywords" content="">
+  
+  <title>金字塔(四)-序言的具体写法 - Yyb的花园</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yb705.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","app_key":"dJ07LxI5XAsyjJ3DB7zmCUL3","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Yyb的花园" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Yyb的花园</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/post.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="金字塔(四)-序言的具体写法">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Yyb
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-08-15 12:11" pubdate>
+        2021年8月15日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      34
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">金字塔(四)-序言的具体写法</h1>
+            
+            <div class="markdown-body">
+              <h3 id="序言的结构"><a href="#序言的结构" class="headerlink" title="序言的结构"></a>序言的结构</h3><p>虽然在之前的章节中已经提到过序言的组成部分了，但为了引出接下来要说的内容，我还是想要再重复一遍序言的构成—“背景-冲突-疑问-解答”。具体结构如下所示：</p>
+<p><img src="/2021/08/15/%E9%87%91%E5%AD%97%E5%A1%94-%E5%BA%8F%E8%A8%80%E7%9A%84%E5%85%B7%E4%BD%93%E5%86%99%E6%B3%95/image-20210728133414453.png" srcset="/img/loading.gif" lazyload alt="image-20210728133414453"></p>
+<h3 id="序言，是一篇“故事”"><a href="#序言，是一篇“故事”" class="headerlink" title="序言，是一篇“故事”"></a>序言，是一篇“故事”</h3><p>当读者在拿到一篇文章准备阅读之前，他的大脑中往往会充斥很多与文章主题无关的想法。这时读者是很难去阅读文章内容的，因为那些想法在牵扯他的注意力。那么如何才能够抓住读者呢？—讲“故事”。</p>
+<blockquote>
+<p>深夜，两个衣衫褴褛的醉鬼行走在大街上。。。。。。</p>
+</blockquote>
+<p>或许在看到这句话之前，你可能在想“中午吃什么？”，“什么时候才能下班啊？”，“外面下雨了吗？”……</p>
+<p>但是在看到这句话之后，你的想法就有可能变成了“晚上会发生什么可怕的事情吗？”，“他们为什么还不回家？”，“接下来会发生什么？”……</p>
+<p>而当你产生上面的疑问的时候，就说明无关的想法已经被剔除了，当下你的注意力已经被这句话牢牢地抓住了，甚至还会有点期待接下来要说的内容。</p>
+<p>所以当我们在写序言部分的时候，推荐采取<strong>平铺陈述</strong>的方法去描写，就像是在写一篇故事一样。或许，<strong>一段好的序言，就是一篇好的“故事”。</strong></p>
+<h3 id="何时引入背景"><a href="#何时引入背景" class="headerlink" title="何时引入背景"></a>何时引入背景</h3><p>“背景”有两个特征，一个是符合文章主题，另一个就是读者已知或者是读者认可的与自身相关连的内容，并且可以引起读者的好奇，探索心。</p>
+<p>那么什么时候可以引入“背景”呢？</p>
+<p>一般说来，在“背景”内容前后的某句话有一个特征，那就是锁住特定的时间和特定的地点，举个栗子：</p>
+<blockquote>
+<p>7月28日至29日，受台风“烟花”减弱后的热带低压影响，河南仍有强降雨。</p>
+<p>在24日举行的东京奥运会女子10米气步枪决赛中，中国选手杨倩夺得冠军，为中国代表团揽入本届奥运会第一枚金牌。</p>
+</blockquote>
+<p>可以看出，在上面的两句话中都有特定的时间和特定的地点，而接在这两句话之后的内容就可以顺理成章地阐述文章的”背景了“。</p>
+<h3 id="什么是冲突"><a href="#什么是冲突" class="headerlink" title="什么是冲突"></a>什么是冲突</h3><p>这里的”冲突“并不是指两者之间的矛盾，在大多数情况下，它更像是某种转折。</p>
+<p><strong>在序言中，”冲突“是推动故事情节发展的因素。</strong>举个栗子：</p>
+<blockquote>
+<p>产品经理是指在公司中针对某一项或是某一类的产品进行规划和管理的人员，可以说他们充斥着产品的一生。<strong>但是</strong>，最近有一些公司的总裁提出，产品经理在逐渐变成一个可有可无的职位。</p>
+</blockquote>
+<p>可以看到，在上面的例子中，”但是“后面的内容就是序言的”冲突“部分。它不仅”乘上“推动了”背景“的叙事发展，还”启下“引出了读者的疑问—”为什么产品经理在逐渐变得可有可无？“</p>
+<h3 id="序言的搭建顺序"><a href="#序言的搭建顺序" class="headerlink" title="序言的搭建顺序"></a>序言的搭建顺序</h3><p>平常，我们在构建序言的时候，可以按照正常顺序依次搭建，即”背景-冲突-疑问-回答”。但并不是说所有的序言都要按照这个顺序来去阐述。有的时候，也可以考虑“冲突-背景-疑问”，“疑问-背景-冲突”等顺序。</p>
+<p>实际上，有一些文学作品，像是《盗墓笔记》，《诡秘之主》等人气小说中有很多内容便是利用倒序，插叙，伏笔等非顺序的叙事手法来描写的。而这种叙事顺序不仅没有让读者的思路混乱，反而营造了一种引人入胜的感觉，非常吸引读者。</p>
+<p>所以，我们在构思阐述序言的时候，不必按照某种固定的顺序，只要符合正常的表达逻辑就可以。</p>
+<h3 id="关键句要点"><a href="#关键句要点" class="headerlink" title="关键句要点"></a>关键句要点</h3><p>在文章中，关键句要点不仅要符合文章主题，提醒读者，还要充当文章的整体框架。</p>
+<p>实际上，每个关键要点都是文章中的部分思想总结。换言之，就是下层内容支持关键要点，而关键要点汇总成文章的主题。结构如下图所示：</p>
+<p><img src="/2021/08/15/%E9%87%91%E5%AD%97%E5%A1%94-%E5%BA%8F%E8%A8%80%E7%9A%84%E5%85%B7%E4%BD%93%E5%86%99%E6%B3%95/image-20210729132213211.png" srcset="/img/loading.gif" lazyload alt="image-20210729132213211"></p>
+<p>而列出关键要点的作用就是提前跟读者说好接下来文章的内容，将文章交给读者，让读者去选择去阅读接下来的哪个部分。同时，提前知道关键思想也可以帮助读者更好地去理解文章的内容。（毕竟，怀揣着结论去了解过程要比根据流程去探索结论更加容易些。）</p>
+<h3 id="序言有多长"><a href="#序言有多长" class="headerlink" title="序言有多长"></a>序言有多长</h3><p>序言的长度要符合文章主题与读者的需要。如果过长的话，作者就需要花费多余的精力去将过多的熟悉的内容“提示”给读者，这样做的话，不仅会让文章变得冗余繁杂，也会消耗读者的耐心；如果过短的话，序言部分就会很难引起读者的初始疑问，继而让读者难以进入文章的引导。</p>
+<p>所以说序言就是“一双腿”，既不用太长，也不用太短。只要能够保证读者与作者刚好站在同一高度上就是最合适的。</p>
+<h3 id="关键要点也可以用引言"><a href="#关键要点也可以用引言" class="headerlink" title="关键要点也可以用引言"></a>关键要点也可以用引言</h3><p>之前提到了，序言有四个要素“背景-冲突-疑问-解答”。那么一个包含了关键要点的段落中，是不是也可以用“背景-冲突-疑问-解答”的引言形式作为开头呢？</p>
+<p>答案当然是可以的。只不过，文章开头的序言部分是与文章主题相关的，用于引起初始疑问，而段落的引言部分是与关键要点相关，用于引起第N个疑问。</p>
+<p><strong>同时，也要注意每个段落的小标题。不要使用“简介”，“序言”，“总结”等空泛的名词，因为它们很难引起读者的兴趣。这类名词虽然完整地概括了段落，但是却并没有将任何实际内容提示给读者，颇有一种“废话”的意味。当然，如果不知道如何给段落取一个好的小标题的话，那么直接参考本篇文章的小标题就可以了。</strong></p>
+<p>最后再说一下在写引言的过程中需要注意的三个点：</p>
+<blockquote>
+<ol>
+<li>引言不是“告诉”读者需要知道的内容，而是“提示”读者。</li>
+<li>与序言相同，引言也包含四个要素，即“背景-冲突-疑问-解答”。</li>
+<li>引言的长度要适中，要同时满足文章的要求和读者的需要。</li>
+</ol>
+</blockquote>
+<h3 id="序言常见模式"><a href="#序言常见模式" class="headerlink" title="序言常见模式"></a>序言常见模式</h3><p>总结是将看似不同的事情放在一起，提炼它们之间的相同点，整理出一套常见模式的过程。对于有着某种共性的事情，我们可以通过套用这种模式来吸取经验教训，提高完成质量。所以总结是工作学习中非常重要的一项技能，也是一个从“经事”到“长智”的过程 。</p>
+<p>因此，我们把商务文章中常见的序言整理成4套模式，来加深我们对序言的理解，提高写作效率。</p>
+<h4 id="发出指示式"><a href="#发出指示式" class="headerlink" title="发出指示式"></a>发出指示式</h4><p>在日常工作过程中，我们经常会遇到公司老板要求员工区完成某项工作的情况。（这里的动词是“要求”或“指示”，而不是“请求”，“提示”。）</p>
+<p>在这种情形下，我们可以将序言写成下面的模式：</p>
+<blockquote>
+<p>背景：公司要完成X</p>
+<p>冲突：在完成X之前，我们要先完成Y</p>
+<p>疑问：如何完成Y</p>
+</blockquote>
+<h4 id="请求批准式"><a href="#请求批准式" class="headerlink" title="请求批准式"></a>请求批准式</h4><p>在日常工作中，当现有的环境条件已经无法满足工作的要求时，员工一般会对公司提出优化请求。</p>
+<p>举个栗子：车间要求工人们一天共要完成50个零件，但是即使算上加班的工作量，工人们一天也只能完成40个零件。所以为了满足公司的工作要求，设备部门就要向公司提交申请，更换一批可以提高生产效率的零件加工机器。</p>
+<p>把上面的情形总结下来就是：</p>
+<blockquote>
+<p>背景：我们遇到了一个问题</p>
+<p>冲突：我们制定了解决方案，该方案需要XXX支持</p>
+<p>疑问：我应该批准吗</p>
+</blockquote>
+<h4 id="解决问题式"><a href="#解决问题式" class="headerlink" title="解决问题式"></a>解决问题式</h4><p>很多时候，尤其是在提供咨询的时候，我们写作的目的，就是告诉某人如何解决他所遇到的问题，即向读者解释解决问题的方法。这类文章的关键就在于步骤：</p>
+<p><img src="/2021/08/15/%E9%87%91%E5%AD%97%E5%A1%94-%E5%BA%8F%E8%A8%80%E7%9A%84%E5%85%B7%E4%BD%93%E5%86%99%E6%B3%95/image-20210730163043105.png" srcset="/img/loading.gif" lazyload alt="image-20210730163043105"></p>
+<p>那么这类序言总结一下就是：</p>
+<blockquote>
+<p>背景：必须要做X</p>
+<p>冲突：还未做好完成X的准备</p>
+<p>疑问：如何做？</p>
+</blockquote>
+<p><strong>这里还需要强调一下，开始写作之前，在纸上列出两个流程进行对比非常重要。也许你认为，你已经在这个领域工作很长时间了，完全了解问题出在哪里，但是，如果你不将这两个流程列出来进行比较，那么遗漏某个重要元素的可能性就很大。</strong></p>
+<h4 id="优化比较式"><a href="#优化比较式" class="headerlink" title="优化比较式"></a>优化比较式</h4><p>上面提到的解决问题模式主要是给出解决问题的<strong>某个</strong>方法，但有的时候，上级或许会说“多拿几个方案出来”。需要注意的是，上级的这句话也许并不是在追求方案的数量，而是在他的心里可能已经有了某种解决方法，但他还是希望员工可以提供一些其它的思路，并通过对比不同方案的优劣性，来选择相对更好的那一个。</p>
+<p>PS：所以说揣摩上级的心理还是很重要的</p>
+<p>那么，在这种环境下，序言就可以总结成下面的模式：</p>
+<blockquote>
+<p>背景：遇到了什么问题</p>
+<p>冲突：对问题提出了多个解决方案</p>
+<p>疑问：选择哪种方案比较合适</p>
+</blockquote>
+<p>同时还要留意的是，在回答阶段不仅要解释各个方案的内容，还要比较方案之间的优缺点，以便作出选择，如下图所示：</p>
+<p><img src="/2021/08/15/%E9%87%91%E5%AD%97%E5%A1%94-%E5%BA%8F%E8%A8%80%E7%9A%84%E5%85%B7%E4%BD%93%E5%86%99%E6%B3%95/image-20210803121204279.png" srcset="/img/loading.gif" lazyload alt="image-20210803121204279"></p>
+<h3 id="序言的实际使用"><a href="#序言的实际使用" class="headerlink" title="序言的实际使用"></a>序言的实际使用</h3><p>我们在前面讲了很多有关于写序言的注意事项。但“纸上得来终觉浅,绝知此事要躬行”，所以接下来我们讲一下商务工作中常见的两类文章实例，一个是<strong>项目建议书</strong>，一个是<strong>项目阶段总结</strong>。</p>
+<h4 id="项目建议书"><a href="#项目建议书" class="headerlink" title="项目建议书"></a>项目建议书</h4><p>项目建议书，顾名思义就是对某个项目作出建议，并罗列实施步骤。这类商务文章多用于咨询公司中咨询顾问对客户某个问题的回答，或者是帮助，可以说是<strong>咨询公司的“生命线”</strong>。那么该如何阐述项目建议书的序言部分呢？</p>
+<blockquote>
+<p>背景：客户有什么问题？</p>
+<p>冲突：需要我做什么/需要提供什么帮助？</p>
+<p>疑问：我对事件的处理有什么建议？</p>
+<p>回答：依次描述具体措施/建议，并解释为什么这么做。</p>
+</blockquote>
+<h4 id="项目阶段总结"><a href="#项目阶段总结" class="headerlink" title="项目阶段总结"></a>项目阶段总结</h4><p>项目阶段总结主要用于某个项目或者是工程中阶段性的总结（PS：好一句废话…）。它主要有两个用途，一是对接上级领导，进行周期性/阶段性的工作汇报；二是对接客户，让客户了解流程进度，并及时地进行沟通交流。所以序言可以按照下面的内容来去构思：</p>
+<blockquote>
+<p>背景：介绍项目整体内容，并说明目前所处的阶段</p>
+<p>冲突：在已经完成的内容中遇到了什么问题？/在接下来的工作中可能会遇到什么问题？</p>
+<p>疑问：如何解决将要面对的问题？是否需要什么支持？</p>
+<p>回答：提出需要的支持，依次阐述解决问题的步骤。</p>
+</blockquote>
+<h3 id="序言的作用"><a href="#序言的作用" class="headerlink" title="序言的作用"></a>序言的作用</h3><p>本文前面讲了这么多关于序言的内容，相信大家对于序言应该有了一个清晰的认识。那么最后，我再简单说下序言的作用。</p>
+<p>不知道大家对于律师的当庭辩护有没有了解（感兴趣的朋友可以去听一听罗翔老师的讲课），我觉得序言就像是律师的开场白一样，起到一个框架的作用，限制接下来所讲到的内容不超出框架的范围。也就是说读者可以不同意作者的观点，但他的思考却不会超过序言所限定的范围。简单来说就是，作者认为“1+1=2”，但是读者却觉得有的时候“1+1=3”，这时读者便与作者产生了分歧，可读者却是知道作者为什么会得出“1+1=2”的结论。</p>
+<p>同时读者可以更加顺理成章地理解作者的想法。换言之，作者认为“1+1=2”，那么读者便自然而然地知道“1+2=3”。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/">金字塔思维</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/%E8%A1%A8%E8%BE%BE%E7%9A%84%E9%80%BB%E8%BE%91/">表达的逻辑</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/%E8%A1%A8%E8%BE%BE%E7%9A%84%E9%80%BB%E8%BE%91/%E7%AC%AC%E5%9B%9B%E7%AB%A0/">第四章</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%86%85%E5%8C%96%E7%AC%94%E8%AE%B0/">内化笔记</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BA%8F%E8%A8%80/">序言</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/08/15/%E9%87%91%E5%AD%97%E5%A1%94-%E5%BD%92%E7%BA%B3%E6%8E%A8%E7%90%86%E4%B8%8E%E6%BC%94%E7%BB%8E%E6%8E%A8%E7%90%86/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">金字塔(五)-归纳推理与演绎推理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/08/15/%E9%87%91%E5%AD%97%E5%A1%94-%E9%87%91%E5%AD%97%E5%A1%94%E6%9E%84%E5%BB%BA/">
+                        <span class="hidden-mobile">金字塔(三)-金字塔构建</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","appKey":"dJ07LxI5XAsyjJ3DB7zmCUL3","placeholder":"走过路过不要错过,买不买的瞧一瞧也好啊!","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"requiredFields":[]},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://blog.csdn.net/weixin_43580339?spm=1010.2135.3001.5343" target="_blank" rel="nofollow noopener"><span>CSDN</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/yb705" target="_blank" rel="nofollow noopener"><span>Github</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

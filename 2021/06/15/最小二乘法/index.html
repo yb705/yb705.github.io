@@ -270,23 +270,28 @@
 <p>大家可以看出来，这个很像高中数学里的直线方程。其中w[0]就是斜率，对于有更多特征的数据集，w包含沿每个特征坐标元素的斜率。或者，你也可以将预测的响应值看作输入特征的加权求和，权重由w的元素给出。</p>
 <h2 id="算法简介"><a href="#算法简介" class="headerlink" title="算法简介"></a>算法简介</h2><p><strong>最小二乘算法</strong></p>
 <p>普通最小二乘算法，或者说线性回归，是回归问题最简单也是最经典的线性方法，线性回归寻找参数w和b，使得对训练集的预测值与真实的回归目标值y之间的<strong>均方误差</strong>最小。<br><strong>均方误差</strong>是预测值与真实值之差的平方和除以样本数。</p>
-<h2 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h2><p><a target="_blank" rel="noopener" href="https://www.kaggle.com/sp1nalcord/mycsgo-data">第一人称fps游戏csgo的等分数据：https://www.kaggle.com/sp1nalcord/mycsgo-data</a><br><img src="/2021/06/15/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/20210106144238394.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h2><p><a target="_blank" rel="noopener" href="https://www.kaggle.com/sp1nalcord/mycsgo-data">第一人称fps游戏csgo的等分数据：https://www.kaggle.com/sp1nalcord/mycsgo-data</a></p>
+<p><img src="/2021/06/15/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/20210106144238394.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>csgo是一款第一人称的射击游戏，该数据包括每位玩家的网络延迟（ping），击杀数量，死亡数量，得分情况等等。<br><del>嘿嘿，游戏这方面我还是比较了解的，这也是博主唯一一个不用看原版数据的英文介绍，就能看懂各个维度的数据集了。</del> </p>
 <h2 id="数据挖掘"><a href="#数据挖掘" class="headerlink" title="数据挖掘"></a>数据挖掘</h2><p><strong>1.导入第三方库</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> winreg<br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<br><span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LinearRegression<span class="hljs-comment">#导入线性回归算法</span><br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> r2_score<br></code></pre></td></tr></table></figure>
 
-<p>老规矩，上来先依次导入建模需要的各个模块<br><strong>2.读取文件</strong></p>
+<p>老规矩，上来先依次导入建模需要的各个模块</p>
+<p><strong>2.读取文件</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> winreg<br>real_address = winreg.OpenKey(winreg.HKEY_CURRENT_USER,<span class="hljs-string">r&#x27;Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders&#x27;</span>,)<br>file_address=winreg.QueryValueEx(real_address, <span class="hljs-string">&quot;Desktop&quot;</span>)[<span class="hljs-number">0</span>]<br>file_address+=<span class="hljs-string">&#x27;\\&#x27;</span><br>file_origin=file_address+<span class="hljs-string">&quot;\\源数据-分析\\avocado.csv&quot;</span><span class="hljs-comment">#设立源数据文件的桌面绝对路径</span><br>glass=pd.read_csv(file_origin)<span class="hljs-comment">#https://www.kaggle.com/neuromusic/avocado-prices</span><br></code></pre></td></tr></table></figure>
 
 <p>因为之前每次下载数据之后都要将文件转移到python根目录里面，或者到下载文件夹里面去读取，很麻烦。所以我通过winreg库，来设立绝对桌面路径，这样只要把数据下载到桌面上，或者粘到桌面上的特定文件夹里面去读取就好了，不会跟其它数据搞混。<br><del>其实到这一步都是在走流程，基本上每个数据挖掘都要来一遍，没什么好说的。</del> </p>
-<p><strong>3.清洗数据</strong><br><img src="/2021/06/15/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/20210106144941434.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>可以看到这个数据并不包括缺失值，而且各个特征值之间也没有属性重叠的状况，所以暂时不需要任何处理。</p>
+<p><strong>3.清洗数据</strong></p>
+<p><img src="/2021/06/15/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/20210106144941434.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>可以看到这个数据并不包括缺失值，而且各个特征值之间也没有属性重叠的状况，所以暂时不需要任何处理。</p>
 <p><strong>4.建模</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">X_train,X_test,y_train,y_test=train_test_split(csgo[[<span class="hljs-string">&quot;Ping&quot;</span>,<span class="hljs-string">&quot;Kills&quot;</span>,<span class="hljs-string">&quot;Assists&quot;</span>,<span class="hljs-string">&quot;Deaths&quot;</span>,<span class="hljs-string">&quot;MVP&quot;</span>,<span class="hljs-string">&quot;HSP&quot;</span>]],csgo[<span class="hljs-string">&quot;Score&quot;</span>],random_state=<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
 
 <p>将score划分为预测值，其它的属性划分为特征值，并将数据划分成训练集和测试集。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">LR=LinearRegression()<br>LR.fit(X_train,y_train)<br>prediction=LR.predict(X_test)<br>r2_score(y_test,prediction)<br></code></pre></td></tr></table></figure>
 
-<p>引入knn算法，进行建模后，对测试集进行精度评分，得到的结果如下：<br><img src="/2021/06/15/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/20210106145315552.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>引入knn算法，进行建模后，对测试集进行精度评分，得到的结果如下：</p>
+<p><img src="/2021/06/15/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/20210106145315552.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>可以看到，该模型的精度为94%左右。<br>至此，这个数据集的将建模就算是完成了。</p>
 <p><strong>5.总结</strong></p>
 <p>1.可以感受到最小二乘法算法并没有什么难点，但是它确是最经典，最重要的算法之一。因为有很多的其它线性回归算法都是基于它的模型公式推导出来的，所以对于这个模型的公式一定要理解。<br><del>对算法的原理一定要有自己的理解，或许并不会专门从事算法研发的工作，但是对于算法如何去使用，用在什么场景是一定要知道的。</del> </p>

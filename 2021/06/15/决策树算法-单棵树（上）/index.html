@@ -261,14 +261,18 @@
               <h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>这次讲解机器学习里面非常经典的一个算法模型——<strong>分类树</strong>。由于篇幅比较长，所以特分为上下两篇讲解。本篇主要讲解决策树的原理，实际应用以及参数。</p>
 <h2 id="算法介绍"><a href="#算法介绍" class="headerlink" title="算法介绍"></a>算法介绍</h2><p><strong>1.分类树原理</strong></p>
 <p>决策树是广泛应用于分类和回归任务的模型。本质上，它从一层层的if/else问题中进行学习，并得出结论。</p>
-<p>想像一下，你想要区分下面四种动物：熊，鹰，企鹅和海豚。你的目标是通过提出尽可能少的if/else问题来得到正确答案。而这个提问过程可以表示为一棵决策树，如下图所示：<br><img src="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/20210414153543772.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>想像一下，你想要区分下面四种动物：熊，鹰，企鹅和海豚。你的目标是通过提出尽可能少的if/else问题来得到正确答案。而这个提问过程可以表示为一棵决策树，如下图所示：</p>
+<p><img src="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/20210414153543772.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>在这张图中，树的每个结点代表一个问题或一个包含答案的终结点（也叫<strong>叶结点</strong>）。树的边将问题的答案与将问的下一个问题连接起来。</p>
 <p>用机器学习的语言来说就是，为了区分四类动物（鹰，企鹅，海豚和熊），我们利用三个特征（“有没有羽毛”，“会不会飞”和“有没有鳍”）来构建一个模型。我们利用监督学习从数据中学习模型，而无需人为构造模型。</p>
 <p><strong>2.构造分类树</strong></p>
-<p>学习分类树，就是学习一系列if/else问题，使我们能够以最快的速度得到正确答案。在机器学习中，这些问题叫做<strong>测试</strong>（PS：不要与测试集搞混，测试集是用来测试模型泛化性能的数据）。数据通常并不像动物的例子那样具有二元特性（是/否）的形式，而是表现为连续特征。而为了构造决策树，算法会搜遍所有可能的测试，找出对目标变量来说信息量最大的那个。<br>我们以一个测试为例，如下图所示：<br><img src="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/20210414140912176.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>学习分类树，就是学习一系列if/else问题，使我们能够以最快的速度得到正确答案。在机器学习中，这些问题叫做<strong>测试</strong>（PS：不要与测试集搞混，测试集是用来测试模型泛化性能的数据）。数据通常并不像动物的例子那样具有二元特性（是/否）的形式，而是表现为连续特征。而为了构造决策树，算法会搜遍所有可能的测试，找出对目标变量来说信息量最大的那个。<br>我们以一个测试为例，如下图所示：</p>
+<p><img src="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/20210414140912176.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>将数据集在x[1]=0.0596处垂直划分可以得到最多信息，它在最大程度上将类别0中的点与类别1中的点进行区分。顶节点（也叫<strong>根结点</strong>）表示整个数据集，包含属于类别0的50个点和属于类别1的50个点。通过测试x[1]&lt;=0.0596的真假来对数据集进行划分。</p>
 <p>如果测试结果为真，那么将这个点分配给左结点，左结点里面包含属于类别0的2个点和属于类别1的32个点。否则将这个点分配给右结点，右结点里面包含属于类别0的48个点和属于类别1的18个点。</p>
-<p>尽管第一次划分已经对两个类别做了很好的区分，但底部区域仍包含属于类别0的点，顶部区域也仍包含属于类别1的点。所以我们可以在两个区域中重复寻找最佳测试的过程，从而构建出更准确的模型。如下图所示：<br><img src="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/20210414141646424.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>开始时递归过程生成一棵二元决策树，其中的每个结点都包含一个测试。或者可以将每个测试看成沿着一条轴对当前数据进行划分。这是一种将算法看作分层划分的观点。</p>
+<p>尽管第一次划分已经对两个类别做了很好的区分，但底部区域仍包含属于类别0的点，顶部区域也仍包含属于类别1的点。所以我们可以在两个区域中重复寻找最佳测试的过程，从而构建出更准确的模型。如下图所示：</p>
+<p><img src="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/20210414141646424.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>开始时递归过程生成一棵二元决策树，其中的每个结点都包含一个测试。或者可以将每个测试看成沿着一条轴对当前数据进行划分。这是一种将算法看作分层划分的观点。</p>
 <p>接下来对数据反复进行递归划分，直到划分后的每个区域（决策树的每个叶结点）只包含单一目标值（单一类别或单一回归值）。如果树中某个叶结点所包含数据点的目标值相同，那么这个叶结点就是<strong>纯的</strong>。</p>
 <p>要想对新数据点进行预测，首先要查看这个点位于特征空间划分的哪个区域，然后将该区域的多数目标值（如果是纯的叶结点，就是单一目标值）作为预测结果。从根结点开始对树进行遍历就可以找到这一区域，每一步向左还是向右取决于是否满足相应的测试。</p>
 <p>决策树也可以用于回归任务，使用的方法相同。预测的方法是，基于每个结点的测试对树进行遍历，最终找到新数据点所属的叶结点。这一数据的输出即为此叶结点中所有训练点的平均目标值。</p>
@@ -281,18 +285,23 @@
 
 <p>老规矩，上来先依次导入建模需要的各个模块，并读取文件。</p>
 <p><strong>2.清洗数据</strong></p>
-<p>查找缺失值：<br><img src="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/2021041414390177.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>从上面的结果来看，数据中没有缺失值。</p>
+<p>查找缺失值：</p>
+<p><img src="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/2021041414390177.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>从上面的结果来看，数据中没有缺失值。</p>
 <p><strong>3.建模</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">train=red_wine.drop([<span class="hljs-string">&quot;quality&quot;</span>],axis=<span class="hljs-number">1</span>)<br>X_train,X_test,y_train,y_test=train_test_split(train,red_wine[<span class="hljs-string">&quot;quality&quot;</span>],random_state=<span class="hljs-number">1</span>)<br><span class="hljs-comment">###考虑到接下来可能需要进行其他的操作，所以定了一个随机种子，保证接下来的train和test是同一组数</span><br>classifier=DecisionTreeClassifier(random_state=<span class="hljs-number">1</span>)<br>train_prediction=classifier.fit(X_train,y_train).predict(X_train)<br>test_prediction=classifier.fit(X_train,y_train).predict(X_test)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;决策树分类器训练模型评分：&quot;</span>+<span class="hljs-built_in">str</span>(accuracy_score(y_train,train_prediction)))<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;决策树分类器待测模型评分：&quot;</span>+<span class="hljs-built_in">str</span>(accuracy_score(y_test,test_prediction)))<br></code></pre></td></tr></table></figure>
 
 <p>划分列索引为特征值和预测值，并将数据划分成训练集和测试集。</p>
-<p>引入决策树分类算法，并将算法中的参数设立好，进行建模后，对测试集进行精度评分，得到的结果如下：<br><img src="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/20210414144037342.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>可以看到，该模型的精度为63%左右。</p>
+<p>引入决策树分类算法，并将算法中的参数设立好，进行建模后，对测试集进行精度评分，得到的结果如下：</p>
+<p><img src="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/20210414144037342.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>可以看到，该模型的精度为63%左右。</p>
 <p><strong>4.参数-控制决策树的复杂度</strong></p>
 <p><strong>random_state</strong>: sklearn可以选择建不同的树，在每次分枝时不使用全部特征，随机选取一部分特征，而random_state参数决定特征选择的随机性，类似random.seed()。</p>
 <p>通常来说，构造决策树知道所有的叶结点都是纯的叶结点，这会导致模型非常复杂，并且对训练数据高度过拟合。纯叶结点的存在说明这颗树在训练集上的精度是100%（如上面图片结果所示）。训练集中的每个数据点都位于分类正确的叶结点中。</p>
 <p>防止过拟合有两种常见策略：一种是及早停止树的生长，也叫<strong>预剪枝</strong>；另一种是先构造树，但随后删除或折叠信息量很少的结点，也叫<strong>后剪枝</strong>或<strong>剪枝</strong>。预剪枝的限制条件可能包括限制树的最大深度，限制叶结点的最大数目，或者规定一个结点中数据点的最小数目来防止继续划分。</p>
 <p>scikit-learn只实现了预剪枝，没有实现后剪枝。</p>
-<p>我们固定一下树的<strong>random_state</strong>，限制树的深度<strong>max_depth</strong>，放在上面的数据集上重新建模，结果如下所示：<br><img src="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/20210414151720918.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>我们固定一下树的<strong>random_state</strong>，限制树的深度<strong>max_depth</strong>，放在上面的数据集上重新建模，结果如下所示：</p>
+<p><img src="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/20210414151720918.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>与之前的结果相比，可以看出如果我们不限制决策树的深度，它的深度和复杂度都可以变得特别大。因此，未剪枝的树容易过拟合，对新数据的泛化性能不佳。</p>
 <p>如果我们尝试将剪枝应用在决策树上，这可以在完美拟合训练数据之前阻止树的展开。其中一种选择是在达到一定深度之后停止树的展开。这里我们设置了max_depth=13，这意味着只可以连续问13个问题（详见之前的算法介绍图片）。限制树的深度可以减少过拟合。这会降低训练集的精度，但可以提高测试集的精度，如上图结果所示。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>总的来说，决策树是一种非常经典的算法模型，它既可以用于分类问题，也可以用于回归问题。</p>

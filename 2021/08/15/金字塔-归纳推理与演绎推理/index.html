@@ -1,0 +1,663 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Yyb">
+  <meta name="keywords" content="">
+  
+  <title>金字塔(五)-归纳推理与演绎推理 - Yyb的花园</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yb705.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","app_key":"dJ07LxI5XAsyjJ3DB7zmCUL3","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Yyb的花园" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Yyb的花园</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/post.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="金字塔(五)-归纳推理与演绎推理">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Yyb
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-08-15 12:16" pubdate>
+        2021年8月15日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      27
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">金字塔(五)-归纳推理与演绎推理</h1>
+            
+            <div class="markdown-body">
+              <h2 id="演绎推理和归纳推理"><a href="#演绎推理和归纳推理" class="headerlink" title="演绎推理和归纳推理"></a>演绎推理和归纳推理</h2><p>之前我们讲过金字塔结构的文章有两个表达方向，分别是纵向和横向，其中”纵向“的内容，指的是自上而下表达和自下而上分析。那么本篇文章，我们主要讨论下</p>
+<p>同一层次思想的横向表达逻辑，即<strong>演绎推理</strong>和<strong>归纳推理</strong>。</p>
+<p><img src="/2021/08/15/%E9%87%91%E5%AD%97%E5%A1%94-%E5%BD%92%E7%BA%B3%E6%8E%A8%E7%90%86%E4%B8%8E%E6%BC%94%E7%BB%8E%E6%8E%A8%E7%90%86/image-20210804114439350.png" srcset="/img/loading.gif" lazyload alt="image-20210804114439350"></p>
+<h3 id="演绎推理"><a href="#演绎推理" class="headerlink" title="演绎推理"></a>演绎推理</h3><h4 id="演绎推理的步骤"><a href="#演绎推理的步骤" class="headerlink" title="演绎推理的步骤"></a>演绎推理的步骤</h4><p>从上面的推理图形我们可以看出，演绎推理就是个单线程的线性推理。那么我们将其化繁为简，总结成三步：</p>
+<ol>
+<li>提出大家广泛认可的一件事情/现象</li>
+<li>从普遍中提出某个个体</li>
+<li>依照前两句话顺理成章地推论出个体必然会发生的事情</li>
+</ol>
+<p>当然，除了上面的这种总结之外，我们还可以将其概括成另一种模式：</p>
+<ol>
+<li>第一个思想是提出大众认可的事情/现象</li>
+<li>第二个思想则是针对第一个思想中提到的主语或谓语来做特殊个体的阐述</li>
+<li>通过前两个思想合理地推导出第三个结论思想</li>
+</ol>
+<h4 id="演绎推理的缺点"><a href="#演绎推理的缺点" class="headerlink" title="演绎推理的缺点"></a>演绎推理的缺点</h4><p>相较于归纳推理来说，演绎推理是一个很容易理解的内容。但在实际写作过程中，还是希望大家尽量不要用演绎推理，因为它有个很难让人忽视的缺点。下面我用一个栗子来解释这个缺点。</p>
+<blockquote>
+<ol>
+<li>非洲是一片矿藏非常丰富的大陆。</li>
+<li>非洲人民自己开采矿物，并将矿物出口给其它国家。</li>
+<li>非洲人民通过矿物买卖所赚的钱来购买自己所需要的生活用品。</li>
+<li>较多的矿物被出口给其它国家，导致非洲各国自身的矿产需求得不到满足。</li>
+<li>由于非洲国家严重匮乏矿产使用，所以大部分的基础设施均没有搭建。</li>
+<li>基础设施的缺失对社会/国家经济的影响非常大，因此，大部分非洲人民都处于贫穷的生活状态之中。</li>
+</ol>
+</blockquote>
+<p>PS：不知道大家在看完上面这段话是什么感受，反正我是长出了一口气。</p>
+<p>上面的这段话就是一段典型的用演绎推理来表达的内容。从第一句到第六句呈线性推演逻辑，且逻辑本身非常清晰，不存在分歧。但是我认为“这段话很啰嗦”的这个观点应该也是不存在分歧吧。可以看出，这段话自身的思考逻辑并没有问题，但是它的表达逻辑却有问题，最终导致段落冗余复杂，“劝退”读者。</p>
+<p>优化改进往往比推倒重来所需要的成本低，那么要如何改善演绎推理的缺点呢？</p>
+<h4 id="演绎推理的实际使用"><a href="#演绎推理的实际使用" class="headerlink" title="演绎推理的实际使用"></a>演绎推理的实际使用</h4><p>在阐述具体的改善方法之前，我们先来看一个例子：</p>
+<p><img src="/2021/08/15/%E9%87%91%E5%AD%97%E5%A1%94-%E5%BD%92%E7%BA%B3%E6%8E%A8%E7%90%86%E4%B8%8E%E6%BC%94%E7%BB%8E%E6%8E%A8%E7%90%86/image-20210804141552455.png" srcset="/img/loading.gif" lazyload alt="image-20210804141552455"></p>
+<p>这也是一个典型的演绎推理的思路流程，同样有着之前我们提到的问题——冗余复杂。当读者在阅读到“出现问题的原因”这部分的时候，他就需要去回想之前”制度出现的问题“这部分，并将原因一与问题一对应起来，同理原因二也需要与问题二联系起来。那当读者阅读到“解决问题的措施”这部分内容的时候呢？这时，他就需要寻找前面的内容，并将措施一，原因一，问题一这三者一一对应。说实话，别说读者了，就算作者重新阅读自己写的这部分内容恐怕都会感到烦躁吧。</p>
+<p>上文提过，表达逻辑有两种，一个是演绎逻辑，一个是归纳逻辑。那么<strong>当其中一种方法单靠自己已经无法修正自身的缺点时，我们就可以尝试搭配另一种方法来去改善</strong>，所以接下来我们在上面说到的例子中加入归纳推理：</p>
+<p><img src="/2021/08/15/%E9%87%91%E5%AD%97%E5%A1%94-%E5%BD%92%E7%BA%B3%E6%8E%A8%E7%90%86%E4%B8%8E%E6%BC%94%E7%BB%8E%E6%8E%A8%E7%90%86/image-20210804145807426.png" srcset="/img/loading.gif" lazyload alt="image-20210804145807426"></p>
+<p>结果自不必多说，相较于之前的单演绎推理来说，演绎+归纳的组合使得思考逻辑和表达逻辑，都要清晰很多，且简单易懂，没有冗余。</p>
+<h4 id="内容要在表达之前"><a href="#内容要在表达之前" class="headerlink" title="内容要在表达之前"></a>内容要在表达之前</h4><p>通过上面的讨论，可以看出在文章写作过程中，我们还要先明确表达的内容，再确定表达的方式。</p>
+<p>譬如，在上面的例子中，当我们想要阐述“制度需要改革”这一中心思想时，要先明确它的支持内容都有哪些，先不需要考虑表达问题，只是简单地罗列出来，如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>原因</th>
+<th>措施</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>问题一</td>
+<td>原因一</td>
+<td>措施一</td>
+</tr>
+<tr>
+<td>问题二</td>
+<td>原因二</td>
+<td>措施二</td>
+</tr>
+<tr>
+<td>问题三</td>
+<td>原因三</td>
+<td>措施三</td>
+</tr>
+</tbody></table>
+<p>然后，我们再考虑如何以一种<strong>合理且清晰</strong>的逻辑推理，将这些内容表达出来。（演绎，归纳，演绎+归纳）</p>
+<h4 id="演绎推理的优点及使用原则"><a href="#演绎推理的优点及使用原则" class="headerlink" title="演绎推理的优点及使用原则"></a>演绎推理的优点及使用原则</h4><p>前面“贬低”了演绎推理这么久，那么是不是说演绎推理本身就是一无是处的呢？当然不是。我们将之前所提到的问题总结成一句话，就是正确的方法用在了错误的地方。实际上，演绎推理是比归纳推理更加符合人们的思考逻辑，且更加简单易懂。但是当读者需要向前翻阅十几页文章内容，来去寻找当前内容的对应部分的时候，再简单易懂的内容，也会变成烦躁难耐。</p>
+<p>那演绎推理的使用范围在哪里呢？</p>
+<p>相较于文章框架/大纲，演绎推理更加适用于底层的思维，即用两三句就可以表达的内容。这样既可以避免文章整体的冗余复杂，又可以保证关键句/底层语句之间的逻辑清晰，便于读者理解。</p>
+<p>所以，在使用演绎推理的时候，要注意两点原则：</p>
+<ol>
+<li>演绎推理的过程不要超过4步</li>
+<li>推导出来的结论不要超过两个</li>
+</ol>
+<h3 id="归纳推理"><a href="#归纳推理" class="headerlink" title="归纳推理"></a>归纳推理</h3><p>相较于演绎推理的易于思考，难于表达的特点来说，归纳推理正好相反。其原因便在于，当我们拿到一些有某种关系的内容时，大脑需要思考，并提供创造性思维，来将其中的共性总结出来。换言之，就是归纳推理要比演绎推理多需要一些主观能动性。 </p>
+<p>那么接下来，我来说一下归纳推理的具体步骤。</p>
+<h4 id="归纳推理的步骤"><a href="#归纳推理的步骤" class="headerlink" title="归纳推理的步骤"></a>归纳推理的步骤</h4><p>归纳推理的第一步，也是最重要的一步，就是寻找内容之间的共性，并将其总结出来。简单来说，就是用一个名词，或者是一句简单的话，来包括所有思维的相同点。举个栗子：</p>
+<p><img src="/2021/08/15/%E9%87%91%E5%AD%97%E5%A1%94-%E5%BD%92%E7%BA%B3%E6%8E%A8%E7%90%86%E4%B8%8E%E6%BC%94%E7%BB%8E%E6%8E%A8%E7%90%86/image-20210805115709310.png" srcset="/img/loading.gif" lazyload alt="image-20210805115709310"></p>
+<p>可以看到底层的每个观点都可以找到顶层思想的痕迹。也就是说，虽然底层的同类思想之间有着各种差异性，但是顶层思想却包含了它们的共同性，这就是归纳。</p>
+<p>当然，在我们找完共性之后，还要记着要分别从自上而下和自下而上两个方向，再来检查两遍，毕竟“好事多磨”嘛。</p>
+<p>那么总结一下，我们就知道归纳推理的建立是需要两个技能的：</p>
+<blockquote>
+<ol>
+<li>正确定义一组思想</li>
+<li>总结共性，并剔除同类思想之间的不相称性。</li>
+</ol>
+</blockquote>
+<h3 id="归纳推理与演绎推理的区别"><a href="#归纳推理与演绎推理的区别" class="headerlink" title="归纳推理与演绎推理的区别"></a>归纳推理与演绎推理的区别</h3><h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><p>在阐述归纳推理与演绎推理的区别之前，我想先分享两个例子，来帮助大家更好地理解演绎推理和归纳推理。</p>
+<p>首先，先说演绎推理，大家先看下面的例子：</p>
+<blockquote>
+<ol>
+<li>工党支持医疗社会化。</li>
+<li>政府中有一些人支持医疗社会化。</li>
+</ol>
+<p>结论：政府中有一些人是工党。</p>
+</blockquote>
+<p>如果大家没有感受什么异样的话，可以再看看下面这个例子：</p>
+<blockquote>
+<ol>
+<li>兔子跑得很快。</li>
+<li>马跑得很快。</li>
+</ol>
+<p>结论：马是兔子。</p>
+</blockquote>
+<p>这样，大家应该感觉到有问题了吧。这说明，有一些演绎推论只是看起来是演绎流程，但是它们的内在逻辑是有问题的。那就是第二个思想并没有针对第一个思想中的主语或谓语提出讨论，而只是把两个看起来很像的句子放到一起。所以，这种情况不属于演绎推理，而是属于归纳推理。</p>
+<p>那么既然提到了归纳推理，那我们正好也说一个例子：</p>
+<blockquote>
+<p>美国本土发现新增新冠病例。</p>
+<p>日本本土发现新增新冠病例。</p>
+<p>意大利本土发现新增新冠病例。</p>
+<p>英国本土发现新增新冠病例。</p>
+<p>法国本土发现新增新冠病例。</p>
+<p>德国本土发现新增新冠病例。</p>
+<p>新加坡本土发现新增新冠病例。</p>
+<p>泰国本土发现新增新冠病例。</p>
+<p>俄罗斯本土发现新增新冠病例。</p>
+<p>结论：世界上大部分国家均出现了新冠病毒的新增患者。</p>
+</blockquote>
+<p>上面这段话是一段典型的归纳推理，先不提内容怎么样，我想大家看到的第一反应就是啰嗦吧。实际上，这就是一段新闻，但需要注意的是新闻本身是不包含任何主观思想的。也就是说，在任何阐述作者主题思想的文章中，新闻都是没有立足之地的。如果一定要有，那么新闻所扮演的也是支持文章主题思想的一个角色，<strong>不宜太长</strong>，只要篇幅恰到好处就可以了。（明明两三句就足以支撑文章内容，为什么一定要这么冗余呢？）</p>
+<p>PS：生活中也是这样，须知有些事情过犹不及，恰到好处往往才是最难的。</p>
+<h4 id="两者之间的区别"><a href="#两者之间的区别" class="headerlink" title="两者之间的区别"></a>两者之间的区别</h4><p>前面说了这么多，总算是要讲到正题了。</p>
+<p>演绎关系的建立，要求推理过程中的第二步对第一步作出评述，并推导出一个结论。而归纳关系则基于句子结构，必须找到各句主语或谓语之间的相同点，并根据这一相同点的出结论。</p>
+<p>还要注意的是，大脑对归纳论述和演绎论述的完整性有一种预期，这使作者将思维“投射”到前方，预测作者的下一个句子。如果读者预期的结果与作者实际表达的不同，读者就会感到疑惑，不解，烦躁。因此，在呈现归纳或演绎过程之前，应当先告诉读者文章的主题思想，使读者能够更容易地跟上你的思路。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/">金字塔思维</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/%E8%A1%A8%E8%BE%BE%E7%9A%84%E9%80%BB%E8%BE%91/">表达的逻辑</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/%E8%A1%A8%E8%BE%BE%E7%9A%84%E9%80%BB%E8%BE%91/%E7%AC%AC%E4%BA%94%E7%AB%A0/">第五章</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%86%85%E5%8C%96%E7%AC%94%E8%AE%B0/">内化笔记</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BD%92%E7%BA%B3%E6%8E%A8%E7%90%86/">归纳推理</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%BC%94%E7%BB%8E%E6%8E%A8%E7%90%86/">演绎推理</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/08/15/%E9%87%91%E5%AD%97%E5%A1%94-%E5%BA%94%E7%94%A8%E9%80%BB%E8%BE%91%E9%A1%BA%E5%BA%8F/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">金字塔(六)-应用逻辑顺序</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/08/15/%E9%87%91%E5%AD%97%E5%A1%94-%E5%BA%8F%E8%A8%80%E7%9A%84%E5%85%B7%E4%BD%93%E5%86%99%E6%B3%95/">
+                        <span class="hidden-mobile">金字塔(四)-序言的具体写法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","appKey":"dJ07LxI5XAsyjJ3DB7zmCUL3","placeholder":"走过路过不要错过,买不买的瞧一瞧也好啊!","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"requiredFields":[]},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://blog.csdn.net/weixin_43580339?spm=1010.2135.3001.5343" target="_blank" rel="nofollow noopener"><span>CSDN</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/yb705" target="_blank" rel="nofollow noopener"><span>Github</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

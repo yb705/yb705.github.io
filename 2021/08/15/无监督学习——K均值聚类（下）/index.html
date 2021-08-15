@@ -1,0 +1,622 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Yyb">
+  <meta name="keywords" content="">
+  
+  <title>无监督学习——K均值聚类（下） - Yyb的花园</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yb705.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","app_key":"dJ07LxI5XAsyjJ3DB7zmCUL3","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Yyb的花园" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Yyb的花园</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/post.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="无监督学习——K均值聚类（下）">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Yyb
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-08-15 12:33" pubdate>
+        2021年8月15日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      55
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">无监督学习——K均值聚类（下）</h1>
+            
+            <div class="markdown-body">
+              <h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>之前我们讲了聚类中比较常用的K均值算法，包括原理，相关参数以及实际操作。那么本篇文章，我们来讲一下更复杂一点的内容，即K均值，PCA与NMF之间的比较。希望大家在阅读下面的内容之前，已经了解了K均值，PCA与NMF算法的基础知识。</p>
+<p>如果不清楚的话，可以点击下面的链接，来简单阅读下：<br>K均值：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/119212829">无监督学习——K均值聚类（上）</a><br>PCA：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/118222281">主成分分析（PCA）应用（上）</a>；<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/118223829">主成分分析（PCA）应用（下）</a><br>NMF：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/118416483">非负矩阵分解（NMF）</a></p>
+<h2 id="图像重建与矢量量化"><a href="#图像重建与矢量量化" class="headerlink" title="图像重建与矢量量化"></a>图像重建与矢量量化</h2><p>虽然k均值是一种聚类算法，但在k均值和分解方法（比如之前讨论的PCA和NMF）之间存在一些有趣的相似之处。大家可能还记得，PCA试图找到数据中方差最大的方向，而NMF试图找到累加的分量，这通常对应于数据的“极值”或“部分”。两种方法都试图将数据点表示为一些分量之和。与之相反，k均值则尝试利用簇中心来表示每个数据点。你可以将其看作仅用一个分量来表示每个数据点，该分量有簇中心给出。这种观点将k均值看作是一种分解方法，其中每个点用单一分量来表示，这种观点被称为<strong>矢量量化</strong>。<strong>实际上，对于k均值来说，重建就是在训练集中找到的最近的簇中心。</strong></p>
+<p>接下来，我们通过一个实际例子来比较三者之间的关系。</p>
+<p><strong>1.数据来源</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/atulanandjha/lfwpeople?select=pairs.txt">LFW - People (Face Recognition)：https://www.kaggle.com/atulanandjha/lfwpeople?select=pairs.txt</a></p>
+<p>这是kaggle网站上一个专门用来做人脸识别的数据集，收录了网站上超过13000张人脸图片。接下来把这份图片数据集下载下来并解压。</p>
+<p>PS：下载下来的图片保存在lfw-funneled.tgz文件里，”.tgz”是一种压缩文件的格式，所以我们只要解压缩就可以了。</p>
+<p>解压完毕后，我们就可以看见图片存储在以每人的名字所命名的文件里，每个文件夹包含数量不同的照片，而每个照片又分别以名字+数字的名字命名，方便我们使用。</p>
+<p><strong>2.数据处理</strong></p>
+<p>我之前写了一篇文章来讲图像数据处理方面的知识，需要了解的朋友可以自行阅读这篇文章，这里就不再赘述了。（传送门：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/118222281">主成分分析（PCA）应用（上）</a>）</p>
+<p>处理代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br>all_folds = os.listdir(<span class="hljs-string">r&#x27;C:\Users\Administrator\Desktop\源数据-分析\lfw_funneled&#x27;</span>)<br>all_folds = [x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> all_folds <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;.&#x27;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> x]<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd <br>numbers_img=pd.DataFrame(columns=[<span class="hljs-string">&quot;文件名称&quot;</span>,<span class="hljs-string">&quot;图片数量&quot;</span>])<span class="hljs-comment">####统计各个文件夹里面的图片数量</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(all_folds)):<br>    path = <span class="hljs-string">&#x27;C:\\Users\\Administrator\\Desktop\\源数据-分析\\lfw_funneled\\&#x27;</span>+all_folds[i]<br>    all_files = os.listdir(path)<br>    numbers_img.loc[i]=[all_folds[i],<span class="hljs-built_in">len</span>(all_files)]   <br>img_10=numbers_img[numbers_img[<span class="hljs-string">&quot;图片数量&quot;</span>]==<span class="hljs-number">10</span>].reset_index()<span class="hljs-comment">#####为了降低数据偏斜，选取图片数量为10的文件（否则，特征提取会被图片数量过多的数据影响）</span><br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image <br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br>image_arr_list=[]<span class="hljs-comment">###存放灰度值numpy数组</span><br>flat_arr_list=[]<span class="hljs-comment">###存放灰度值一维数组</span><br>target_list=[]<span class="hljs-comment">###存放目标值</span><br><span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(img_10[<span class="hljs-string">&quot;文件名称&quot;</span>])):<br>    file_address=<span class="hljs-string">&#x27;C:\\Users\\Administrator\\Desktop\\源数据-分析\\lfw_funneled\\&#x27;</span>+img_10[<span class="hljs-string">&quot;文件名称&quot;</span>][m]+<span class="hljs-string">&quot;\\&quot;</span><span class="hljs-comment">####指定特定的文件地址</span><br>    image_name=os.listdir(file_address)<span class="hljs-comment">###获得指定文件夹下的左右文件名称</span><br>    <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> image_name:<br>        image=Image.<span class="hljs-built_in">open</span>(file_address+n)<br>        image=image.convert(<span class="hljs-string">&#x27;L&#x27;</span>)<span class="hljs-comment">###RGB（红绿蓝）像素值转换成灰度值</span><br>        image_arr=np.array(image,<span class="hljs-string">&quot;f&quot;</span>)<span class="hljs-comment">###灰度值转化成numpy数组（二维）</span><br>        flat_arr=image_arr.ravel()<span class="hljs-comment">###将数组扁平化处理，返回的是一个一维数组的非副本视图，就是将几行的数据强行拉成一行</span><br>        image_arr_list.append(image_arr)<br>        flat_arr_list.append(flat_arr)<br>        target_list.append(m)<span class="hljs-comment">###这里的m设定是数字，如果是文本的话后面的算法会报错</span><br>faces_dict=&#123;<span class="hljs-string">&quot;images&quot;</span>:np.array(image_arr_list),<span class="hljs-string">&quot;data&quot;</span>:np.array(flat_arr_list),<span class="hljs-string">&quot;target&quot;</span>:np.array(target_list)&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>3.划分数据集并进行建模</strong></p>
+<p>下面我们划分数据集，并利用NMF，PCA和K均值来依次进行建模，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<br>train=faces_dict[<span class="hljs-string">&quot;data&quot;</span>]/<span class="hljs-number">255</span><br>X_train,X_test,y_train,y_test=train_test_split(train,faces_dict[<span class="hljs-string">&quot;target&quot;</span>],random_state=<span class="hljs-number">0</span>)<span class="hljs-comment">###划分训练集和测试集</span><br><span class="hljs-keyword">from</span> sklearn.decomposition <span class="hljs-keyword">import</span> PCA<br><span class="hljs-keyword">from</span> sklearn.cluster <span class="hljs-keyword">import</span> KMeans<br><span class="hljs-keyword">from</span> sklearn.decomposition <span class="hljs-keyword">import</span> NMF<br>nmf=NMF(n_components=<span class="hljs-number">100</span>,random_state=<span class="hljs-number">0</span>)<br>nmf.fit(X_train)<br>pca=PCA(n_components=<span class="hljs-number">100</span>,random_state=<span class="hljs-number">0</span>)<br>pca.fit(X_train)<br>kmeans=KMeans(n_clusters=<span class="hljs-number">100</span>,random_state=<span class="hljs-number">0</span>)<br>kmeans.fit(X_train)<span class="hljs-comment">###注意这是训练数据</span><br></code></pre></td></tr></table></figure>
+
+<p>然后，我们依次利用训练好的模型，依次生成重建数据集：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">X_reconstructed_pca=pca.inverse_transform(pca.transform(X_test))<span class="hljs-comment">###注意这是测试数据模型</span><br>X_reconstructed_kmeans=kmeans.cluster_centers_[kmeans.predict(X_test)]<br>X_reconstructed_nmf=np.dot(nmf.transform(X_test),nmf.components_)<br></code></pre></td></tr></table></figure>
+
+<p><strong>4.恢复图像</strong></p>
+<p>为了方便接下来的图像展示，我们首先将上面的重建数据整合在一起，构成一个二维列表：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">list</span>=[X_test,X_reconstructed_nmf,X_reconstructed_kmeans,X_reconstructed_pca]<br>X_reconstructed=[[],[],[],[]]<br>shape=image_arr.shape<span class="hljs-comment">###获得二维数组的维度</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(<span class="hljs-built_in">list</span>)):<br>    <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> <span class="hljs-built_in">list</span>[i]:<br>        vector=np.matrix(m)<span class="hljs-comment">####将一维数组转换成矩阵</span><br>        arr2=np.asarray(vector).reshape(shape)<span class="hljs-comment">###可以通过这个矩阵将一维数组转换为原灰度值numpy数组，即arr2=image_arr</span><br>        X_reconstructed[i].append(arr2)<br></code></pre></td></tr></table></figure>
+
+<p>接下来，为了比较方便，我们只选取前5张图像，并利用多图表结构将其展现出来</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br>plt.style.use(<span class="hljs-string">&quot;fivethirtyeight&quot;</span>)<br>sns.set_style(&#123;<span class="hljs-string">&#x27;font.sans-serif&#x27;</span>:[<span class="hljs-string">&#x27;SimHei&#x27;</span>,<span class="hljs-string">&#x27;Arial&#x27;</span>]&#125;)<br>fig,axes=plt.subplots(<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,figsize=(<span class="hljs-number">45</span>, <span class="hljs-number">30</span>)) <br>plt.suptitle(<span class="hljs-string">&#x27;K均值，PCA与NMF的图像还原比较&#x27;</span>, fontsize=<span class="hljs-number">80</span>, ha=<span class="hljs-string">&#x27;center&#x27;</span>)<br><span class="hljs-keyword">for</span> l <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(X_reconstructed)):<br>    <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):<br>        axes[l,n].imshow(X_reconstructed[l][n],cmap=<span class="hljs-string">&quot;gray&quot;</span>)<span class="hljs-comment">###通过灰度值还原图像</span><br>axes[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>].set_ylabel(<span class="hljs-string">&quot;原始图片&quot;</span>,fontsize=<span class="hljs-number">50</span>) <br>axes[<span class="hljs-number">1</span>,<span class="hljs-number">0</span>].set_ylabel(<span class="hljs-string">&quot;NMF&quot;</span>,fontsize=<span class="hljs-number">50</span>)<br>axes[<span class="hljs-number">2</span>,<span class="hljs-number">0</span>].set_ylabel(<span class="hljs-string">&quot;K均值&quot;</span>,fontsize=<span class="hljs-number">50</span>)<br>axes[<span class="hljs-number">3</span>,<span class="hljs-number">0</span>].set_ylabel(<span class="hljs-string">&quot;PCA&quot;</span>,fontsize=<span class="hljs-number">50</span>)<br>plt.show()<span class="hljs-comment">###由于之前已经划分了数据集，这是利用训练出来的模型对测试数据集进行的图像恢复，所以只有38个图像，而不是原来的150个图像</span><br></code></pre></td></tr></table></figure>
+
+<p>最终结果如下所示：</p>
+<p><img src="https://img-blog.csdnimg.cn/cc0d37c9ecc046ed86a453402a9a870e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>上图就是利用了100个分量（簇中心)的k均值，PCA和NMF的图像重建对比，其中k均值的每张图像中仅使用了一个簇中心。可以看出，相对来说还是k均值的表现要好一点。当然，PCA和NMF亦可以通过调整参数来提高精度，感兴趣的朋友可以自行探究。</p>
+<p><strong>5.矢量量化</strong></p>
+<p>利用K均值做矢量量化的一个有趣之处在于，可以用比输入维度更多的簇来对数据进行编码。让我们回到two_moons数据。利用PCA或NMF，我们对这个数据无能为力，因为它只有两个维度。如果使用PCA和NMF将其降维到一维，将会完全破坏数据结构。但通过使用更多的簇中心，我们可以用K均值找到一种更具表现力的表示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> make_moons<br>plt.rcParams[<span class="hljs-string">&#x27;axes.unicode_minus&#x27;</span>] = <span class="hljs-literal">False</span><span class="hljs-comment">###防止坐标轴符号显示不出来</span><br>X,y=make_moons(n_samples=<span class="hljs-number">200</span>,noise=<span class="hljs-number">0.05</span>,random_state=<span class="hljs-number">0</span>)<br>kmeans=KMeans(n_clusters=<span class="hljs-number">10</span>,random_state=<span class="hljs-number">0</span>)<span class="hljs-comment">###使用两个簇</span><br>kmeans.fit(X)<br>y_pred=kmeans.predict(X)<span class="hljs-comment">###与labels_相同，为新数据点分配簇标签</span><br>plt.scatter(X[:,<span class="hljs-number">0</span>],X[:,<span class="hljs-number">1</span>],c=y_pred,cmap=<span class="hljs-string">&quot;Paired&quot;</span>,s=<span class="hljs-number">60</span>)<br>plt.scatter(kmeans.cluster_centers_[:,<span class="hljs-number">0</span>],kmeans.cluster_centers_[:,<span class="hljs-number">1</span>],s=<span class="hljs-number">60</span>,marker=<span class="hljs-string">&quot;*&quot;</span>,c=<span class="hljs-built_in">range</span>(kmeans.n_clusters),linewidth=<span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/90543c394f3c49ad9401fd807e8228e4.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><strong>我们使用了10个簇中心，也就是说，现在每10个点都被分配了0到9之间的一个数字。我们可以将其看作10个分量表示的数据（有10个新特征)，只有表示该点对应的簇中心的那个特征不为0，其它特征均为0。利用这个10维表示，我们就可以用线性模型来划分两个半月形，而利用原始的两个特征是不可能做到这一点的。</strong></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>K均值是非常流行的聚类算法，因为它不仅相对容易理解和实现，而且运行速度也相对较快。同时K均值可以轻松扩展到大型数据集。</p>
+<p>而K均值的缺点之一在于，它依赖随机初始化，也就是说，算法的输出依赖于随机种子。默认情况下scikit-learn用10种不同的随机初始化将算法运行10次，并返回最佳结果。当然，K均值还有一个缺点，就是簇形状的假设的约束性较强，而且还要求指定所要寻找的簇的个数（在现实世界中可能并不知道这个数字）。</p>
+<p>有很多地方做的不是很好，欢迎网友来提出建议，也希望可以遇到些朋友来一起交流讨论。序</p>
+<p>之前我们讲了聚类中比较常用的K均值算法，包括原理，相关参数以及实际操作。那么本篇文章，我们来讲一下更复杂一点的内容，即K均值，PCA与NMF之间的比较。希望大家在阅读下面的内容之前，已经了解了K均值，PCA与NMF算法的基础知识。</p>
+<p>如果不清楚的话，可以点击下面的链接，来简单阅读下：<br>K均值：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/119212829">无监督学习——K均值聚类（上）</a><br>PCA：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/118222281">主成分分析（PCA）应用（上）</a>；<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/118223829">主成分分析（PCA）应用（下）</a><br>NMF：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/118416483">非负矩阵分解（NMF）</a></p>
+<h2 id="图像重建与矢量量化-1"><a href="#图像重建与矢量量化-1" class="headerlink" title="图像重建与矢量量化"></a>图像重建与矢量量化</h2><p>虽然k均值是一种聚类算法，但在k均值和分解方法（比如之前讨论的PCA和NMF）之间存在一些有趣的相似之处。大家可能还记得，PCA试图找到数据中方差最大的方向，而NMF试图找到累加的分量，这通常对应于数据的“极值”或“部分”。两种方法都试图将数据点表示为一些分量之和。与之相反，k均值则尝试利用簇中心来表示每个数据点。你可以将其看作仅用一个分量来表示每个数据点，该分量有簇中心给出。这种观点将k均值看作是一种分解方法，其中每个点用单一分量来表示，这种观点被称为<strong>矢量量化</strong>。<strong>实际上，对于k均值来说，重建就是在训练集中找到的最近的簇中心。</strong></p>
+<p>接下来，我们通过一个实际例子来比较三者之间的关系。</p>
+<p><strong>1.数据来源</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/atulanandjha/lfwpeople?select=pairs.txt">LFW - People (Face Recognition)：https://www.kaggle.com/atulanandjha/lfwpeople?select=pairs.txt</a></p>
+<p>这是kaggle网站上一个专门用来做人脸识别的数据集，收录了网站上超过13000张人脸图片。接下来把这份图片数据集下载下来并解压。</p>
+<p>PS：下载下来的图片保存在lfw-funneled.tgz文件里，”.tgz”是一种压缩文件的格式，所以我们只要解压缩就可以了。</p>
+<p>解压完毕后，我们就可以看见图片存储在以每人的名字所命名的文件里，每个文件夹包含数量不同的照片，而每个照片又分别以名字+数字的名字命名，方便我们使用。</p>
+<p><strong>2.数据处理</strong></p>
+<p>我之前写了一篇文章来讲图像数据处理方面的知识，需要了解的朋友可以自行阅读这篇文章，这里就不再赘述了。（传送门：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/118222281">主成分分析（PCA）应用（上）</a>）</p>
+<p>处理代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br>all_folds = os.listdir(<span class="hljs-string">r&#x27;C:\Users\Administrator\Desktop\源数据-分析\lfw_funneled&#x27;</span>)<br>all_folds = [x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> all_folds <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;.&#x27;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> x]<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd <br>numbers_img=pd.DataFrame(columns=[<span class="hljs-string">&quot;文件名称&quot;</span>,<span class="hljs-string">&quot;图片数量&quot;</span>])<span class="hljs-comment">####统计各个文件夹里面的图片数量</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(all_folds)):<br>    path = <span class="hljs-string">&#x27;C:\\Users\\Administrator\\Desktop\\源数据-分析\\lfw_funneled\\&#x27;</span>+all_folds[i]<br>    all_files = os.listdir(path)<br>    numbers_img.loc[i]=[all_folds[i],<span class="hljs-built_in">len</span>(all_files)]   <br>img_10=numbers_img[numbers_img[<span class="hljs-string">&quot;图片数量&quot;</span>]==<span class="hljs-number">10</span>].reset_index()<span class="hljs-comment">#####为了降低数据偏斜，选取图片数量为10的文件（否则，特征提取会被图片数量过多的数据影响）</span><br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image <br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br>image_arr_list=[]<span class="hljs-comment">###存放灰度值numpy数组</span><br>flat_arr_list=[]<span class="hljs-comment">###存放灰度值一维数组</span><br>target_list=[]<span class="hljs-comment">###存放目标值</span><br><span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(img_10[<span class="hljs-string">&quot;文件名称&quot;</span>])):<br>    file_address=<span class="hljs-string">&#x27;C:\\Users\\Administrator\\Desktop\\源数据-分析\\lfw_funneled\\&#x27;</span>+img_10[<span class="hljs-string">&quot;文件名称&quot;</span>][m]+<span class="hljs-string">&quot;\\&quot;</span><span class="hljs-comment">####指定特定的文件地址</span><br>    image_name=os.listdir(file_address)<span class="hljs-comment">###获得指定文件夹下的左右文件名称</span><br>    <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> image_name:<br>        image=Image.<span class="hljs-built_in">open</span>(file_address+n)<br>        image=image.convert(<span class="hljs-string">&#x27;L&#x27;</span>)<span class="hljs-comment">###RGB（红绿蓝）像素值转换成灰度值</span><br>        image_arr=np.array(image,<span class="hljs-string">&quot;f&quot;</span>)<span class="hljs-comment">###灰度值转化成numpy数组（二维）</span><br>        flat_arr=image_arr.ravel()<span class="hljs-comment">###将数组扁平化处理，返回的是一个一维数组的非副本视图，就是将几行的数据强行拉成一行</span><br>        image_arr_list.append(image_arr)<br>        flat_arr_list.append(flat_arr)<br>        target_list.append(m)<span class="hljs-comment">###这里的m设定是数字，如果是文本的话后面的算法会报错</span><br>faces_dict=&#123;<span class="hljs-string">&quot;images&quot;</span>:np.array(image_arr_list),<span class="hljs-string">&quot;data&quot;</span>:np.array(flat_arr_list),<span class="hljs-string">&quot;target&quot;</span>:np.array(target_list)&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>3.划分数据集并进行建模</strong></p>
+<p>下面我们划分数据集，并利用NMF，PCA和K均值来依次进行建模，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<br>train=faces_dict[<span class="hljs-string">&quot;data&quot;</span>]/<span class="hljs-number">255</span><br>X_train,X_test,y_train,y_test=train_test_split(train,faces_dict[<span class="hljs-string">&quot;target&quot;</span>],random_state=<span class="hljs-number">0</span>)<span class="hljs-comment">###划分训练集和测试集</span><br><span class="hljs-keyword">from</span> sklearn.decomposition <span class="hljs-keyword">import</span> PCA<br><span class="hljs-keyword">from</span> sklearn.cluster <span class="hljs-keyword">import</span> KMeans<br><span class="hljs-keyword">from</span> sklearn.decomposition <span class="hljs-keyword">import</span> NMF<br>nmf=NMF(n_components=<span class="hljs-number">100</span>,random_state=<span class="hljs-number">0</span>)<br>nmf.fit(X_train)<br>pca=PCA(n_components=<span class="hljs-number">100</span>,random_state=<span class="hljs-number">0</span>)<br>pca.fit(X_train)<br>kmeans=KMeans(n_clusters=<span class="hljs-number">100</span>,random_state=<span class="hljs-number">0</span>)<br>kmeans.fit(X_train)<span class="hljs-comment">###注意这是训练数据</span><br></code></pre></td></tr></table></figure>
+
+<p>然后，我们依次利用训练好的模型，依次生成重建数据集：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">X_reconstructed_pca=pca.inverse_transform(pca.transform(X_test))<span class="hljs-comment">###注意这是测试数据模型</span><br>X_reconstructed_kmeans=kmeans.cluster_centers_[kmeans.predict(X_test)]<br>X_reconstructed_nmf=np.dot(nmf.transform(X_test),nmf.components_)<br></code></pre></td></tr></table></figure>
+
+<p><strong>4.恢复图像</strong></p>
+<p>为了方便接下来的图像展示，我们首先将上面的重建数据整合在一起，构成一个二维列表：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">list</span>=[X_test,X_reconstructed_nmf,X_reconstructed_kmeans,X_reconstructed_pca]<br>X_reconstructed=[[],[],[],[]]<br>shape=image_arr.shape<span class="hljs-comment">###获得二维数组的维度</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(<span class="hljs-built_in">list</span>)):<br>    <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> <span class="hljs-built_in">list</span>[i]:<br>        vector=np.matrix(m)<span class="hljs-comment">####将一维数组转换成矩阵</span><br>        arr2=np.asarray(vector).reshape(shape)<span class="hljs-comment">###可以通过这个矩阵将一维数组转换为原灰度值numpy数组，即arr2=image_arr</span><br>        X_reconstructed[i].append(arr2)<br></code></pre></td></tr></table></figure>
+
+<p>接下来，为了比较方便，我们只选取前5张图像，并利用多图表结构将其展现出来</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br>plt.style.use(<span class="hljs-string">&quot;fivethirtyeight&quot;</span>)<br>sns.set_style(&#123;<span class="hljs-string">&#x27;font.sans-serif&#x27;</span>:[<span class="hljs-string">&#x27;SimHei&#x27;</span>,<span class="hljs-string">&#x27;Arial&#x27;</span>]&#125;)<br>fig,axes=plt.subplots(<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,figsize=(<span class="hljs-number">45</span>, <span class="hljs-number">30</span>)) <br>plt.suptitle(<span class="hljs-string">&#x27;K均值，PCA与NMF的图像还原比较&#x27;</span>, fontsize=<span class="hljs-number">80</span>, ha=<span class="hljs-string">&#x27;center&#x27;</span>)<br><span class="hljs-keyword">for</span> l <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(X_reconstructed)):<br>    <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):<br>        axes[l,n].imshow(X_reconstructed[l][n],cmap=<span class="hljs-string">&quot;gray&quot;</span>)<span class="hljs-comment">###通过灰度值还原图像</span><br>axes[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>].set_ylabel(<span class="hljs-string">&quot;原始图片&quot;</span>,fontsize=<span class="hljs-number">50</span>) <br>axes[<span class="hljs-number">1</span>,<span class="hljs-number">0</span>].set_ylabel(<span class="hljs-string">&quot;NMF&quot;</span>,fontsize=<span class="hljs-number">50</span>)<br>axes[<span class="hljs-number">2</span>,<span class="hljs-number">0</span>].set_ylabel(<span class="hljs-string">&quot;K均值&quot;</span>,fontsize=<span class="hljs-number">50</span>)<br>axes[<span class="hljs-number">3</span>,<span class="hljs-number">0</span>].set_ylabel(<span class="hljs-string">&quot;PCA&quot;</span>,fontsize=<span class="hljs-number">50</span>)<br>plt.show()<span class="hljs-comment">###由于之前已经划分了数据集，这是利用训练出来的模型对测试数据集进行的图像恢复，所以只有38个图像，而不是原来的150个图像</span><br></code></pre></td></tr></table></figure>
+
+<p>最终结果如下所示：</p>
+<p><img src="https://img-blog.csdnimg.cn/cc0d37c9ecc046ed86a453402a9a870e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>上图就是利用了100个分量（簇中心)的k均值，PCA和NMF的图像重建对比，其中k均值的每张图像中仅使用了一个簇中心。可以看出，相对来说还是k均值的表现要好一点。当然，PCA和NMF亦可以通过调整参数来提高精度，感兴趣的朋友可以自行探究。</p>
+<p><strong>5.矢量量化</strong></p>
+<p>利用K均值做矢量量化的一个有趣之处在于，可以用比输入维度更多的簇来对数据进行编码。让我们回到two_moons数据。利用PCA或NMF，我们对这个数据无能为力，因为它只有两个维度。如果使用PCA和NMF将其降维到一维，将会完全破坏数据结构。但通过使用更多的簇中心，我们可以用K均值找到一种更具表现力的表示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> make_moons<br>plt.rcParams[<span class="hljs-string">&#x27;axes.unicode_minus&#x27;</span>] = <span class="hljs-literal">False</span><span class="hljs-comment">###防止坐标轴符号显示不出来</span><br>X,y=make_moons(n_samples=<span class="hljs-number">200</span>,noise=<span class="hljs-number">0.05</span>,random_state=<span class="hljs-number">0</span>)<br>kmeans=KMeans(n_clusters=<span class="hljs-number">10</span>,random_state=<span class="hljs-number">0</span>)<span class="hljs-comment">###使用两个簇</span><br>kmeans.fit(X)<br>y_pred=kmeans.predict(X)<span class="hljs-comment">###与labels_相同，为新数据点分配簇标签</span><br>plt.scatter(X[:,<span class="hljs-number">0</span>],X[:,<span class="hljs-number">1</span>],c=y_pred,cmap=<span class="hljs-string">&quot;Paired&quot;</span>,s=<span class="hljs-number">60</span>)<br>plt.scatter(kmeans.cluster_centers_[:,<span class="hljs-number">0</span>],kmeans.cluster_centers_[:,<span class="hljs-number">1</span>],s=<span class="hljs-number">60</span>,marker=<span class="hljs-string">&quot;*&quot;</span>,c=<span class="hljs-built_in">range</span>(kmeans.n_clusters),linewidth=<span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/90543c394f3c49ad9401fd807e8228e4.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU4MDMzOQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><strong>我们使用了10个簇中心，也就是说，现在每10个点都被分配了0到9之间的一个数字。我们可以将其看作10个分量表示的数据（有10个新特征)，只有表示该点对应的簇中心的那个特征不为0，其它特征均为0。利用这个10维表示，我们就可以用线性模型来划分两个半月形，而利用原始的两个特征是不可能做到这一点的。</strong></p>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p>K均值是非常流行的聚类算法，因为它不仅相对容易理解和实现，而且运行速度也相对较快。同时K均值可以轻松扩展到大型数据集。</p>
+<p>而K均值的缺点之一在于，它依赖随机初始化，也就是说，算法的输出依赖于随机种子。默认情况下scikit-learn用10种不同的随机初始化将算法运行10次，并返回最佳结果。当然，K均值还有一个缺点，就是簇形状的假设的约束性较强，而且还要求指定所要寻找的簇的个数（在现实世界中可能并不知道这个数字）。</p>
+<p>有很多地方做的不是很好，欢迎网友来提出建议，也希望可以遇到些朋友来一起交流讨论。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">无监督学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/K%E5%9D%87%E5%80%BC%E8%81%9A%E7%B1%BB/">K均值聚类</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/">人脸识别</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9B%BE%E5%83%8F%E8%81%9A%E7%B1%BB/">图像聚类</a>
+                    
+                      <a class="hover-with-bg" href="/tags/PCA%E4%B8%8ENMF/">PCA与NMF</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/08/15/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E5%87%9D%E8%81%9A%E8%81%9A%E7%B1%BB/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">无监督学习——凝聚聚类</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/08/15/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94K%E5%9D%87%E5%80%BC%E8%81%9A%E7%B1%BB%EF%BC%88%E4%B8%8A%EF%BC%89/">
+                        <span class="hidden-mobile">无监督学习——K均值聚类（上）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","appKey":"dJ07LxI5XAsyjJ3DB7zmCUL3","placeholder":"走过路过不要错过,买不买的瞧一瞧也好啊!","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"requiredFields":[]},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://blog.csdn.net/weixin_43580339?spm=1010.2135.3001.5343" target="_blank" rel="nofollow noopener"><span>CSDN</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/yb705" target="_blank" rel="nofollow noopener"><span>Github</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

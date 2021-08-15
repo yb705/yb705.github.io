@@ -260,7 +260,9 @@
             <div class="markdown-body">
               <h2 id="算法简介"><a href="#算法简介" class="headerlink" title="算法简介"></a>算法简介</h2><p><em><strong>SVM</strong></em></p>
 <p>之前我们用了很多线性算法来做预测模型，像是<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/112277248">逻辑算法（LogisticRegression)</a>,<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/112983192">lasso</a>,<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/112931842">岭回归</a>。但现实生活中，很多事情不是线性可分的（即画一条直线就能分类的），而SVM就是专治线性不可分，把分类问题转化为平面分类问题。这个算法中，我们将每一个数据项作为一个点，而在n维空间中(其中n是你拥有的特征数)作为一个点，每一个特征值都是一个特定坐标的值。然后，我们通过查找区分这两个类的超平面来进行分类。</p>
-<p>我们用一张图形来说明这一点：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331144958674.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>在实际使用过程中，我们并不需要了解确定最佳分类平面的原理，只需要记住一个经验法则来确定正确的超平面:“选择能更好地隔离两个类的超平面”。在这个场景中，蓝色超平面“A”出色地完成了这项工作。</p>
+<p>我们用一张图形来说明这一点：</p>
+<p><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331144958674.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>在实际使用过程中，我们并不需要了解确定最佳分类平面的原理，只需要记住一个经验法则来确定正确的超平面:“选择能更好地隔离两个类的超平面”。在这个场景中，蓝色超平面“A”出色地完成了这项工作。</p>
 <h2 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h2><p><a target="_blank" rel="noopener" href="https://www.kaggle.com/andrewmvd/fetal-health-classification">胎儿健康分类：https://www.kaggle.com/andrewmvd/fetal-health-classification</a></p>
 <p><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210326150227435.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>该数据包含胎儿心电图，胎动，子宫收缩等特征值，而我们所需要做的就是通过这些特征值来对胎儿的健康状况(fetal_health)进行分类。</p>
@@ -271,14 +273,18 @@
 
 <p>老规矩，上来先依次导入建模需要的各个模块，并读取文件。</p>
 <p><strong>2.清洗数据</strong></p>
-<p>查找缺失值：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210326150702818.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>从上面的结果来看，数据中没有缺失值。</p>
+<p>查找缺失值：</p>
+<p><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210326150702818.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>从上面的结果来看，数据中没有缺失值。</p>
 <p><strong>3.建模</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">train=health.drop([<span class="hljs-string">&quot;fetal_health&quot;</span>],axis=<span class="hljs-number">1</span>)<br>X_train,X_test,y_train,y_test=train_test_split(train,health[<span class="hljs-string">&quot;fetal_health&quot;</span>],random_state=<span class="hljs-number">1</span>)<br><span class="hljs-comment">###考虑到接下来可能需要进行其他的操作，所以定了一个随机种子，保证接下来的train和test是同一组数</span><br></code></pre></td></tr></table></figure>
 
 <p>划分列索引为特征值和预测值，并将数据划分成训练集和测试集。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">svm_linear=svm.SVC(C=<span class="hljs-number">10</span>,kernel=<span class="hljs-string">&quot;linear&quot;</span>,decision_function_shape=<span class="hljs-string">&quot;ovr&quot;</span>)<span class="hljs-comment">#参数部分会在下面进行讲解</span><br>svm_linear.fit(X_train,y_train)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;SVM训练模型评分：&quot;</span>+<span class="hljs-built_in">str</span>(accuracy_score(y_train,svm_linear.predict(X_train))))<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;SVM待测模型评分：&quot;</span>+<span class="hljs-built_in">str</span>(accuracy_score(y_test,svm_linear.predict(X_test))))<br></code></pre></td></tr></table></figure>
 
-<p>引入SVM算法，并将算法中的参数依次设立好，进行建模后，对测试集进行精度评分，得到的结果如下：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331145934753.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>可以看到，该模型的精度为89%左右。</p>
+<p>引入SVM算法，并将算法中的参数依次设立好，进行建模后，对测试集进行精度评分，得到的结果如下：</p>
+<p><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331145934753.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>可以看到，该模型的精度为89%左右。</p>
 <p><strong>4.参数</strong></p>
 <p>在这里我们只讲解几个重要的参数，对于其它的参数，朋友们可以自行探究。</p>
 <blockquote>
@@ -287,7 +293,8 @@
 <p>1.<strong>C</strong> ：惩罚参数，通常默认为1。 C越大，表明越不允许分类出错，但是C越大可能会造成过拟合，泛化效果太低。C越小，正则化越强，分类将不会关注分类是否正确的问题，只要求间隔越大越好，此时分类也没有意义。所以，这其中需要朋友们做一些调整。</p>
 <p>2.<strong>kernel（核函数）</strong> ：核函数的引入是为了解决线性不可分的问题，将分类点映射到高维空间中以后，转化为可线性分割的问题。</p>
 <p>我们用一张表来说明核函数的几个参数：</p>
-<p><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331152357255.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>这其中最常用的核函数是<strong>Linear核</strong>与<strong>RBF核</strong>：</p>
+<p><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331152357255.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>这其中最常用的核函数是<strong>Linear核</strong>与<strong>RBF核</strong>：</p>
 <p>（1）<strong>Linear核</strong>：主要用于线性可分的情形，参数少，速度快，对于一般数据，分类效果已经很理想了。</p>
 <p>（2）<strong>RBF核</strong>：主要用于线性不可分的情形，相比其它线性算法来说这也是一个非常突出的一个优点了。无论是小样本还是大样本，高维还是低维，RBF核函数均适用。</p>
 <p>接下来用一段分类边界函数，就能很明显地展现出这两者的区别：</p>
@@ -296,14 +303,19 @@
 <p>手动设定一个随机的平面分布点</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn <span class="hljs-keyword">import</span> svm<br>clf = svm.SVC(C=<span class="hljs-number">1</span>,kernel=<span class="hljs-string">&quot;linear&quot;</span>,decision_function_shape=<span class="hljs-string">&quot;ovo&quot;</span>)<br>clf.fit(X, y)<br>plot_decision_boundary(<span class="hljs-keyword">lambda</span> x: clf.predict(x))<br>plt.title(<span class="hljs-string">&quot;SVM-Linearly&quot;</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
 
-<p>咱们先来瞄一眼线性核分类对于它的分类效果：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331153225903.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>接下来看看rbf核对它进行非线性分类：</p>
+<p>咱们先来瞄一眼线性核分类对于它的分类效果：</p>
+<p><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331153225903.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>接下来看看rbf核对它进行非线性分类：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">clf = svm.SVC(C=<span class="hljs-number">1</span>,kernel=<span class="hljs-string">&quot;rbf&quot;</span>,decision_function_shape=<span class="hljs-string">&quot;ovo&quot;</span>)<br>clf.fit(X, y)<br>plot_decision_boundary(<span class="hljs-keyword">lambda</span> x: clf.predict(x))<br>plt.title(<span class="hljs-string">&quot;SVM-Nonlinearity&quot;</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
 
-<p>结果如下所示：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331153412296.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>从上面两个图可以很轻松的看出来linear核与rbf核的区别，在上面的两个结果中，很明显rbf核函数的模型精度更好一些。但是在运行过程中，却可以感觉到选用rbf核函数比linear核函数运行速度要稍慢一些，并且随着数据量的增大，运行时间是会一直增加的。</p>
+<p>结果如下所示：</p>
+<p><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/20210331153412296.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>从上面两个图可以很轻松的看出来linear核与rbf核的区别，在上面的两个结果中，很明显rbf核函数的模型精度更好一些。但是在运行过程中，却可以感觉到选用rbf核函数比linear核函数运行速度要稍慢一些，并且随着数据量的增大，运行时间是会一直增加的。</p>
 <p>3.<strong>decision_function_shape</strong>:原始的svm只是用于二分类的问题，如果将其扩展到多分类问题，就要采取一定的融合策略，<strong>‘ovo’一对一</strong>，就是两两之间进行划分，<strong>‘ovr’一对多</strong>就是一类与其他类别进行划分。<br>这里重点讲一下<strong>一对多</strong>:对每个类别都学习一个二分类模型，将这个类别与其它类别都尽量分开，这样就生成了与类别个数一样多的二分类模型。在测试点上运行所有二分类分类器来进行预测。在对应类别上分数最高的分类器胜出，将这个类别标签返回作为预测结果。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>SVM是一种二分类模型，处理的数据可以分为三类：</p>
 <p>1.线性可分，通过硬间隔最大化，学习线性分类器，在平面上对应直线<br>2.近似线性可分，通过软间隔最大化，学习线性分类器<br>3.线性不可分，通过核函数以及软间隔最大化，学习非线性分类器，在平面上对应曲线</p>
-<p>而svm比线性模型要优秀的一个点就是可以处理非线性分类数据，甚至是更高维的数据，例如这样的数据分类：<br><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/2021033116142616.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>而svm比线性模型要优秀的一个点就是可以处理非线性分类数据，甚至是更高维的数据，例如这样的数据分类：</p>
+<p><img src="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/2021033116142616.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>有很多地方做的不是很好，欢迎网友来提出建议，也希望可以遇到些朋友来一起交流讨论。</p>
 
             </div>

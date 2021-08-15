@@ -195,6 +195,423 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E8%A1%A5%E5%85%85%E8%AF%B4%E6%98%8E/" target="_self">
+          支持向量机（SVM）算法-补充说明
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/15/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88SVM%EF%BC%89%E7%AE%97%E6%B3%95-%E8%A1%A5%E5%85%85%E8%AF%B4%E6%98%8E/" target="_self">
+          
+          
+            
+          
+          序之前我有写过一篇关于svm的使用流程和基本概念讲解——支持向量机（SVM）算法之分类实操。不过最近又接触了一些关于svm的基础概念和预处理数据的使用，所以在这里做一下简单地补充。在接触本篇文章之前，建议先去看完支持向量机（SVM）算法之分类实操，一些我之前讲过的东西，这里就不在赘述了。
+核技巧首先需要声明的一点是，向数据表示中添加非线性特征，可以让线性模型变得更强大。但是，通常来说我们并不知道要
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-15 20:12" pubdate>
+              2021-06-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E6%A0%B8%E5%90%91%E9%87%8F%E6%9C%BA/">核向量机</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/SVM/">SVM</a>
+            
+              <a href="/tags/%E8%A1%A5%E5%85%85%E8%AF%B4%E6%98%8E/">补充说明</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/" target="_self">
+          神经网络（深度学习）算法
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/15/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89%E7%AE%97%E6%B3%95/" target="_self">
+          
+          
+            
+          
+          序我想接触过机器学习的人应该都听过一个高大上，但是又非常陌生的算法，就是“神经网络”。尤其是最近两年，这类被称为神经网络的算法以“深度学习”的名字再度流行。虽然深度学习在许多机器学习应用中都有非常大的潜力，但深度学习算法往往经过精确调整，只适用于特定的使用场景。接下来，我们只讨论一些相对简单的方法，即用于分类和回归的多层感知机（MLP），它可以作为研究更复杂的深度学习方法的起点。MLP也被称为（普
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-15 20:09" pubdate>
+              2021-06-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/">线性模型</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">神经网络</a>
+            
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/15/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8/" target="_self">
+          朴素贝叶斯分类器
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/15/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8/" target="_self">
+          
+          
+            
+          
+          基本概念鲁棒性
+Huber从稳健统计的角度系统地给出了鲁棒性3个层面的概念：
+1.是模型具有较高的精度或有效性，这也是对于机器学习中所有学习模型的基本要求；2.是对于模型假设出现的较小偏差，只能对算法性能产生较小的影响，如噪声；3.是对于模型假设出现的较大偏差，不可对算法性能产生“灾难性”的影响，如离群点。
+PS：上面的解释是从网上抄来的 
+定义：对于聚类（分类）算法而言，鲁棒性意味着聚类结果不应
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-15 20:06" pubdate>
+              2021-06-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/">线性模型</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B/">回归模型</a>
+            
+              <a href="/tags/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8/">朴素贝叶斯分类器</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/" target="_self">
+          岭回归
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/15/%E5%B2%AD%E5%9B%9E%E5%BD%92/" target="_self">
+          
+          
+            
+          
+          基本概念正则化
+正则化是指对模型做显式约束，以避免过拟合。本文用到的岭回归就是L2正则化。（从数学的观点来看，岭回归惩罚了系数的L2范数或w的欧式长度）
+正则化的具体原理就不在这里多叙述了，感兴趣的朋友可以看一下这篇文章：机器学习中正则化项L1和L2的直观理解。
+算法简介岭回归
+岭回归也是一种用于回归的线性模型，因此它的模型公式与最小二乘法的相同，如下式所示：
+
+y=w[0]x[0]+w[1]x[
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-15 20:03" pubdate>
+              2021-06-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/">线性模型</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B/">回归模型</a>
+            
+              <a href="/tags/L2%E6%AD%A3%E5%88%99%E5%8C%96/">L2正则化</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8B%EF%BC%89/" target="_self">
+          决策树算法-单棵树（下）
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8B%EF%BC%89/" target="_self">
+          
+          
+            
+          
+          序在上篇的文章决策树算法之讲解实操（上）当中，我们主要了解了决策树的算法原理，实际应用，以及简单介绍了下决策树的复杂度参数。而这篇我们主要讲解决策树的分析可视化，特征值重要程度，以及讨论回归决策树。
+决策树的分析与可视化树的可视化有助于深入理解算法是如何进行预测的，也是易于向非专家解释的机器学习算法的优秀示例。我们可以利用tree模块的export_graphviz函数来将树可视化。这个函数会生成
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-15 20:01" pubdate>
+              2021-06-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E5%86%B3%E7%AD%96%E6%A0%91/">决策树</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/%E5%8D%95%E6%A3%B5%E6%A0%91/">单棵树</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/" target="_self">
+          决策树算法-单棵树（上）
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-%E5%8D%95%E6%A3%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/" target="_self">
+          
+          
+            
+          
+          序这次讲解机器学习里面非常经典的一个算法模型——分类树。由于篇幅比较长，所以特分为上下两篇讲解。本篇主要讲解决策树的原理，实际应用以及参数。
+算法介绍1.分类树原理
+决策树是广泛应用于分类和回归任务的模型。本质上，它从一层层的if/else问题中进行学习，并得出结论。
+想像一下，你想要区分下面四种动物：熊，鹰，企鹅和海豚。你的目标是通过提出尽可能少的if/else问题来得到正确答案。而这个提问过程
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-15 19:59" pubdate>
+              2021-06-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E5%86%B3%E7%AD%96%E6%A0%91/">决策树</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/%E5%8D%95%E6%A3%B5%E6%A0%91/">单棵树</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E9%9B%86%E6%88%90-%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/" target="_self">
+          决策树集成-随机森林
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/15/%E5%86%B3%E7%AD%96%E6%A0%91%E9%9B%86%E6%88%90-%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/" target="_self">
+          
+          
+            
+          
+          基础概念集成
+集成是合并多个机器学习模型来构建更强大模型的方法。在机器学习算法中有许多模型属于这一类，但已证明有两种集成模型对大量分类和回归的数据集都是有效的，二者都以决策树为基础，分别是随机森林（random forest）和梯度提升决策树决策（gradiet boosted decision tree）。
+本片文章先讲解一下随机森林。在了解随机森林之前建议先去看一下我的另外两篇讲解决策树的文章
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-15 19:55" pubdate>
+              2021-06-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E5%86%B3%E7%AD%96%E6%A0%91%E9%9B%86%E6%88%90/">决策树集成</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/">随机森林</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021/06/15/%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8D%E7%A1%AE%E5%AE%9A%E5%BA%A6%E4%BC%B0%E8%AE%A1%EF%BC%8C%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/" target="_self">
           分类器不确定度估计，监督学习算法小结
         </a>
@@ -368,232 +785,11 @@ L(Y-f(X))=|Y-f(X)|——公式Y-实际Y的绝对值
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/06/15/k%E4%B8%B4%E8%BF%91%E7%AE%97%E6%B3%95-%E5%9B%9E%E5%BD%92/" target="_self">
-          k临近算法-回归
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/06/15/k%E4%B8%B4%E8%BF%91%E7%AE%97%E6%B3%95-%E5%9B%9E%E5%BD%92/" target="_self">
-          
-          
-            
-          
-          基本概念先简单介绍一下机器学习里面的两个概念
-1.分类与回归
-分类模型和回归模型本质一样，分类模型是将回归模型的输出离散化。
-一般来说，回归问题通常是用来预测一个值，如预测房价、未来的天气情况等等，例如一个产品的实际价格为500元，通过回归分析预测值为499元，我们认为这是一个比较好的回归分析。回归是对真实值的一种逼近预测。
-分类问题是用于将事物打上一个标签，通常结果为离散值。例如判断一幅图片上的
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-15 19:42" pubdate>
-              2021-06-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
-            
-              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
-            
-              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/k%E9%82%BB%E8%BF%91/">k邻近</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/python/">python</a>
-            
-              <a href="/tags/%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B/">回归模型</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/06/15/k%E9%82%BB%E8%BF%91%E7%AE%97%E6%B3%95-%E5%88%86%E7%B1%BB/" target="_self">
-          k邻近算法-分类
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/06/15/k%E9%82%BB%E8%BF%91%E7%AE%97%E6%B3%95-%E5%88%86%E7%B1%BB/" target="_self">
-          
-          
-            
-          
-          算法简介k邻近算法是最简单的算法之一，该算法的思路是：在特征空间中，如果一个样本附近的k个最近(即特征空间中最邻近)样本的大多数属于某一个类别，则该样本也属于这个类别。该算法主要用于解决分类问题，无论是二分类或者是多分类都可以应用。本文主要记录实际操作，想了解具体的算法原理可以自己查找，或者可以参考这篇博客：KNN原理小结
-数据来源玻璃分类（Kaggle）：https://www.kaggle.c
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-15 19:34" pubdate>
-              2021-06-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
-            
-              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
-            
-              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/k%E9%82%BB%E8%BF%91/">k邻近</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B/">分类模型</a>
-            
-              <a href="/tags/python/">python</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/06/14/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" target="_self">
-          博客搭建
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/06/14/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" target="_self">
-          
-          
-            
-          
-          博客搭建目前网络上有两种主流的搭建方法,一个是jekyll+github,另一个是hexo+github,这两种框架均是利用静态网页编辑器将生成的静态网页上传到github上,从而实现网页展示,跳转等功能.
-本网站是采用hexo+github的方法搭建的,过程很简单,哪怕是完全不懂java,js的小白也可以轻松搭建出来.网络上有很多关于利用hexo搭建博客的文章,譬如:搭建GitHub免费个人网站
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 12:34" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a>
-            
-              <a href="/tags/%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/">注意事项</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/06/14/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" target="_self">
-          第一篇博客
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/06/14/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" target="_self">
-          
-          
-            
-          
-          第一篇博客 从21年年初,我开始自学数据分析,数据挖掘方面的东西.为了能够坚持下去,同时也是想要将学到的东西记录下来,我便给自己定了一个规矩:每周至少要更新一篇博客.开始的时候是在CSDN和知乎上面更新,毕竟是知名技术网站,而且编辑器什么的也都是搭建好的,撰写发布很方便.
-可时间久了,就发现这两个网站的markdown编辑器还是有一些限制的,譬如说标题,字体等种类很少,布局简陋等等.在加上自己平常
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 11:45" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">第一篇博客</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/">生活记录</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span>
+      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
