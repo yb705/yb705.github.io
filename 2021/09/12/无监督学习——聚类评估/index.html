@@ -1,0 +1,576 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Yyb">
+  <meta name="keywords" content="">
+  
+  <title>无监督学习——聚类评估 - Yyb的花园</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yb705.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","app_key":"dJ07LxI5XAsyjJ3DB7zmCUL3","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Yyb的花园" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Yyb的花园</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/post.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="无监督学习——聚类评估">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Yyb
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-09-12 10:03" pubdate>
+        2021年9月12日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      16
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">无监督学习——聚类评估</h1>
+            
+            <div class="markdown-body">
+              <h3 id="序"><a href="#序" class="headerlink" title="序"></a>序</h3><p>在用聚类算法时,其挑战之一就是很难评估一个算法的效果好坏,也很难比较不同算法的结果.在讨论完k均值,凝聚聚类和DBSCAN背后的算法之后,下面我们来说一下如何对聚类进行评估.</p>
+<h3 id="用真实值评估聚类"><a href="#用真实值评估聚类" class="headerlink" title="用真实值评估聚类"></a>用真实值评估聚类</h3><p>有一些指标可用于评估聚类算法相对于真实聚类的结果，其中最重要的是<strong>调整rand指数</strong>和<strong>归一化互信息</strong>。二者都给出了定量的度量，其最佳值为1，0表示不相关的聚类（虽然ARI可以取负值）。</p>
+<p>下面我们使用ARI来比较k均值，凝聚聚类和DBSCAN算法。</p>
+<p>PS：数据集是make_moons，之前有在<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/119883924">DBSCAN</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/119212829">k均值聚类</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/119647712">凝聚聚类</a>中使用过，感兴趣的可以点开链接看一下，这里就不再赘述了。</p>
+<p>首先，我们先导入数据集，并进行<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/117774014">标准化</a>（不了解标准化的可以点击链接浏览一下）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> make_moons<br><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScaler<span class="hljs-comment">###标准化</span><br>X,y=make_moons(n_samples=<span class="hljs-number">200</span>,noise=<span class="hljs-number">0.05</span>,random_state=<span class="hljs-number">0</span>)<span class="hljs-comment">###引入数据集</span><br>standard=StandardScaler()<br>standard.fit(X)<br>X_scaled=standard.transform(X)<br></code></pre></td></tr></table></figure>
+
+<p>之后，依次导入各类算法，并设立一个随机簇，作为参考：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.cluster <span class="hljs-keyword">import</span> DBSCAN<span class="hljs-comment">###导入DBSCAN</span><br><span class="hljs-keyword">from</span> sklearn.cluster <span class="hljs-keyword">import</span> KMeans<span class="hljs-comment">###导入k均值</span><br><span class="hljs-keyword">from</span> sklearn.cluster <span class="hljs-keyword">import</span> AgglomerativeClustering<span class="hljs-comment">###导入凝聚聚类</span><br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br>clusters=[KMeans(n_clusters=<span class="hljs-number">2</span>),AgglomerativeClustering(n_clusters=<span class="hljs-number">2</span>),DBSCAN()]<br><span class="hljs-comment">###创建一个随机的簇分配,作为参考</span><br>random_state=np.random.RandomState(seed=<span class="hljs-number">0</span>)<br>random_clusters=random_state.randint(low=<span class="hljs-number">0</span>,high=<span class="hljs-number">2</span>,size=<span class="hljs-built_in">len</span>(X))<br></code></pre></td></tr></table></figure>
+
+<p>最后，我们用”K均值聚类”,”凝聚聚类”,”DBSCAN”依次进行聚类操作，并把结果汇总成一个表格：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics.cluster <span class="hljs-keyword">import</span> adjusted_rand_score<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br>score=pd.DataFrame(index=[<span class="hljs-string">&quot;K均值聚类&quot;</span>,<span class="hljs-string">&quot;凝聚聚类&quot;</span>,<span class="hljs-string">&quot;DBSCAN&quot;</span>],columns=[<span class="hljs-string">&quot;随机分配评分&quot;</span>,<span class="hljs-string">&quot;ARI&quot;</span>])<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(clusters)):<br>    result=clusters[i].fit_predict(X_scaled)<br>    score.iloc[i,<span class="hljs-number">0</span>]=adjusted_rand_score(y,random_clusters)<br>    score.iloc[i,<span class="hljs-number">1</span>]=adjusted_rand_score(y,result)<br></code></pre></td></tr></table></figure>
+
+<p>结果如下所示：</p>
+<p><img src="/2021/09/12/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E8%81%9A%E7%B1%BB%E8%AF%84%E4%BC%B0/f1267bb19cc54dff847c9e26f79cdc41.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>调整rand参数给出了符合直觉的结果，随机簇分配的分数约等于0，而DBSCAN（完美找到了期望中的聚类)的分数为1.</p>
+<p>其实，用这种方法评估聚类时，一个常见的错误是使用accuracy_score（之前在监督学习中，用于分类器评分），而不是adjusted_rand_score或者其它聚类指标。使用精度的问题在于，它要求分配的簇标签与真实值完全匹配。但簇标签本身毫无意义——唯一重要的是哪些点位于同一个簇中。</p>
+<p><img src="/2021/09/12/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E8%81%9A%E7%B1%BB%E8%AF%84%E4%BC%B0/20547fc5f00143d88ca1b78cf28c69f1.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h3 id="在没有真实值的情况下评估聚类"><a href="#在没有真实值的情况下评估聚类" class="headerlink" title="在没有真实值的情况下评估聚类"></a>在没有真实值的情况下评估聚类</h3><p>我们刚刚展示了一种评估聚类算法的方法，但在实践中，使用诸如ARI之类的指标有一个很大的问题。在应用聚类算法时，通常没有真实值来比较结果。如果我们知道了数据的正确聚类，那么可以使用这一信息构建一个监督模型（比如分类器）。因此，使用类似ARI和NMI的指标通常仅有助于开发算法，但对评估应用是否成功没有帮助。</p>
+<p>有一些聚类的评分指标不需要真实值，比如<strong>轮廓系数</strong>。但它们在实践中的效果并不好。轮廓分数计算一个簇的紧致度，其值越大越好，最高分数为1.虽然紧致的簇很好，但紧致度不允许复杂的形状。</p>
+<p>接下来，我们李勇轮廓分数在make_moons数据集上比较k均值，凝聚聚类和DBSCAN：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics.cluster <span class="hljs-keyword">import</span> silhouette_score<br>score[<span class="hljs-string">&quot;轮廓系数&quot;</span>]=<span class="hljs-string">&quot;&quot;</span><span class="hljs-comment">###新添加一列,存放轮廓系数</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):<br>    result=clusters[i].fit_predict(X_scaled)<br>    score.iloc[i,<span class="hljs-number">2</span>]=silhouette_score(X_scaled,result)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2021/09/12/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E8%81%9A%E7%B1%BB%E8%AF%84%E4%BC%B0/1e70fc4a8ded465bac22357d749e8a66.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>如你所见，k均值的轮廓分数最高，尽管我们可能更喜欢DBSCAN的结果：</p>
+<p><img src="/2021/09/12/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E8%81%9A%E7%B1%BB%E8%AF%84%E4%BC%B0/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAeWI3MDU=,size_20,color_FFFFFF,t_70,g_se,x_16.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>对于评估聚类，稍好的策略是使用<strong>基于鲁棒性</strong>的聚类指标，这种指标先向数据中添加一些噪声，或者使用不同的参数设定，然后运用算法，并对结果进行比较。其思想是，如果许多算法参数和许多数据扰动返回相同的结果，那么它很可能是可信的。</p>
+<p>即使我们得到一个鲁棒性很好的聚类或者非常高的轮廓分数，但仍然不知道聚类中是否有任何语义含义，或者聚类是否反应了数据中我们感兴趣的某个方面。要想知道聚类是否对应于我们感兴趣的内容，唯一的办法就是对簇进行人工分析。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其实，<strong>聚类的应用与评估是一个非常定性的过程，通常在数据分析的探索阶段很有帮助。</strong></p>
+<p>我们在前面分别学习了三种聚类算法：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/119883924">DBSCAN</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/119212829">k均值聚类</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/119647712">凝聚聚类</a>。这三种算法都可以控制聚类的粒度。k均值和凝聚聚类允许你指定想要的簇的数量，而DBSCAN允许你用eps参数定义接近程度，从而间接影响簇的大小。三种方法都可以用于大型的现实世界数据集，都相对容易理解，也都可以聚类成多个簇。</p>
+<p>当然，分解（<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/118222281">PCA</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/118416483">NMF</a>），<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43580339/article/details/118574996">流形学习</a>与聚类一样，都是加深数据理解的重要工具，在没有监督信息的情况下，也是理解数据仅有的方法。即使在监督学习中，探索性工具对于更好地理解数据性质也很重要。通常来说，很难量化无监督算法的有用性，但这不应该妨碍你使用它们来深入理解数据。</p>
+<p>有很多地方做的不是很好，欢迎网友来提出建议，也希望可以遇到些朋友来一起交流讨论。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">无监督学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E8%81%9A%E7%B1%BB%E8%AF%84%E4%BC%B0/">聚类评估</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/DBSCAN/">DBSCAN</a>
+                    
+                      <a class="hover-with-bg" href="/tags/K%E5%9D%87%E5%80%BC/">K均值</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%87%9D%E8%81%9A%E8%81%9A%E7%B1%BB/">凝聚聚类</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%81%9A%E7%B1%BB%E8%AF%84%E4%BC%B0/">聚类评估</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/09/12/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E7%8B%AC%E7%83%AD%E7%BC%96%E7%A0%81/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">特征工程——独热编码</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/12/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94DBSCAN/">
+                        <span class="hidden-mobile">无监督学习——DBSCAN</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"S3SM93qxXfn8olHkcUQnJuIp-gzGzoHsz","appKey":"dJ07LxI5XAsyjJ3DB7zmCUL3","placeholder":"走过路过不要错过,买不买的瞧一瞧也好啊!","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"requiredFields":[]},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://blog.csdn.net/weixin_43580339?spm=1010.2135.3001.5343" target="_blank" rel="nofollow noopener"><span>CSDN</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/yb705" target="_blank" rel="nofollow noopener"><span>Github</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

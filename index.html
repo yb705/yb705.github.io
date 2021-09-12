@@ -197,19 +197,18 @@
         
           <i class="index-pin iconfont icon-top" title="Pin on top"></i>
         
-        <a href="/2021/08/15/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E5%87%9D%E8%81%9A%E8%81%9A%E7%B1%BB/" target="_self">
-          无监督学习——凝聚聚类
+        <a href="/2021/09/12/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E7%8B%AC%E7%83%AD%E7%BC%96%E7%A0%81/" target="_self">
+          特征工程——独热编码
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/08/15/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E5%87%9D%E8%81%9A%E8%81%9A%E7%B1%BB/" target="_self">
+        <a href="/2021/09/12/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E7%8B%AC%E7%83%AD%E7%BC%96%E7%A0%81/" target="_self">
           
           
             
           
-          序凝聚聚类指的是许多基于相同原则构建的聚类算法，这一原则是：算法首先声明每个点是自己的簇，然后合并两个最相似的簇，直到满足某种停止规则为止。scikit-learn中实现的停止规则是簇的个数，因此相似的簇被合并，直到仅剩下指定个数的簇。还有一些链接准则，规定如何度量”最相似的簇“。这种度量总是定义在两个现有的簇之间。
-scikit-learn中实现了以下三种选项：ward：默认选项。ward挑选两
+          序到目前为止，我们一直假设数据是由浮点数组成的二维数组，其中每一列是描述数据点的连续特征。对于许多应用而言，数据的收集方式并不是这样。一种特别常见的特征类型就是分类特征，也叫离散特征。这种特征通常并不是数值。分类特征与连续特征之间的区别类似于分类和回归之间的区别，只是前者在输入端而不是输出端。其实，无论你的数据包含哪种类型的特征，数据表示方式都会对机器学习模型的性能产生巨大影响。譬如说我们之前讲过
         </a>
       </p>
 
@@ -217,8 +216,8 @@ scikit-learn中实现了以下三种选项：ward：默认选项。ward挑选两
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-15 12:35" pubdate>
-              2021-08-15
+            <time datetime="2021-09-12 10:06" pubdate>
+              2021-09-12
             </time>
           </div>
         
@@ -228,9 +227,9 @@ scikit-learn中实现了以下三种选项：ward：默认选项。ward挑选两
             
               <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
             
-              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">无监督学习</a>
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/">特征工程</a>
             
-              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E5%87%9D%E8%81%9A%E8%81%9A%E7%B1%BB/">凝聚聚类</a>
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/%E7%8B%AC%E7%83%AD%E7%BC%96%E7%A0%81/">独热编码</a>
             
           </div>
         
@@ -238,9 +237,13 @@ scikit-learn中实现了以下三种选项：ward：默认选项。ward挑选两
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%81%9A%E7%B1%BB%E5%8F%AF%E8%A7%86%E5%8C%96/">聚类可视化</a>
+              <a href="/tags/%E8%99%9A%E6%8B%9F%E5%8F%98%E9%87%8F/">虚拟变量</a>
             
-              <a href="/tags/%E5%B1%82%E6%AC%A1%E8%81%9A%E7%B1%BB/">层次聚类</a>
+              <a href="/tags/%E7%8B%AC%E7%83%AD%E7%BC%96%E7%A0%81/">独热编码</a>
+            
+              <a href="/tags/%E6%96%87%E6%9C%AC%E6%95%B0%E6%8D%AE/">文本数据</a>
+            
+              <a href="/tags/%E5%88%86%E7%B1%BB%E5%8F%98%E9%87%8F/">分类变量</a>
             
           </div>
         
@@ -256,22 +259,23 @@ scikit-learn中实现了以下三种选项：ward：默认选项。ward挑选两
         
           <i class="index-pin iconfont icon-top" title="Pin on top"></i>
         
-        <a href="/2021/08/15/%E9%87%91%E5%AD%97%E5%A1%94-%E5%BA%94%E7%94%A8%E9%80%BB%E8%BE%91%E9%A1%BA%E5%BA%8F/" target="_self">
-          金字塔(六)-应用逻辑顺序
+        <a href="/2021/09/12/%E9%87%91%E5%AD%97%E5%A1%94-%E5%A4%96%E5%B1%95%E6%8E%A8%E7%90%86/" target="_self">
+          金字塔(附录)-外展推理
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/08/15/%E9%87%91%E5%AD%97%E5%A1%94-%E5%BA%94%E7%94%A8%E9%80%BB%E8%BE%91%E9%A1%BA%E5%BA%8F/" target="_self">
+        <a href="/2021/09/12/%E9%87%91%E5%AD%97%E5%A1%94-%E5%A4%96%E5%B1%95%E6%8E%A8%E7%90%86/" target="_self">
           
           
             
           
-          应用逻辑顺序当我们在写文章的时候，往往会把存在某种联系的思想放在同一组，进行讲解。之所以要把某些思想放在一起，便是因为它们之间存在着某种逻辑关系，既方便作者进行分析，也有助于读者的理解。而这种逻辑关系有三种，分别是因果关系，结构关系，重要性关系。接下来，我们就简单介绍下这三种关系。
+          在无结构情况下解决问题的方法前面提到的”界定问题”把解决问题描绘成一个不断进行逻辑分析的过程,目的是发现并展示导致非期望结果的内在结构.如果问题是我们不喜欢该结构造成的结果,解决方案就是调整结构.
+当然,有的时候,我们无法解释问题,发生这种情况的原因有3个:
 
-1.时间（因果）顺序因果关系，顾名思义就是某些原因导致了某些结果。举个例子：
-
-受到市场波动，政策调控，疫情叠加的
+造成非期望结果的结构根本不存在,比如你要发明一件新东西时.
+结构无形,如空气或者是wifi等,只能分析其结果.
+结构不能解释结果,比如无论
         </a>
       </p>
 
@@ -279,8 +283,8 @@ scikit-learn中实现了以下三种选项：ward：默认选项。ward挑选两
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-15 12:21" pubdate>
-              2021-08-15
+            <time datetime="2021-09-12 09:57" pubdate>
+              2021-09-12
             </time>
           </div>
         
@@ -290,9 +294,9 @@ scikit-learn中实现了以下三种选项：ward：默认选项。ward挑选两
             
               <a href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/">金字塔思维</a>
             
-              <a href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/%E6%80%9D%E8%80%83%E7%9A%84%E9%80%BB%E8%BE%91/">思考的逻辑</a>
+              <a href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/%E6%8E%A8%E7%90%86%E9%80%BB%E8%BE%91/">推理逻辑</a>
             
-              <a href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/%E6%80%9D%E8%80%83%E7%9A%84%E9%80%BB%E8%BE%91/%E7%AC%AC%E5%85%AD%E7%AB%A0/">第六章</a>
+              <a href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/%E6%8E%A8%E7%90%86%E9%80%BB%E8%BE%91/%E9%99%84%E5%BD%95/">附录</a>
             
           </div>
         
@@ -304,7 +308,7 @@ scikit-learn中实现了以下三种选项：ward：默认选项。ward挑选两
             
               <a href="/tags/%E5%86%85%E5%8C%96%E7%AC%94%E8%AE%B0/">内化笔记</a>
             
-              <a href="/tags/%E5%BA%94%E7%94%A8%E9%80%BB%E8%BE%91%E9%A1%BA%E5%BA%8F/">应用逻辑顺序</a>
+              <a href="/tags/%E5%A4%96%E5%B1%95%E6%8E%A8%E7%90%86/">外展推理</a>
             
           </div>
         
@@ -382,23 +386,20 @@ scikit-learn中实现了以下三种选项：ward：默认选项。ward挑选两
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/09/12/%E9%87%91%E5%AD%97%E5%A1%94-%E5%A4%96%E5%B1%95%E6%8E%A8%E7%90%86/" target="_self">
-          金字塔-外展推理
+        <a href="/2021/09/12/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E8%81%9A%E7%B1%BB%E8%AF%84%E4%BC%B0/" target="_self">
+          无监督学习——聚类评估
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/09/12/%E9%87%91%E5%AD%97%E5%A1%94-%E5%A4%96%E5%B1%95%E6%8E%A8%E7%90%86/" target="_self">
+        <a href="/2021/09/12/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E8%81%9A%E7%B1%BB%E8%AF%84%E4%BC%B0/" target="_self">
           
           
             
           
-          在无结构情况下解决问题的方法前面提到的”界定问题”把解决问题描绘成一个不断进行逻辑分析的过程,目的是发现并展示导致非期望结果的内在结构.如果问题是我们不喜欢该结构造成的结果,解决方案就是调整结构.
-当然,有的时候,我们无法解释问题,发生这种情况的原因有3个:
-
-造成非期望结果的结构根本不存在,比如你要发明一件新东西时.
-结构无形,如空气或者是wifi等,只能分析其结果.
-结构不能解释结果,比如无论
+          序在用聚类算法时,其挑战之一就是很难评估一个算法的效果好坏,也很难比较不同算法的结果.在讨论完k均值,凝聚聚类和DBSCAN背后的算法之后,下面我们来说一下如何对聚类进行评估.
+用真实值评估聚类有一些指标可用于评估聚类算法相对于真实聚类的结果，其中最重要的是调整rand指数和归一化互信息。二者都给出了定量的度量，其最佳值为1，0表示不相关的聚类（虽然ARI可以取负值）。
+下面我们使用ARI来比较k
         </a>
       </p>
 
@@ -406,7 +407,7 @@ scikit-learn中实现了以下三种选项：ward：默认选项。ward挑选两
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-12 09:57" pubdate>
+            <time datetime="2021-09-12 10:03" pubdate>
               2021-09-12
             </time>
           </div>
@@ -415,11 +416,11 @@ scikit-learn中实现了以下三种选项：ward：默认选项。ward挑选两
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/">金字塔思维</a>
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
             
-              <a href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/%E6%8E%A8%E7%90%86%E9%80%BB%E8%BE%91/">推理逻辑</a>
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">无监督学习</a>
             
-              <a href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/%E6%8E%A8%E7%90%86%E9%80%BB%E8%BE%91/%E9%99%84%E5%BD%95/">附录</a>
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E8%81%9A%E7%B1%BB%E8%AF%84%E4%BC%B0/">聚类评估</a>
             
           </div>
         
@@ -427,11 +428,71 @@ scikit-learn中实现了以下三种选项：ward：默认选项。ward挑选两
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+              <a href="/tags/DBSCAN/">DBSCAN</a>
             
-              <a href="/tags/%E5%86%85%E5%8C%96%E7%AC%94%E8%AE%B0/">内化笔记</a>
+              <a href="/tags/K%E5%9D%87%E5%80%BC/">K均值</a>
             
-              <a href="/tags/%E5%A4%96%E5%B1%95%E6%8E%A8%E7%90%86/">外展推理</a>
+              <a href="/tags/%E5%87%9D%E8%81%9A%E8%81%9A%E7%B1%BB/">凝聚聚类</a>
+            
+              <a href="/tags/%E8%81%9A%E7%B1%BB%E8%AF%84%E4%BC%B0/">聚类评估</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/09/12/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94DBSCAN/" target="_self">
+          无监督学习——DBSCAN
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/12/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94DBSCAN/" target="_self">
+          
+          
+            
+          
+          序与之前提到的凝聚聚类，K均值聚类类似，DBSCAN也是一个非常有用的聚类算法。它的主要优点是它不需要用户先验地设置簇的个数，可以划分具有复杂形状的簇，还可以找出不属于任何簇的点。DBSCAN比凝聚聚类和k均值稍慢，但仍可以扩展到相对较大的数据集。
+接下来，我“简单”地介绍一下算法的原理（PS：大概看一下就好）。
+算法原理DBSCAN的全称是具有噪声的基于密度的空间聚类应用。顾名思义，DBSCAN
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-12 10:02" pubdate>
+              2021-09-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">无监督学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/DBSCAN/">DBSCAN</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%81%9A%E7%B1%BB/">聚类</a>
+            
+              <a href="/tags/DBSCAN/">DBSCAN</a>
             
           </div>
         
@@ -636,6 +697,63 @@ scikit-learn中实现了以下三种选项：ward：默认选项。ward挑选两
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021/08/15/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E5%87%9D%E8%81%9A%E8%81%9A%E7%B1%BB/" target="_self">
+          无监督学习——凝聚聚类
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/08/15/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E5%87%9D%E8%81%9A%E8%81%9A%E7%B1%BB/" target="_self">
+          
+          
+            
+          
+          序凝聚聚类指的是许多基于相同原则构建的聚类算法，这一原则是：算法首先声明每个点是自己的簇，然后合并两个最相似的簇，直到满足某种停止规则为止。scikit-learn中实现的停止规则是簇的个数，因此相似的簇被合并，直到仅剩下指定个数的簇。还有一些链接准则，规定如何度量”最相似的簇“。这种度量总是定义在两个现有的簇之间。
+scikit-learn中实现了以下三种选项：ward：默认选项。ward挑选两
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-15 12:35" pubdate>
+              2021-08-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">无监督学习</a>
+            
+              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E5%87%9D%E8%81%9A%E8%81%9A%E7%B1%BB/">凝聚聚类</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%81%9A%E7%B1%BB%E5%8F%AF%E8%A7%86%E5%8C%96/">聚类可视化</a>
+            
+              <a href="/tags/%E5%B1%82%E6%AC%A1%E8%81%9A%E7%B1%BB/">层次聚类</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021/08/15/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94K%E5%9D%87%E5%80%BC%E8%81%9A%E7%B1%BB%EF%BC%88%E4%B8%8B%EF%BC%89/" target="_self">
           无监督学习——K均值聚类（下）
         </a>
@@ -689,134 +807,11 @@ scikit-learn中实现了以下三种选项：ward：默认选项。ward挑选两
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/08/15/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94K%E5%9D%87%E5%80%BC%E8%81%9A%E7%B1%BB%EF%BC%88%E4%B8%8A%EF%BC%89/" target="_self">
-          无监督学习——K均值聚类（上）
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/08/15/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94K%E5%9D%87%E5%80%BC%E8%81%9A%E7%B1%BB%EF%BC%88%E4%B8%8A%EF%BC%89/" target="_self">
-          
-          
-            
-          
-          序近几年在机器学习领域里面，聚类是比较热门的一个词汇。它是将数据集划分成组的任务，这些组叫做簇。其目标是划分数据，使得一个簇内的数据点非常相似且簇内的数据点非常不同。与分类算法相似，聚类算法为每个数据点分配（或预测）一个数字，表示这个点属于哪个簇。但是，与分类算法不同的是，聚类属于无监督学习，也就是说事先并不知道数据集的标签或者说特征值分类，而分类算法是监督学习，意味着已经提前知道了数据点的所属类
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-15 12:31" pubdate>
-              2021-08-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
-            
-              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">无监督学习</a>
-            
-              <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/K%E5%9D%87%E5%80%BC%E8%81%9A%E7%B1%BB/">K均值聚类</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%81%9A%E7%B1%BB/">聚类</a>
-            
-              <a href="/tags/%E7%B0%87/">簇</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/08/15/%E9%87%91%E5%AD%97%E5%A1%94-%E5%BD%92%E7%BA%B3%E6%8E%A8%E7%90%86%E4%B8%8E%E6%BC%94%E7%BB%8E%E6%8E%A8%E7%90%86/" target="_self">
-          金字塔(五)-归纳推理与演绎推理
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/08/15/%E9%87%91%E5%AD%97%E5%A1%94-%E5%BD%92%E7%BA%B3%E6%8E%A8%E7%90%86%E4%B8%8E%E6%BC%94%E7%BB%8E%E6%8E%A8%E7%90%86/" target="_self">
-          
-          
-            
-          
-          演绎推理和归纳推理之前我们讲过金字塔结构的文章有两个表达方向，分别是纵向和横向，其中”纵向“的内容，指的是自上而下表达和自下而上分析。那么本篇文章，我们主要讨论下
-同一层次思想的横向表达逻辑，即演绎推理和归纳推理。
-
-演绎推理演绎推理的步骤从上面的推理图形我们可以看出，演绎推理就是个单线程的线性推理。那么我们将其化繁为简，总结成三步：
-
-提出大家广泛认可的一件事情/现象
-从普遍中提出某个个体
-依照
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-15 12:16" pubdate>
-              2021-08-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/">金字塔思维</a>
-            
-              <a href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/%E8%A1%A8%E8%BE%BE%E7%9A%84%E9%80%BB%E8%BE%91/">表达的逻辑</a>
-            
-              <a href="/categories/%E9%87%91%E5%AD%97%E5%A1%94%E6%80%9D%E7%BB%B4/%E8%A1%A8%E8%BE%BE%E7%9A%84%E9%80%BB%E8%BE%91/%E7%AC%AC%E4%BA%94%E7%AB%A0/">第五章</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
-            
-              <a href="/tags/%E5%86%85%E5%8C%96%E7%AC%94%E8%AE%B0/">内化笔记</a>
-            
-              <a href="/tags/%E5%BD%92%E7%BA%B3%E6%8E%A8%E7%90%86/">归纳推理</a>
-            
-              <a href="/tags/%E6%BC%94%E7%BB%8E%E6%8E%A8%E7%90%86/">演绎推理</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
