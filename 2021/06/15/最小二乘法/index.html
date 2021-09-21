@@ -278,7 +278,7 @@
 
 <p>老规矩，上来先依次导入建模需要的各个模块</p>
 <p><strong>2.读取文件</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> winreg<br>real_address = winreg.OpenKey(winreg.HKEY_CURRENT_USER,<span class="hljs-string">r&#x27;Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders&#x27;</span>,)<br>file_address=winreg.QueryValueEx(real_address, <span class="hljs-string">&quot;Desktop&quot;</span>)[<span class="hljs-number">0</span>]<br>file_address+=<span class="hljs-string">&#x27;\\&#x27;</span><br>file_origin=file_address+<span class="hljs-string">&quot;\\源数据-分析\\avocado.csv&quot;</span><span class="hljs-comment">#设立源数据文件的桌面绝对路径</span><br>glass=pd.read_csv(file_origin)<span class="hljs-comment">#https://www.kaggle.com/neuromusic/avocado-prices</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> winreg<br>real_address = winreg.OpenKey(winreg.HKEY_CURRENT_USER,<span class="hljs-string">r&#x27;Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders&#x27;</span>,)<br>file_address=winreg.QueryValueEx(real_address, <span class="hljs-string">&quot;Desktop&quot;</span>)[<span class="hljs-number">0</span>]<br>file_address+=<span class="hljs-string">&#x27;\\&#x27;</span><br>file_origin=file_address+<span class="hljs-string">&quot;\\源数据-分析\\avocado.csv&quot;</span><span class="hljs-comment">#设立源数据文件的桌面绝对路径</span><br>csgo=pd.read_csv(file_origin)<span class="hljs-comment">#https://www.kaggle.com/neuromusic/avocado-prices</span><br></code></pre></td></tr></table></figure>
 
 <p>因为之前每次下载数据之后都要将文件转移到python根目录里面，或者到下载文件夹里面去读取，很麻烦。所以我通过winreg库，来设立绝对桌面路径，这样只要把数据下载到桌面上，或者粘到桌面上的特定文件夹里面去读取就好了，不会跟其它数据搞混。<br><del>其实到这一步都是在走流程，基本上每个数据挖掘都要来一遍，没什么好说的。</del> </p>
 <p><strong>3.清洗数据</strong></p>
@@ -290,7 +290,7 @@
 <p>将score划分为预测值，其它的属性划分为特征值，并将数据划分成训练集和测试集。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">LR=LinearRegression()<br>LR.fit(X_train,y_train)<br>prediction=LR.predict(X_test)<br>r2_score(y_test,prediction)<br></code></pre></td></tr></table></figure>
 
-<p>引入knn算法，进行建模后，对测试集进行精度评分，得到的结果如下：</p>
+<p>引入算法，进行建模后，对测试集进行精度评分，得到的结果如下：</p>
 <p><img src="/2021/06/15/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/20210106145315552.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>可以看到，该模型的精度为94%左右。<br>至此，这个数据集的将建模就算是完成了。</p>
 <p><strong>5.总结</strong></p>
